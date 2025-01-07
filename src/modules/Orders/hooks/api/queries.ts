@@ -1,6 +1,6 @@
 "use client";
 import apiRequest from "@/config/request";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const orderKeys = {
   getOrder: ["order"] as const,

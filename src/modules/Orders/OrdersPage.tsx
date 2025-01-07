@@ -4,6 +4,7 @@ import { useGetOrders } from "./hooks/api/queries";
 import { OrdersTable } from "./components/OrdersTable";
 import { Button } from "@/components/ui";
 import { RefreshCw } from "lucide-react";
+import { OrderForm } from "./components/OrderForm";
 
 export const OrdersPage = () => {
   const { refetch } = useGetOrders();
@@ -20,7 +21,7 @@ export const OrdersPage = () => {
           <RefreshCw className="mr-2 h-4 w-4" />
           Refresh
         </Button>
-        <Button className="rounded-3xl">Add order</Button>
+        <OrderForm />
       </div>
       <OrdersTable />
     </Body>

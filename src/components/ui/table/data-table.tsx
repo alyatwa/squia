@@ -79,84 +79,81 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <motion.div {...TAB_ITEM_ANIMATION_SETTINGS} className=" w-full">
-      <div className="  space-y-4  ">
-        {Toolbar && <Toolbar table={table} refetch={refetch} />}
-        <div>
-          {!isLoading && (
-            <Table className="rounded-md border">
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id} className="text-center">
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
+    <div className="  space-y-2  ">
+      {Toolbar && <Toolbar table={table} refetch={refetch} />}
+      {!isLoading ? (
+        <div className="rounded-xl border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="text-center">
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
 
-              <TableBody>
-                {(table.getRowModel().rows ?? []).length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell
-                          key={cell.id}
-                          className={cn(
-                            cell.column.getCanSort()
-                              ? "ltr:text-left rtl:text-right"
-                              : "cursor-pointer"
-                          )}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
-                    </TableCell>
+            <TableBody>
+              {(table.getRowModel().rows ?? []).length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        className={cn(
+                          cell.column.getCanSort()
+                            ? "ltr:text-left rtl:text-right"
+                            : "cursor-pointer"
+                        )}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          )}
-          {isLoading ? (
-            <AnimatePresence>
-              {isLoading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="absolute inset-0 flex min-h-[180px] items-center justify-center  "
-                >
-                  <LoadingSpinner />
-                </motion.div>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
               )}
-            </AnimatePresence>
-          ) : null}
+            </TableBody>
+          </Table>
         </div>
-        {!isLoading && <DataTablePagination table={table} />}
-      </div>
-    </motion.div>
+      ) : (
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="absolute inset-0 flex min-h-[180px] items-center justify-center  "
+            >
+              <LoadingSpinner />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+      {!isLoading && <DataTablePagination table={table} />}
+    </div>
   );
 }

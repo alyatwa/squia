@@ -1,28 +1,17 @@
 import express from "express";
 import { createMiddleware } from "@mswjs/http-middleware";
 import { handlers } from "./handlers";
+import cors from "cors";
 
 const app = express();
 const port = 5000;
-app.use(
-  (
-    req: any,
-    res: { header: (arg0: string, arg1: string) => void },
-    next: () => void
-  ) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-    );
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    next();
-  }
-);
+app.use(cors());
 app.use(express.json());
+// log requests
+app.use((req: { method: any; url: any }, res: any, next: () => void) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 app.use(createMiddleware(...handlers));
 
 app.listen(port, () => console.log(`Mock server is running on port: ${port}`));

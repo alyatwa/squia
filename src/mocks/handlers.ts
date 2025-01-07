@@ -11,6 +11,11 @@ export const handlers = [
       },
     });
   }),
+  //add order
+  http.post(`${baseUrl}/order`, async ({ request, params }) => {
+    const nextPost = await request.json();
+    return HttpResponse.json(nextPost);
+  }),
   http.get(`${baseUrl}/orders`, () => {
     const orders: Order[] = [
       {
@@ -29,6 +34,19 @@ export const handlers = [
     ];
     return HttpResponse.json(orders);
   }),
+  // handle OPTIONS requests
+  http.options("*", () => {
+    return new Response(null, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Credentials": "*",
+      },
+    });
+  }),
+
   http.get("*", (req) => {
     console.log(req.request.body);
   }),
