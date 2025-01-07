@@ -1,18 +1,18 @@
 import Head from "next/head";
 import { Metadata } from "next";
-import { AdminPage } from "@/modules/Admin";
+import { InquiriesPage } from "@/modules/Inquiries";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Admin | Dashboard",
+    title: "Inquiries | Dashboard",
     description: "Dashboard",
   };
 }
 
-export default async function Admin() {
+export default async function Inquiries() {
   return (
     <div>
-      <AdminPage />
+      <InquiriesPage />
     </div>
   );
 }

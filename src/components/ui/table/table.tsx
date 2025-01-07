@@ -1,4 +1,3 @@
-// import { cn, deepEqual, isClickOnInteractiveChild } from "@dub/utils";
 import {
   Cell,
   Column,
@@ -348,20 +347,22 @@ export function Table<T>({
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"
-              text="Previous"
               className="h-7 px-2"
               onClick={() => table.previousPage()}
               // disabled={!table.getCanPreviousPage()}
               disabled={pagination.pageIndex === 1}
-            />
+            >
+              Previous
+            </Button>
             <Button
               variant="secondary"
-              text="Next"
               className="h-7 px-2"
               onClick={() => table.nextPage()}
               // disabled={!table.getCanNextPage()}
               disabled={pagination.pageIndex === table.getPageCount()}
-            />
+            >
+              Next
+            </Button>
           </div>
         </div>
       )}

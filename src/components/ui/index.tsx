@@ -1,6 +1,3 @@
-// styles
-import "./styles.css";
-
 // components
 export * from "./accordion";
 export * from "./alert";
