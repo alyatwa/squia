@@ -13,22 +13,22 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  MoreHorizontal,
+  Pencil,
+  X,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 import { DataTable } from "@/components/ui/table/data-table";
 import { useGetOrders } from "../hooks/api/queries";
+import { Order } from "@/types/Order.types";
+import { OrderForm } from "./OrderForm";
+import { AlertConfirm } from "@/components/shared/alert-confirm";
 
 export const OrdersTable = () => {
   const { data, isFetching, refetch } = useGetOrders();
@@ -147,28 +147,28 @@ const columns: ColumnDef<Order>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const order = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center space-x-2">
+          <OrderForm
+            isUpdate
+            order={order}
+            button={
+              <Button variant="ghost" size="icon">
+                <Pencil className="h-4 w-4" />
+              </Button>
+            }
+          />
+          <AlertConfirm
+            onConfirm={() => {}}
+            button={
+              <Button variant="ghost" size="icon">
+                <X className="h-4 w-4 text-red-600" />
+              </Button>
+            }
+          />
+        </div>
       );
     },
   },

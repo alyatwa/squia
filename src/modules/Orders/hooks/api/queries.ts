@@ -1,5 +1,6 @@
 "use client";
 import apiRequest from "@/config/request";
+import { Order } from "@/types/Order.types";
 import { useQuery } from "@tanstack/react-query";
 
 export const orderKeys = {

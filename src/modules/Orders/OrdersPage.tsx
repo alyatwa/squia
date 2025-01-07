@@ -3,7 +3,7 @@ import { Body } from "@/components/layout/Body";
 import { useGetOrders } from "./hooks/api/queries";
 import { OrdersTable } from "./components/OrdersTable";
 import { Button } from "@/components/ui";
-import { RefreshCw } from "lucide-react";
+import { Plus, RefreshCw } from "lucide-react";
 import { OrderForm } from "./components/OrderForm";
 
 export const OrdersPage = () => {
@@ -21,7 +21,14 @@ export const OrdersPage = () => {
           <RefreshCw className="mr-2 h-4 w-4" />
           Refresh
         </Button>
-        <OrderForm />
+        <OrderForm
+          button={
+            <Button className="rounded-3xl">
+              <Plus className="mr-2 h-4 w-4" />
+              Add order
+            </Button>
+          }
+        />
       </div>
       <OrdersTable />
     </Body>
