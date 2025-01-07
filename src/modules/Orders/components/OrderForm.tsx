@@ -26,6 +26,8 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
+import React from "react";
+import { useGetOrders } from "../hooks/api/queries";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -36,6 +38,8 @@ const formSchema = z.object({
 interface OrderFormProps {}
 
 export const OrderForm: React.FC<OrderFormProps> = ({}) => {
+  const [open, setOpen] = React.useState(false);
+  const { refetch } = useGetOrders();
   const { mutateAsync, isPending } = useAddOrder();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,19 +62,21 @@ export const OrderForm: React.FC<OrderFormProps> = ({}) => {
       serviceType: "delivery",
       amount: 0,
     });
+    refetch();
+    setOpen(false);
     toast.success("Order added successfully");
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-3xl" disabled={isPending}>
+        <Button className="rounded-3xl">
           <Plus className="mr-2 h-4 w-4" />
           Add order
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Order</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
@@ -100,7 +106,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({}) => {
           </form>
         </Form>
         <DialogFooter>
-          <Button form="form-order" type="submit">
+          <Button form="form-order" type="submit" disabled={isPending}>
             Submit
           </Button>
         </DialogFooter>

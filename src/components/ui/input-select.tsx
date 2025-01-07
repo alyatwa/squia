@@ -459,7 +459,7 @@ function SelectorList({ items }: { items: InputSelectItemProps[] }) {
           {item.value}
         </p>
         {item.label && (
-          <Badge className="text-xs" variant="neutral">
+          <Badge className="text-xs" variant="outline">
             {item.label}
           </Badge>
         )}

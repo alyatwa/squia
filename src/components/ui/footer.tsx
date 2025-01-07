@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { COMPARE_PAGES, FEATURES_LIST, LEGAL_PAGES } from "./content";
 import { Github, LinkedIn, ReferredVia, Twitter, YouTube } from "./icons";
 import { MaxWidthWrapper } from "./max-width-wrapper";
-import { NavWordmark } from "./nav-wordmark";
 import { cn } from "@/lib/utils";
 
 const socials = [

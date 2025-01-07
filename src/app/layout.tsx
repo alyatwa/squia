@@ -5,9 +5,10 @@ import { cn } from "@/lib/utils";
 import { META_THEME_COLORS } from "@/config/site";
 import { ThemeProvider } from "./providers/theme-provider";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { Toaster } from "@/components/ui/toaster";
+// import { Toaster } from "@/components/ui/toaster";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/reactQuery";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,7 @@ export default function RootLayout({
               </div>
             </div>
             <Toaster />
+
             <TailwindIndicator />
           </ThemeProvider>
         </QueryClientProvider>
