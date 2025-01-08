@@ -68,7 +68,7 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.75 }}
-          className="z-[1]"
+          className="z-[1] relative"
         >
           <div className="flex w-full flex-1 flex-col gap-4 h-[90vh] overflow-x-hidden p-4">
             {children}
