@@ -23,6 +23,7 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
   ({ className, breadcrumbs, children }, ref) => {
     return (
       <>
+        <div className="absolute h-[168px] w-full bg-[linear-gradient(rgb(217,230,255)_0%,rgba(242,238,249,0)_100%)] dark:bg-none"></div>
         <header
           ref={ref}
           data-layout="body-admin"
@@ -67,7 +68,7 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.75 }}
-          className=" "
+          className="z-[1]"
         >
           <div className="flex w-full flex-1 flex-col gap-4 h-[90vh] overflow-x-hidden p-4">
             {children}
