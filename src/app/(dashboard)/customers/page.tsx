@@ -1,24 +1,23 @@
 import Head from "next/head";
 import { Metadata } from "next";
-import { OrdersPage } from "@/modules/Orders";
-import { ProductsPage } from "@/modules/Products";
+import { CustomersPage } from "@/modules/Customers";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/config/get-query-client";
-import { fetchProductsOptions } from "@/modules/Products/hooks/api/queries";
+import { fetchCustomersOptions } from "@/modules/Customers/hooks/api/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Products | Dashboard",
+    title: "Customers | Dashboard",
     description: "Dashboard",
   };
 }
 
-export default async function Products() {
+export default async function Customers() {
   const queryClient = getQueryClient();
-  void (await queryClient.prefetchQuery(fetchProductsOptions));
+  void (await queryClient.prefetchQuery(fetchCustomersOptions));
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProductsPage />
+      <CustomersPage />
     </HydrationBoundary>
   );
 }

@@ -34,7 +34,7 @@ const Body = React.forwardRef<HTMLDivElement, BodyProps>(
               <Separator orientation="vertical" className="mr-2 h-4" />
               <Breadcrumb>
                 <BreadcrumbList>
-                  {[{ title: "Home", url: "/" }, ...breadcrumbs].map(
+                  {[{ title: "Home", url: "/overview" }, ...breadcrumbs].map(
                     (item, i) => (
                       <div
                         className="flex flex-row-reverse gap-2 items-center"

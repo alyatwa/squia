@@ -14,6 +14,7 @@ import { OrderForm } from "./OrderForm";
 import { AlertConfirm } from "@/components/shared/alert-confirm";
 import { useDeleteOrder } from "../hooks/api/mutations";
 import { toast } from "sonner";
+import { formatDateTime } from "@/utils/functions/datetime";
 
 export const OrdersTable = () => {
   const { data, isFetching, refetch } = useGetOrders();
@@ -53,7 +54,9 @@ const columns: ColumnDef<Order>[] = [
   {
     accessorKey: "id",
     header: "ID",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize w-24 truncate">{row.getValue("id")}</div>
+    ),
   },
   {
     accessorKey: "status",
@@ -87,7 +90,9 @@ const columns: ColumnDef<Order>[] = [
     accessorKey: "createdAt",
     header: "Date",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("createdAt")}</div>
+      <div className="capitalize min-w-24">
+        {formatDateTime(row.original.createdAt)}
+      </div>
     ),
   },
   // company
@@ -95,7 +100,7 @@ const columns: ColumnDef<Order>[] = [
     accessorKey: "company",
     header: "Company",
     cell: ({ row }) => (
-      <div className="capitalize">{row.original.companyName}</div>
+      <div className="capitalize w-24 truncate">{row.original.companyName}</div>
     ),
   },
   // order type

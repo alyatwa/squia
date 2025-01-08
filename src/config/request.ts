@@ -24,9 +24,9 @@ const apiRequest = () => {
       //   const sessionServer = await getServerSession();
       //   session = `${(sessionServer as any)?.access_token}`;
     } else {
-      const clientSession = await getSession();
-      console.log("clientSession: ", clientSession);
-      session = (clientSession as any)?.access_token;
+      // const clientSession = await getSession();
+      // console.log("clientSession: ", clientSession);
+      // session = (clientSession as any)?.access_token;
     }
 
     if (session) {

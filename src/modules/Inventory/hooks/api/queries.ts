@@ -1,4 +1,3 @@
-"use client";
 import apiRequest from "@/config/request";
 import { Inventory } from "@/types/Inventory.types";
 import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";

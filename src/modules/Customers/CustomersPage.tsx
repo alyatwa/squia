@@ -1,16 +1,16 @@
 "use client";
 import { Body } from "@/components/layout/Body";
-import { useGetProducts } from "./hooks/api/queries";
-import { ProductsTable } from "./components/ProductsTable";
+import { useGetCustomers } from "./hooks/api/queries";
+import { CustomersTable } from "./components/CustomersTable";
 import { Button } from "@/components/ui";
 import { Plus, RefreshCw } from "lucide-react";
-import { ProductForm } from "./components/ProductForm";
+import { CustomerForm } from "./components/CustomerForm";
 
-export const ProductsPage = () => {
-  const { refetch } = useGetProducts();
+export const CustomersPage = () => {
+  const { refetch } = useGetCustomers();
 
   return (
-    <Body breadcrumbs={[{ url: "/products", title: "Products" }]}>
+    <Body breadcrumbs={[{ url: "/customers", title: "Customers" }]}>
       {/* <pre>{JSON.stringify(data, null, 2)} </pre> */}
       <div className="py-1 flex justify-end gap-2">
         <Button
@@ -21,16 +21,16 @@ export const ProductsPage = () => {
           <RefreshCw className="mr-2 h-4 w-4" />
           Refresh
         </Button>
-        <ProductForm
+        <CustomerForm
           button={
             <Button className="rounded-3xl">
               <Plus className="mr-2 h-4 w-4" />
-              Add product
+              Add customer
             </Button>
           }
         />
       </div>
-      <ProductsTable />
+      <CustomersTable />
     </Body>
   );
 };

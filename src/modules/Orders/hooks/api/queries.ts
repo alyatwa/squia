@@ -1,7 +1,10 @@
-"use client";
 import apiRequest from "@/config/request";
 import { Order } from "@/types/Order.types";
-import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
+import {
+  DefinedInitialDataOptions,
+  FetchQueryOptions,
+  useQuery,
+} from "@tanstack/react-query";
 
 export const orderKeys = {
   getOrder: ["order"] as const,
@@ -14,9 +17,9 @@ export const fetchOrders = async (): Promise<Order[]> => {
 
   return data;
 };
-export const fetchOrdersOptions: DefinedInitialDataOptions<Order[]> = {
-  queryKey: ["get-orders"],
-  queryFn: fetchOrders,
+export const fetchOrdersOptions: FetchQueryOptions<Order[]> = {
+  queryKey: orderKeys.getOrders,
+  queryFn: () => fetchOrders(),
   initialData: [],
   // enabled: false,
 };
