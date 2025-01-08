@@ -5,7 +5,7 @@ import { DefinedInitialDataOptions, useQuery } from "@tanstack/react-query";
 
 export const orderKeys = {
   getOrder: ["order"] as const,
-  getOrders: ["orders"] as const,
+  getOrders: ["get-orders"] as const,
 };
 
 /*******************  get orders *******************************/

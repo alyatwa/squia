@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Logo } from "@/components/Logo";
 import Link from "next/link";
+import { title } from "process";
 
 // This is sample data.
 const data = {
@@ -54,6 +55,40 @@ const data = {
         {
           title: "Manage Inventory",
           url: "/inventory",
+        },
+      ],
+    },
+    {
+      title: "Products",
+      url: "#",
+      items: [
+        {
+          title: "Manage Products",
+          url: "/products",
+        },
+      ],
+    },
+    {
+      title: "Settings",
+      url: "#",
+      items: [
+        {
+          title: "Manage Settings",
+          url: "/settings",
+        },
+        {
+          title: "Permissions",
+          url: "/permissions",
+        },
+      ],
+    },
+    {
+      title: "Support",
+      url: "#",
+      items: [
+        {
+          title: "Inquiries",
+          url: "/inquiries",
         },
       ],
     },

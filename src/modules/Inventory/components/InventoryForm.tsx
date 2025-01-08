@@ -13,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
 import {
-  useAddOrder,
-  useDeleteOrder,
-  useUpdateOrder,
+  useAddInventory,
+  useDeleteInventory,
+  useUpdateInventory,
 } from "../hooks/api/mutations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -32,7 +32,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import React from "react";
-// import { useGetOrders } from "../hooks/api/queries";
 import {
   Select,
   SelectContent,
@@ -41,59 +40,56 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Order,
-  OrderCategory,
-  OrderServiceType,
-  OrderStatus,
-  OrderType,
-} from "@/types/Order.types";
+  Inventory,
+  InventoryCategory,
+  StockType,
+} from "@/types/Inventory.types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
   quantity: z.number().int().positive(),
   companyName: z.string().nonempty(),
-  orderNo: z.string().nonempty(),
-  customerName: z.string().nonempty(),
-  orderType: z.nativeEnum(OrderType),
-  category: z.nativeEnum(OrderCategory),
-  serviceType: z.nativeEnum(OrderServiceType),
-  status: z.nativeEnum(OrderStatus),
+  inventoryNo: z.string().nonempty(),
+  name: z.string().nonempty(),
+  stockType: z.nativeEnum(StockType),
+  category: z.nativeEnum(InventoryCategory),
+  sellingPrice: z.number().int().positive(),
+  buyingPrice: z.number().int().positive(),
 });
+export type InventoryFormValues = z.infer<typeof formSchema>;
 
-export type OrderFormValues = z.infer<typeof formSchema>;
-
-interface OrderFormProps {
+interface InventoryFormProps {
   button: React.ReactNode;
   isUpdate?: boolean;
-  order?: Order;
+  inventory?: Inventory;
 }
 
-export const OrderForm: React.FC<OrderFormProps> = ({
+export const InventoryForm: React.FC<InventoryFormProps> = ({
   button,
-  order,
+  inventory,
   isUpdate = false,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const { mutateAsync: addOrder, isPending } = useAddOrder();
-  const { mutateAsync: updateOrder, isPending: updatePending } =
-    useUpdateOrder();
+  const { mutateAsync: addInventory, isPending } = useAddInventory();
+  const { mutateAsync: updateInventory, isPending: updatePending } =
+    useUpdateInventory();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<InventoryFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: order,
+    defaultValues: inventory,
   });
 
-  const onSubmit = async (values: OrderFormValues) => {
-    if (isUpdate && order) {
-      await updateOrder({
-        id: order.id,
+  const onSubmit = async (values: InventoryFormValues) => {
+    if (isUpdate && inventory) {
+      await updateInventory({
+        id: inventory.id,
         details: values,
       });
-      toast.success("Order updated successfully");
+      toast.success("Inventory updated successfully");
     } else {
-      await addOrder(values);
+      await addInventory(values);
 
-      toast.success("Order added successfully");
+      toast.success("Inventory added successfully");
     }
 
     setOpen(false);
@@ -103,22 +99,24 @@ export const OrderForm: React.FC<OrderFormProps> = ({
       <DialogTrigger asChild>{button}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{isUpdate ? "Update order" : "Add order"}</DialogTitle>
+          <DialogTitle>
+            {isUpdate ? "Update inventory" : "Add inventory"}
+          </DialogTitle>
         </DialogHeader>
         <ScrollArea className="h-[400px] p-4 pl-0 ">
           <Form {...form}>
             <form
-              id="form-order"
+              id="form-inventory"
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-2 px-2"
             >
-              {/* order NO */}
+              {/* inventory selling price */}
               <FormField
                 control={form.control}
-                name="orderNo"
+                name="sellingPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Order No</FormLabel>
+                    <FormLabel>Selling price</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -126,6 +124,22 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                   </FormItem>
                 )}
               />
+
+              {/* inventory buying price */}
+              <FormField
+                control={form.control}
+                name="buyingPrice"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Buying price</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               {/* quantity */}
               <FormField
                 control={form.control}
@@ -155,13 +169,13 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                   </FormItem>
                 )}
               />
-              {/* customer name */}
+              {/* stock name */}
               <FormField
                 control={form.control}
-                name="customerName"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Customer Name</FormLabel>
+                    <FormLabel>Stock Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -169,13 +183,13 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                   </FormItem>
                 )}
               />
-              {/* order type */}
+              {/* inventory type */}
               <FormField
                 control={form.control}
-                name="orderType"
+                name="stockType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Order type</FormLabel>
+                    <FormLabel>Inventory type</FormLabel>
                     <FormControl>
                       <Select
                         {...field}
@@ -183,16 +197,16 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                         onValueChange={(value) => field.onChange(value)}
                       >
                         <SelectTrigger
-                          id="orderType"
-                          aria-label="Select type of order"
+                          id="stockType"
+                          aria-label="Select type of inventory"
                         >
-                          <SelectValue placeholder={"Order type"} />
+                          <SelectValue placeholder={"Inventory type"} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value={OrderType.PACKAGES}>
+                          <SelectItem value={StockType.PACKAGES}>
                             Packages
                           </SelectItem>
-                          <SelectItem value={OrderType.FRIDGES}>
+                          <SelectItem value={StockType.FRIDGES}>
                             Fridge
                           </SelectItem>
                         </SelectContent>
@@ -217,82 +231,17 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                       >
                         <SelectTrigger
                           id="category"
-                          aria-label="Select category of order"
+                          aria-label="Select category of inventory"
                         >
                           <SelectValue placeholder={"Category"} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value={OrderCategory.PACKAGE_10}>
+                          <SelectItem value={InventoryCategory.PACKAGE_10}>
                             Package 10
                           </SelectItem>
-                          <SelectItem value={OrderCategory.PACKAGE_20}>
+                          <SelectItem value={InventoryCategory.PACKAGE_20}>
                             Package 20
                           </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* service type */}
-              <FormField
-                control={form.control}
-                name="serviceType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Service type</FormLabel>
-                    <FormControl>
-                      <Select
-                        {...field}
-                        value={String(field.value)}
-                        onValueChange={(value) => field.onChange(value)}
-                      >
-                        <SelectTrigger
-                          id="serviceType"
-                          aria-label="Select service type"
-                        >
-                          <SelectValue placeholder={"Service type"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value={OrderServiceType.DELIVERY}>
-                            Delivery
-                          </SelectItem>
-                          <SelectItem value={OrderServiceType.PICKUP}>
-                            Pickup
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* status */}
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status</FormLabel>
-                    <FormControl>
-                      <Select
-                        {...field}
-                        value={String(field.value)}
-                        onValueChange={(value) => field.onChange(value)}
-                      >
-                        <SelectTrigger
-                          id="status"
-                          aria-label="Select status of order"
-                        >
-                          <SelectValue placeholder={"Status"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="approved">Approved</SelectItem>
-                          <SelectItem value="rejected">Rejected</SelectItem>
-                          <SelectItem value="shipped">Shipped</SelectItem>
-                          <SelectItem value="delivered">Delivered</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -305,7 +254,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
         </ScrollArea>
         <DialogFooter>
           <Button
-            form="form-order"
+            form="form-inventory"
             type="submit"
             disabled={isPending || updatePending}
           >

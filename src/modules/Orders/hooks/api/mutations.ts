@@ -3,6 +3,7 @@ import apiRequest from "@/config/request";
 import { queryClient } from "@/reactQuery";
 import { Order } from "@/types/Order.types";
 import { useMutation } from "@tanstack/react-query";
+import { OrderFormValues } from "../../components/OrderForm";
 
 export const orderKeys = {
   addOrder: ["addOrder"] as const,
@@ -11,7 +12,7 @@ export const orderKeys = {
 };
 
 /*******************  add order *******************************/
-export const addOrder = async (details: Order): Promise<Order> => {
+export const addOrder = async (details: OrderFormValues): Promise<Order> => {
   const { data } = await apiRequest.post<Order>(`/order`, details);
 
   return data;
@@ -19,11 +20,11 @@ export const addOrder = async (details: Order): Promise<Order> => {
 
 export const useAddOrder = () =>
   useMutation({
-    mutationFn: (details: Order) => addOrder(details),
+    mutationFn: (details: OrderFormValues) => addOrder(details),
     mutationKey: orderKeys.addOrder,
-    onSuccess:(data, variables, context)=>{
-  queryClient.invalidateQueries({ queryKey: ["get-orders"] });
-    }
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    },
   });
 
 /*******************  update order *******************************/
@@ -43,9 +44,9 @@ export const useUpdateOrder = () =>
   useMutation({
     mutationFn: updateOrder,
     mutationKey: orderKeys.updateOrder,
-     onSuccess:(data, variables, context)=>{
-  queryClient.invalidateQueries({ queryKey: ["get-orders"] });
-    }
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    },
   });
 
 /*******************  delete order *******************************/
@@ -57,7 +58,7 @@ export const useDeleteOrder = () =>
   useMutation({
     mutationFn: deleteOrder,
     mutationKey: orderKeys.deleteOrder,
-     onSuccess:(data, variables, context)=>{
-  queryClient.invalidateQueries({ queryKey: ["get-orders"] });
-    }
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    },
   });

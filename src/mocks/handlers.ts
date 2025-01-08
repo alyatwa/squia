@@ -1,22 +1,42 @@
-import { Order, OrderStatus, OrderType, OrderCategory, OrderServiceType } from "@/types/Order.types";
+import {
+  Inventory,
+  InventoryCategory,
+  StockType,
+} from "@/types/Inventory.types";
+import {
+  Order,
+  OrderStatus,
+  OrderType,
+  OrderCategory,
+  OrderServiceType,
+} from "@/types/Order.types";
 import { http, HttpResponse } from "msw";
 
 const baseUrl = "http://localhost:5000/api/v1";
 
 export const handlers = [
-  http.get(`${baseUrl}/uu`, () => {
-    return HttpResponse.json({
-      user: {
-        id: "abc-123",
-        name: "John Maverick",
+  http.get(`${baseUrl}/inventory`, () => {
+    const inventory: Inventory[] = [
+      {
+        id: "",
+        stockType: StockType.FRIDGES,
+        category: InventoryCategory.PACKAGE_10,
+        name: "",
+        quantity: 0,
+        companyName: "",
+        sellingPrice: 0,
+        buyingPrice: 0,
+        createdAt: new Date(),
       },
-    });
+    ];
+    return HttpResponse.json(inventory);
   }),
-  //delete order 
+
+  //delete order
   http.delete(`${baseUrl}/order/:id`, async ({ params }) => {
     return HttpResponse.json({ message: "Order deleted" });
   }),
-  
+
   // update orders
   http.put(`${baseUrl}/order/:id`, async ({ request, params }) => {
     const nextPost = await request.json();
@@ -28,6 +48,8 @@ export const handlers = [
     const nextPost = await request.json();
     return HttpResponse.json(nextPost);
   }),
+
+  // get orders
   http.get(`${baseUrl}/orders`, () => {
     const orders: Order[] = [
       {
