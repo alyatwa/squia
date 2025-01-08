@@ -11,24 +11,23 @@ import {
   OrderServiceType,
 } from "@/types/Order.types";
 import { http, HttpResponse } from "msw";
+import { faker } from "@faker-js/faker";
 
 const baseUrl = "http://localhost:5000/api/v1";
 
 export const handlers = [
   http.get(`${baseUrl}/inventory`, () => {
-    const inventory: Inventory[] = [
-      {
-        id: "",
-        stockType: StockType.FRIDGES,
-        category: InventoryCategory.PACKAGE_10,
-        name: "",
-        quantity: 0,
-        companyName: "",
-        sellingPrice: 0,
-        buyingPrice: 0,
-        createdAt: new Date(),
-      },
-    ];
+    const inventory: Inventory[] = Array.from({ length: 5 }, () => ({
+      id: faker.string.nanoid(),
+      stockType: faker.helpers.arrayElement(Object.values(StockType)),
+      category: faker.helpers.arrayElement(Object.values(InventoryCategory)),
+      name: faker.commerce.productName(),
+      quantity: faker.number.int({ min: 1, max: 100 }),
+      companyName: faker.company.name(),
+      sellingPrice: faker.number.int({ min: 1, max: 500 }),
+      buyingPrice: faker.number.int({ min: 1, max: 500 }),
+      createdAt: faker.date.past(),
+    }));
     return HttpResponse.json(inventory);
   }),
 
@@ -51,21 +50,19 @@ export const handlers = [
 
   // get orders
   http.get(`${baseUrl}/orders`, () => {
-    const orders: Order[] = [
-      {
-        id: "order-1",
-        amount: 100,
-        createdAt: new Date(),
-        customerName: "John Doe",
-        orderNo: "order-1",
-        orderType: OrderType.FRIDGES,
-        category: OrderCategory.PACKAGE_10,
-        quantity: 1,
-        companyName: "Company",
-        status: OrderStatus.PENDING,
-        serviceType: OrderServiceType.DELIVERY,
-      },
-    ];
+    const orders: Order[] = Array.from({ length: 5 }, () => ({
+      id: faker.string.nanoid(),
+      amount: faker.number.int({ min: 50, max: 500 }),
+      createdAt: faker.date.past(),
+      customerName: faker.person.fullName(),
+      orderNo: faker.string.nanoid(),
+      orderType: OrderType.FRIDGES,
+      category: faker.helpers.arrayElement(Object.values(OrderCategory)),
+      quantity: faker.number.int({ min: 1, max: 10 }),
+      companyName: faker.company.name(),
+      status: faker.helpers.arrayElement(Object.values(OrderStatus)),
+      serviceType: faker.helpers.arrayElement(Object.values(OrderServiceType)),
+    }));
     return HttpResponse.json(orders);
   }),
   // handle OPTIONS requests

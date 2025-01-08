@@ -30,6 +30,7 @@ import { DataTablePagination } from "./data-table-pagination";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { LoadingSpinner } from "../icons";
+import { SkeletonTable } from "@/components/shared/skeleton-table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -81,8 +82,9 @@ export function DataTable<TData, TValue>({
   return (
     <div className="  space-y-2  ">
       {Toolbar && <Toolbar table={table} refetch={refetch} />}
-      {!isLoading ? (
-        <div className="rounded-xl border">
+
+      <div className="rounded-xl border">
+        {!isLoading ? (
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -139,20 +141,11 @@ export function DataTable<TData, TValue>({
               )}
             </TableBody>
           </Table>
-        </div>
-      ) : (
-        <AnimatePresence>
-          {isLoading && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="absolute inset-0 flex min-h-[180px] items-center justify-center  "
-            >
-              <LoadingSpinner />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      )}
+        ) : (
+          <SkeletonTable columns={table.getHeaderGroups()[0].headers.length} />
+        )}
+      </div>
+
       {!isLoading && <DataTablePagination table={table} />}
     </div>
   );

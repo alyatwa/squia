@@ -53,26 +53,12 @@ const columns: ColumnDef<Inventory>[] = [
   {
     accessorKey: "id",
     header: "ID",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.original.id}</div>,
   },
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "category",
-    header: "Category",
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("category")}</div>
-    ),
-  },
-  {
-    accessorKey: "orderNo",
-    header: "Inventory No",
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("orderNo")}</div>
-    ),
+    cell: ({ row }) => <div className="capitalize">{row.original.name}</div>,
   },
 
   {
@@ -84,10 +70,10 @@ const columns: ColumnDef<Inventory>[] = [
   },
   // company
   {
-    accessorKey: "company",
+    accessorKey: "companyName",
     header: "Company",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("companyName")}</div>
+      <div className="capitalize">{row.original.companyName}</div>
     ),
   },
   // stock type
@@ -95,35 +81,35 @@ const columns: ColumnDef<Inventory>[] = [
     accessorKey: "stockType",
     header: "Stock Type",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("stockType")}</div>
+      <div className="capitalize">{row.original.stockType}</div>
     ),
   },
   {
     accessorKey: "category",
     header: "Category",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("category")}</div>
+      <div className="capitalize">{row.original.category}</div>
     ),
   },
   {
     accessorKey: "quantity",
     header: "Quantity",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("quantity")}</div>
+      <div className="capitalize">{row.original.quantity}</div>
     ),
   },
   {
     accessorKey: "sellingPrice",
     header: "Selling Price",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("sellingPrice")}</div>
+      <div className="capitalize">{row.original.sellingPrice}</div>
     ),
   },
   {
     accessorKey: "buyingPrice",
     header: "Buying Price",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("buyingPrice")}</div>
+      <div className="capitalize">{row.original.buyingPrice}</div>
     ),
   },
 

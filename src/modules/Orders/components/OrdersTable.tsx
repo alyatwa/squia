@@ -80,7 +80,7 @@ const columns: ColumnDef<Order>[] = [
     accessorKey: "customer",
     header: "Customer",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("customer")}</div>
+      <div className="capitalize">{row.original.customerName}</div>
     ),
   },
   {
@@ -95,7 +95,7 @@ const columns: ColumnDef<Order>[] = [
     accessorKey: "company",
     header: "Company",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("company")}</div>
+      <div className="capitalize">{row.original.companyName}</div>
     ),
   },
   // order type
@@ -103,7 +103,7 @@ const columns: ColumnDef<Order>[] = [
     accessorKey: "orderType",
     header: "Order Type",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("orderType")}</div>
+      <div className="capitalize">{row.original.orderType}</div>
     ),
   },
   {
@@ -133,13 +133,13 @@ const columns: ColumnDef<Order>[] = [
     enableHiding: false,
     header: "Actions",
     cell: ({ row }) => {
-      const order = row.original; 
-  const {mutateAsync:deleteOrder, isPending} = useDeleteOrder();
+      const order = row.original;
+      const { mutateAsync: deleteOrder, isPending } = useDeleteOrder();
 
-const handleDelete = async ()=>{
-  await deleteOrder(order.id); 
-  toast.success("Order deleted successfully");
-}
+      const handleDelete = async () => {
+        await deleteOrder(order.id);
+        toast.success("Order deleted successfully");
+      };
       return (
         <div className="flex items-center gap-1">
           <OrderForm
@@ -152,7 +152,7 @@ const handleDelete = async ()=>{
             }
           />
           <AlertConfirm
-            onConfirm={() => handleDelete( )}
+            onConfirm={() => handleDelete()}
             button={
               <Button disabled={isPending} variant="ghost" size="icon">
                 <X className="h-4 w-4 text-red-600" />
