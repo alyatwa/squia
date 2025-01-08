@@ -1,5 +1,6 @@
 "use client";
 import apiRequest from "@/config/request";
+import { queryClient } from "@/reactQuery";
 import { Order } from "@/types/Order.types";
 import { useMutation } from "@tanstack/react-query";
 
@@ -20,6 +21,9 @@ export const useAddOrder = () =>
   useMutation({
     mutationFn: (details: Order) => addOrder(details),
     mutationKey: orderKeys.addOrder,
+    onSuccess:(data, variables, context)=>{
+  queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    }
   });
 
 /*******************  update order *******************************/
@@ -39,6 +43,9 @@ export const useUpdateOrder = () =>
   useMutation({
     mutationFn: updateOrder,
     mutationKey: orderKeys.updateOrder,
+     onSuccess:(data, variables, context)=>{
+  queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    }
   });
 
 /*******************  delete order *******************************/
@@ -50,4 +57,7 @@ export const useDeleteOrder = () =>
   useMutation({
     mutationFn: deleteOrder,
     mutationKey: orderKeys.deleteOrder,
+     onSuccess:(data, variables, context)=>{
+  queryClient.invalidateQueries({ queryKey: ["get-orders"] });
+    }
   });

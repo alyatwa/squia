@@ -1,3 +1,4 @@
+import { Order, OrderStatus, OrderType, OrderCategory, OrderServiceType } from "@/types/Order.types";
 import { http, HttpResponse } from "msw";
 
 const baseUrl = "http://localhost:5000/api/v1";
@@ -11,6 +12,17 @@ export const handlers = [
       },
     });
   }),
+  //delete order 
+  http.delete(`${baseUrl}/order/:id`, async ({ params }) => {
+    return HttpResponse.json({ message: "Order deleted" });
+  }),
+  
+  // update orders
+  http.put(`${baseUrl}/order/:id`, async ({ request, params }) => {
+    const nextPost = await request.json();
+    return HttpResponse.json(nextPost);
+  }),
+
   //add order
   http.post(`${baseUrl}/order`, async ({ request, params }) => {
     const nextPost = await request.json();
@@ -24,12 +36,12 @@ export const handlers = [
         createdAt: new Date(),
         customerName: "John Doe",
         orderNo: "order-1",
-        orderType: "fridges",
-        category: "package_10",
+        orderType: OrderType.FRIDGES,
+        category: OrderCategory.PACKAGE_10,
         quantity: 1,
         companyName: "Company",
-        status: "pending",
-        serviceType: "delivery",
+        status: OrderStatus.PENDING,
+        serviceType: OrderServiceType.DELIVERY,
       },
     ];
     return HttpResponse.json(orders);

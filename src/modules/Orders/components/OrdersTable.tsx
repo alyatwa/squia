@@ -1,25 +1,8 @@
 "use client";
 
 import * as React from "react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  MoreHorizontal,
-  Pencil,
-  X,
-} from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Pencil, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -29,13 +12,15 @@ import { useGetOrders } from "../hooks/api/queries";
 import { Order } from "@/types/Order.types";
 import { OrderForm } from "./OrderForm";
 import { AlertConfirm } from "@/components/shared/alert-confirm";
+import { useDeleteOrder } from "../hooks/api/mutations";
+import { toast } from "sonner";
 
 export const OrdersTable = () => {
   const { data, isFetching, refetch } = useGetOrders();
 
   return (
     <DataTable
-      refetch={refetch}
+      refetch={() => refetch()}
       data={data || []}
       columns={columns}
       isLoading={isFetching}
@@ -146,24 +131,30 @@ const columns: ColumnDef<Order>[] = [
   {
     id: "actions",
     enableHiding: false,
+    header: "Actions",
     cell: ({ row }) => {
-      const order = row.original;
+      const order = row.original; 
+  const {mutateAsync:deleteOrder, isPending} = useDeleteOrder();
 
+const handleDelete = async ()=>{
+  await deleteOrder(order.id); 
+  toast.success("Order deleted successfully");
+}
       return (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-1">
           <OrderForm
             isUpdate
             order={order}
             button={
               <Button variant="ghost" size="icon">
-                <Pencil className="h-4 w-4" />
+                <Pencil className="h-4 w-4 text-green-400" />
               </Button>
             }
           />
           <AlertConfirm
-            onConfirm={() => {}}
+            onConfirm={() => handleDelete( )}
             button={
-              <Button variant="ghost" size="icon">
+              <Button disabled={isPending} variant="ghost" size="icon">
                 <X className="h-4 w-4 text-red-600" />
               </Button>
             }

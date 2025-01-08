@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import { useAddOrder } from "../hooks/api/mutations";
+import { useAddOrder, useDeleteOrder, useUpdateOrder } from "../hooks/api/mutations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -28,7 +28,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import React from "react";
-import { useGetOrders } from "../hooks/api/queries";
+// import { useGetOrders } from "../hooks/api/queries";
 import {
   Select,
   SelectContent,
@@ -36,7 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Order, OrderStatus } from "@/types/Order.types";
+import { Order, OrderCategory, OrderServiceType, OrderStatus, OrderType } from "@/types/Order.types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
@@ -44,9 +44,9 @@ const formSchema = z.object({
   companyName: z.string().nonempty(),
   orderNo: z.string().nonempty(),
   customerName: z.string().nonempty(),
-  orderType: z.string().nonempty(),
-  category: z.string().nonempty(),
-  serviceType: z.string().nonempty(),
+  orderType: z.nativeEnum(OrderType),
+  category: z.nativeEnum(OrderCategory),
+  serviceType: z.nativeEnum(OrderServiceType),
   status: z.nativeEnum(OrderStatus),
 });
 
@@ -61,47 +61,58 @@ export const OrderForm: React.FC<OrderFormProps> = ({
   order,
   isUpdate = false,
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const { refetch } = useGetOrders();
-  const { mutateAsync, isPending } = useAddOrder();
+  const [open, setOpen] = React.useState(false); 
+  const { mutateAsync:addOrder, isPending } = useAddOrder();
+  const { mutateAsync:updateOrder, isPending:updatePending } = useUpdateOrder();
+
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: order
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await mutateAsync({
-      id: "",
-      orderType: "fridges",
-      category: "package_10",
-      createdAt: new Date(),
-      quantity: 0,
-      companyName: "",
-      status: OrderStatus.PENDING,
-      customerName: "",
-      orderNo: "",
-      serviceType: "delivery",
-      amount: 0,
-    });
-    refetch();
-    setOpen(false);
-    toast.success("Order added successfully");
+    if(isUpdate && order){
+      await updateOrder({
+         id: order.id,
+        details: values
+        });  
+        toast.success("Order updated successfully");
+      } else{
+        await addOrder({
+          id: "",
+          orderType: "fridges",
+          category: "package_10",
+          createdAt: new Date(),
+          quantity: 0,
+          companyName: "",
+          status: OrderStatus.PENDING,
+          customerName: "",
+          orderNo: "",
+          serviceType: "delivery",
+          amount: 0,
+        });
+
+        toast.success("Order added successfully");
+      }
+
+        setOpen(false);
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{button}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Order</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>
+{isUpdate ? "Update order" : "Add order"}          
+          </DialogTitle> 
         </DialogHeader>
         <ScrollArea className="h-[400px] p-4 pl-0 ">
           <Form {...form}>
             <form
               id="form-order"
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-1"
+              className="space-y-2 px-2"
             >
               {/* order NO */}
               <FormField
@@ -112,8 +123,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                     <FormLabel>Order No</FormLabel>
                     <FormControl>
                       <Input {...field} />
-                    </FormControl>
-                    <FormDescription>Order Number</FormDescription>
+                    </FormControl> 
                     <FormMessage />
                   </FormItem>
                 )}
@@ -128,7 +138,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>Order quantity</FormDescription>
+                     
                     <FormMessage />
                   </FormItem>
                 )}
@@ -142,8 +152,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                     <FormLabel>Company Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
-                    </FormControl>
-                    <FormDescription>Company Name</FormDescription>
+                    </FormControl> 
                     <FormMessage />
                   </FormItem>
                 )}
@@ -157,8 +166,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                     <FormLabel>Customer Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
-                    </FormControl>
-                    <FormDescription>Customer Name</FormDescription>
+                    </FormControl> 
                     <FormMessage />
                   </FormItem>
                 )}
@@ -183,8 +191,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                           <SelectValue placeholder={"Order type"} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="package">Packages</SelectItem>
-                          <SelectItem value="fridge">Fridge</SelectItem>
+                          <SelectItem value={OrderType.PACKAGES}>Packages</SelectItem>
+                          <SelectItem value={OrderType.FRIDGES}>Fridge</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -212,8 +220,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                           <SelectValue placeholder={"Category"} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="package_10">Package 10</SelectItem>
-                          <SelectItem value="package_20">Package 20</SelectItem>
+                          <SelectItem value={OrderCategory.PACKAGE_10}>Package 10</SelectItem>
+                          <SelectItem value={OrderCategory.PACKAGE_20}>Package 20</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -241,8 +249,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({
                           <SelectValue placeholder={"Service type"} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="delivery">Delivery</SelectItem>
-                          <SelectItem value="pickup">Pickup</SelectItem>
+                          <SelectItem value={OrderServiceType.DELIVERY}>Delivery</SelectItem>
+                          <SelectItem value={OrderServiceType.PICKUP}>Pickup</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -286,7 +294,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({
           </Form>
         </ScrollArea>
         <DialogFooter>
-          <Button form="form-order" type="submit" disabled={isPending}>
+          <Button form="form-order" type="submit" disabled={isPending||updatePending}>
             Submit
           </Button>
         </DialogFooter>
