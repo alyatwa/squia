@@ -70,21 +70,21 @@ export default function RootLayout({
         )}
       >
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider
+          {/* <ThemeProvider
             attribute="class"
             defaultTheme="light"
             enableSystem
             disableTransitionOnChange
-          >
-            <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-svh flex-col bg-background">
-                {children}
-              </div>
+          > */}
+          <div vaul-drawer-wrapper="">
+            <div className="relative flex min-h-svh flex-col bg-background">
+              {children}
             </div>
-            <Toaster />
+          </div>
+          <Toaster />
 
-            <TailwindIndicator />
-          </ThemeProvider>
+          <TailwindIndicator />
+          {/* </ThemeProvider> */}
         </QueryClientProvider>
       </body>
     </html>
