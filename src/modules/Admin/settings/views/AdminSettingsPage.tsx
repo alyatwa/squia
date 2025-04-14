@@ -42,7 +42,7 @@ export const AdminSettingsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* إدارة المستخدمين */}
         <Link
-          href="/admin/users_management"
+          href="/admin/users"
           className="settings-card bg-white rounded-2xl shadow-md p-6 hover:shadow-lg fade-in-up fade-in-up-1"
         >
           <div className="flex items-center justify-center mb-6">

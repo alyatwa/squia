@@ -1,14 +1,23 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
+import Link from "next/link";
 
-interface AddInterviewProps {
-  interviewId: string | null;
-  interview: any;
-}
+interface AddInterviewProps {}
 
-export const AddInterview: React.FC<AddInterviewProps> = ({
-  interviewId,
-  interview,
-}) => {
+export const AdminAddInterviewPage: React.FC<AddInterviewProps> = ({}) => {
+  const interviewId = "interviewId";
+  const interview = {
+    id: interviewId,
+    worker_id: 123,
+    order_id: 456,
+    date: "2023-10-01",
+    time: "10:00",
+    meeting_type: "in_person",
+    payment_amount: "100",
+    notes: "ملاحظات المقابلة",
+    zoom_link: "https://zoom.us/j/XXXXXXXXX",
+    client_name: "شركة الرياض للتطوير",
+    client_phone: "123456789",
+  };
   const workers: any[] = [];
   const orders: any[] = [];
   return (
@@ -20,8 +29,8 @@ export const AddInterview: React.FC<AddInterviewProps> = ({
 
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <div className="flex justify-between items-center">
-          <a
-            href="/interviews"
+          <Link
+            href="/admin/interviews"
             className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors text-sm flex items-center w-fit"
           >
             <Icon
@@ -31,11 +40,11 @@ export const AddInterview: React.FC<AddInterviewProps> = ({
               height="16"
             ></Icon>
             العودة للمقابلات
-          </a>
+          </Link>
 
           {interviewId && (
-            <div className="flex space-x-2 space-x-reverse">
-              <a
+            <div className="flex space-x-2 ltr:space-x-reverse">
+              <Link
                 href="/reschedule_interview/interviewId456"
                 className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors text-sm flex items-center"
               >
@@ -46,8 +55,8 @@ export const AddInterview: React.FC<AddInterviewProps> = ({
                   height="16"
                 ></Icon>
                 إعادة جدولة
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/interviewId/13"
                 className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors text-sm flex items-center"
               >
@@ -58,7 +67,7 @@ export const AddInterview: React.FC<AddInterviewProps> = ({
                   height="16"
                 ></Icon>
                 إلغاء المقابلة
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -82,8 +91,6 @@ export const AddInterview: React.FC<AddInterviewProps> = ({
           action="{% if interviewId %}{{ url_for('reschedule_interview', interviewId=interviewId) }}{% else %}{{ url_for('add_interview') }}{% endif %}"
           id="interview-form"
         >
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-
           {interviewId && (
             <input type="hidden" name="interviewId" value="{{ interviewId }}" />
           )}

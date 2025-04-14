@@ -2,8 +2,6 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 
-
-
 export const AdminHomePage = () => {
   // In a real app, you would fetch this data from an API
   const stats = {
@@ -151,7 +149,7 @@ export const AdminHomePage = () => {
               <span className="font-bold">إضافة عامل</span>
             </Link>
             <Link
-              href="/admin/clients"
+              href="/admin/add-client"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -163,7 +161,7 @@ export const AdminHomePage = () => {
               <span className="font-bold">إضافة عميل</span>
             </Link>
             <Link
-              href="/admin/add_order"
+              href="/admin/add-order"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -175,7 +173,7 @@ export const AdminHomePage = () => {
               <span className="font-bold">إضافة طلب</span>
             </Link>
             <Link
-              href="/schedule_interview'?worker_id=1"
+              href="/admin/interview/add-interview"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
