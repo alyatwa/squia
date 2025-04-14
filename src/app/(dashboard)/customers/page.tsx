@@ -16,8 +16,9 @@ export default async function Customers() {
   const queryClient = getQueryClient();
   void (await queryClient.prefetchQuery(fetchCustomersOptions));
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <CustomersPage />
-    </HydrationBoundary>
+    <>customers</>
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    //   <CustomersPage />
+    // </HydrationBoundary>
   );
 }
