@@ -30,25 +30,6 @@ export const WorkerHomePage = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen bg-gray-100">
-        <header className="bg-white shadow-sm">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <img
-                  src="/images/logo.png"
-                  alt="Taeen Logo"
-                  className="h-10 ml-3"
-                />
-                <h1 className="text-xl font-bold text-teal-700">منصة تعيين</h1>
-              </div>
-              <div className="flex items-center">
-                <span className="text-gray-600 ml-2">مرحباً،</span>
-                <span className="font-semibold">{worker.display_name}</span>
-              </div>
-            </div>
-          </div>
-        </header>
-
         <div className="flex flex-1">
           {/* Sidebar */}
           <aside className="w-64 bg-white shadow-md hidden md:block">
