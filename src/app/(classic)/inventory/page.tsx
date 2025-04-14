@@ -18,8 +18,9 @@ export default async function Inventory() {
   void (await queryClient.prefetchQuery(fetchInventoryOptions));
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <InventoryPage />
-    </HydrationBoundary>
+    <>Inventory</>
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    //   <InventoryPage />
+    // </HydrationBoundary>
   );
 }
