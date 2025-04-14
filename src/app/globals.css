@@ -290,7 +290,6 @@
   }
 }
 
-
 .section-header {
   border-bottom: 1px solid #e5e7eb;
   padding-bottom: 0.75rem;
@@ -335,40 +334,40 @@
 /* تحسين عرض الجدول على الأجهزة المحمولة */
 @media (max-width: 768px) {
   .workers-table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
-  
+
   /* تحسين عرض الخلايا على الأجهزة المحمولة */
   .workers-table th,
   .workers-table td {
-      padding: 0.5rem;
+    padding: 0.5rem;
   }
-  
+
   /* تحسين عرض الحقول على الأجهزة المحمولة */
   .workers-table input,
   .workers-table select {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
   }
-  
+
   /* تحسين عرض بطاقات العمال على الأجهزة المحمولة */
   .worker-card {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 0.5rem;
-      overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
   }
-  
+
   /* تحسين عرض حقول العمال على الأجهزة المحمولة */
   .worker-card .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 }
 
@@ -429,7 +428,9 @@
 }
 
 /* تحسين حقول الإدخال */
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
@@ -451,15 +452,19 @@ input:focus, select:focus, textarea:focus {
 
 /* تحسين عرض المبالغ المالية */
 .amount-field {
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   letter-spacing: 0.5px;
   font-weight: bold;
 }
 
 /* إضافة تأثيرات بصرية للتحديثات التلقائية */
 @keyframes highlight {
-  0% { background-color: rgba(59, 130, 246, 0.2); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 .highlight-update {
@@ -484,7 +489,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* تحسين عرض الحقول المعطلة */
-input[readonly], 
+input[readonly],
 input[disabled] {
   background-color: #f3f4f6;
   cursor: not-allowed;
@@ -538,53 +543,271 @@ select option {
 @media (max-width: 640px) {
   /* تحسين عرض الجدول على الشاشات الصغيرة جداً */
   .md\:grid-cols-6 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  
+
   .md\:hidden {
-      display: block;
+    display: block;
   }
-  
+
   .hidden.md\:grid {
-      display: none;
+    display: none;
   }
-  
+
   /* تحسين عرض بطاقات العمال على الشاشات الصغيرة */
   .worker-card {
-      padding: 1rem;
-      margin-bottom: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
-  
+
   /* تحسين عرض الحقول على الشاشات الصغيرة */
   .grid-cols-3 {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
-  
+
   .grid-cols-2 {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 }
 
 /* تحسين عرض الجدول على الشاشات المتوسطة */
 @media (min-width: 641px) and (max-width: 768px) {
   .md\:grid-cols-6 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 /* تحسين عرض الجدول على الشاشات الكبيرة */
 @media (min-width: 769px) {
   .md\:grid-cols-6 {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
-  
+
   .md\:hidden {
-      display: none;
+    display: none;
   }
-  
+
   .hidden.md\:grid {
-      display: grid;
+    display: grid;
   }
+}
+
+/****************** home page admin **********************/
+/* تنسيق للنوافذ المنبثقة */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-container {
+  transform: scale(1);
+}
+
+/* تأثيرات للأزرار */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* تأثير النبض للإشعارات */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.notification {
+  animation: pulse 1.5s infinite;
+}
+
+/* تأثير ظهور العناصر */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.fade-in-up-1 {
+  animation-delay: 0.1s;
+}
+.fade-in-up-2 {
+  animation-delay: 0.2s;
+}
+.fade-in-up-3 {
+  animation-delay: 0.3s;
+}
+.fade-in-up-4 {
+  animation-delay: 0.4s;
+}
+
+/* تأثير الشريط المتحرك */
+@keyframes progressBar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progressBar 1.5s ease-out forwards;
+}
+
+/* تأثير الرسم البياني */
+.chart-bar {
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 10px;
+}
+
+.chart-column {
+  flex: 1;
+  margin: 0 5px;
+  background: linear-gradient(to top, #0ea5e9, #38bdf8);
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  min-height: 20px;
+  transition: height 1s ease;
+}
+
+.chart-column-animate {
+  animation: growUp 1.5s ease-out forwards;
+}
+
+@keyframes growUp {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--height);
+  }
+}
+
+.chart-label {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.chart-value {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #0ea5e9;
+}
+
+/* تأثير التحويم على البطاقات */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* تأثير النبض للأرقام */
+.pulse-number {
+  animation: pulse 2s infinite;
+}
+
+/* تأثير الدائرة النسبية */
+.circle-progress {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.circle-progress svg {
+  transform: rotate(-90deg);
+}
+
+.circle-progress-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* تأثير الشريط الجانبي */
+.sidebar-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-highlight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #0ea5e9, #38bdf8);
+  border-radius: 4px;
 }

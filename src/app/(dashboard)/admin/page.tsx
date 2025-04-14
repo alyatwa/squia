@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Metadata } from "next";
-import { AdminPage } from "@/modules/Admin";
+import { AdminHomePage } from "@/modules/Admin/home/views/AdminHomePage";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -10,9 +10,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Admin() {
-  return (
-    <div>
-      <AdminPage />
-    </div>
-  );
+  return <AdminHomePage />;
 }
