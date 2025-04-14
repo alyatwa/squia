@@ -34,7 +34,7 @@ export const AdminWhatsappPage = () => {
               قوالب الرسائل
             </Link>
             <Link
-              href="{{ url_for('admin_dashboard') }}"
+              href="/admin"
               className="inline-flex items-center px-4 py-2 bg-white text-green-600 rounded-lg hover:bg-white/90 transition-colors"
             >
               <Icon
