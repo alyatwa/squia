@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
+import { ClientStatics } from "../components/clients-statics";
 
 export const ClientHomePage = () => {
   const client = {
@@ -108,8 +109,8 @@ export const ClientHomePage = () => {
   };
   return (
     <>
-      <div className="hide-existing-sections client-dashboard">
-        <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-3xl shadow-lg p-8 mb-8 relative overflow-hidden border-0 welcome-section max-w-5xl mx-auto">
+      <div className=" flex flex-col gap-6">
+        <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-3xl shadow-lg p-8 mb-8 relative overflow-hidden border-0 welcome-section w-full mx-auto">
           {/* Decorative elements (removed green line) */}
           <div className="absolute top-0 right-0 w-60 h-60 bg-gradient-to-br from-teal-100/30 to-emerald-100/30 rounded-full -mr-20 -mt-20 animate-pulse-slow"></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-teal-100/30 to-emerald-100/30 rounded-full -ml-16 -mb-16 animate-pulse-slow"></div>
@@ -135,6 +136,9 @@ export const ClientHomePage = () => {
             </div>
           </div>
         </div>
+
+        {/* البطاقات الإحصائية */}
+        <ClientStatics />
 
         {/* الأقسام الرئيسية */}
         <div className="grid grid-cols-3 gap-6 mb-10 dashboard-cards">
@@ -245,7 +249,7 @@ export const ClientHomePage = () => {
                   عرض المقابلات
                 </Link>
                 <Link
-                  href="/client"
+                  href="/client/workers"
                   className="inline-flex w-full text-center px-5 py-3 bg-white text-teal-700 rounded-xl hover:bg-teal-50 transition-all duration-300 font-bold border border-teal-200 shadow-sm hover:shadow-md card-link"
                 >
                   <Icon
@@ -297,109 +301,6 @@ export const ClientHomePage = () => {
                 ></Icon>
                 طلب تأجير عمال
               </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* البطاقات الإحصائية */}
-        <div className="max-w-6xl mx-auto grid grid-cols-4 gap-6 mb-12 stats-grid">
-          {/* إجمالي المقابلات */}
-          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-6 relative overflow-hidden border-0 stat-card">
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-100/20 rounded-full -mr-10 -mt-10"></div>
-
-            <div className="flex items-center">
-              <div className="bg-teal-600 w-16 h-16 rounded-full flex items-center justify-center shadow-md border-4 border-white">
-                <Icon
-                  icon="heroicons:calendar"
-                  className="text-white"
-                  width="28"
-                  height="28"
-                ></Icon>
-              </div>
-              <div className="mr-4">
-                <p className="text-teal-700 text-sm font-medium stat-label">
-                  إجمالي المقابلات
-                </p>
-                <p className="text-3xl font-bold text-teal-800 stat-value">
-                  {interviews.length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* المقابلات القادمة */}
-          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-6 relative overflow-hidden border-0 stat-card">
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-100/20 rounded-full -mr-10 -mt-10"></div>
-
-            <div className="flex items-center">
-              <div className="bg-teal-600 w-16 h-16 rounded-full flex items-center justify-center shadow-md border-4 border-white">
-                <Icon
-                  icon="heroicons:clock"
-                  className="text-white"
-                  width="28"
-                  height="28"
-                ></Icon>
-              </div>
-              <div className="mr-4">
-                <p className="text-teal-700 text-sm font-medium stat-label">
-                  المقابلات القادمة
-                </p>
-                <p className="text-3xl font-bold text-teal-800 stat-value">
-                  {upcoming_interviews.length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* إجمالي المدفوعات */}
-          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-6 relative overflow-hidden border-0 stat-card">
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-100/20 rounded-full -mr-10 -mt-10"></div>
-
-            <div className="flex items-center">
-              <div className="bg-teal-600 w-16 h-16 rounded-full flex items-center justify-center shadow-md border-4 border-white">
-                <Icon
-                  icon="heroicons:banknotes"
-                  className="text-white"
-                  width="28"
-                  height="28"
-                ></Icon>
-              </div>
-              <div className="mr-4">
-                <p className="text-teal-700 text-sm font-medium stat-label">
-                  إجمالي المدفوعات
-                </p>
-                <p className="text-3xl font-bold text-teal-800 stat-value">
-                  {total_payments} <span className="text-xl">ريال</span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* إجمالي الطلبات */}
-          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-6 relative overflow-hidden border-0 stat-card">
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-100/20 rounded-full -mr-10 -mt-10"></div>
-
-            <div className="flex items-center">
-              <div className="bg-teal-600 w-16 h-16 rounded-full flex items-center justify-center shadow-md border-4 border-white">
-                <Icon
-                  icon="fluent-emoji:package"
-                  className="text-white"
-                  width="28"
-                  height="28"
-                ></Icon>
-              </div>
-              <div className="mr-4">
-                <p className="text-teal-700 text-sm font-medium stat-label">
-                  إجمالي الطلبات
-                </p>
-                <p className="text-3xl font-bold text-teal-800 stat-value">
-                  {orders.length}
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -771,7 +672,7 @@ export const ClientHomePage = () => {
                 لم تقم بجدولة أي مقابلات حتى الآن.
               </p>
               <Link
-                href="/client/dashboard"
+                href="/client/workers"
                 className="inline-flex items-center px-6 py-3 bg-accent-500 text-white rounded-xl hover:bg-accent-600 transition-colors shadow-md font-bold"
               >
                 <Icon
@@ -809,7 +710,7 @@ export const ClientHomePage = () => {
                 </h2>
               </div>
               <Link
-                href="/client"
+                href="/client/workers"
                 className="px-5 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-all duration-300 font-bold shadow-md inline-flex hover:shadow-lg items-center"
               >
                 <Icon
