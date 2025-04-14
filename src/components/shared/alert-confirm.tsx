@@ -14,27 +14,27 @@ import { Button } from "../ui";
 interface AlertConfirmProps {
   button: React.ReactNode;
   onConfirm: () => void;
+  title?: string;
+  description?: string;
 }
 
 export function AlertConfirm({
   button = <Button variant="outline">Show Dialog</Button>,
   onConfirm,
+  title = "Are you sure you want to continue?",
+  description = "This action cannot be undone.",
 }: AlertConfirmProps) {
   return (
     <AlertDialog defaultOpen={false}>
       <AlertDialogTrigger asChild>{button}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you sure you want to continue?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
+          <AlertDialogCancel>إلغاء</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>حذف</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

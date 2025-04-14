@@ -25,4 +25,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withRspack(nextConfig);
+export default nextConfig;

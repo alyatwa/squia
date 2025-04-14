@@ -1,0 +1,196 @@
+/* تأثير النبض للإشعارات */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.notification {
+  animation: pulse 1.5s infinite;
+}
+
+/* تأثير ظهور العناصر */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.fade-in-up-1 {
+  animation-delay: 0.1s;
+}
+.fade-in-up-2 {
+  animation-delay: 0.2s;
+}
+.fade-in-up-3 {
+  animation-delay: 0.3s;
+}
+.fade-in-up-4 {
+  animation-delay: 0.4s;
+}
+
+/* تأثير التحويم على البطاقات */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* تأثير الزر */
+
+/* Status Dropdown Styles */
+.status-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.status-dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  min-width: 160px;
+  z-index: 1;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0;
+}
+
+.status-dropdown-item {
+  padding: 0.5rem 1rem;
+  text-align: right;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.status-dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.status-dropdown-item.authorized:hover {
+  color: #047857;
+}
+
+.status-dropdown-item.completed:hover {
+  color: #1d4ed8;
+}
+
+.status-dropdown-item.cancelled:hover {
+  color: #b91c1c;
+}
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* تصميم التبويبات */
+.tab {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #0ea5e9;
+  border-radius: 3px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.status-dropdown-content.active {
+  display: block;
+}
+
+.status-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.status-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  right: 0;
+}
+
+.status-dropdown-item {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: right;
+  transition: all 0.2s ease;
+}
+
+.status-dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+.status-dropdown-item.unapproved:hover {
+  background-color: #fee2e2;
+}
+
+.status-dropdown-item.authorized:hover {
+  background-color: #e0f2fe;
+}
+
+.status-dropdown-item.completed:hover {
+  background-color: #dcfce7;
+}
+
+.status-dropdown-item.cancelled:hover {
+  background-color: #fef3c7;
+}
