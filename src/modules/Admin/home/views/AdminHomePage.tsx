@@ -137,7 +137,7 @@ export const AdminHomePage = () => {
           </div>
           <div className="grid grid-cols-4 gap-3">
             <Link
-              href="/admin/workers"
+              href="/admin/workers/add-worker"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -173,7 +173,7 @@ export const AdminHomePage = () => {
               <span className="font-bold">إضافة طلب</span>
             </Link>
             <Link
-              href="/admin/interview/add-interview"
+              href="/admin/interviews/add-interview"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -1432,7 +1432,7 @@ export const AdminHomePage = () => {
             <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-4 text-white">
               <div className="flex justify-between items-start">
                 <div className="flex items-center">
-                  <div className="bg-white rounded-full p-2 mr-3">
+                  <div className="bg-white rounded-full p-2 ml-3">
                     <Icon
                       icon="fluent-emoji:construction-worker"
                       width="32"
@@ -1477,7 +1477,10 @@ export const AdminHomePage = () => {
                 </div>
               </div>
               <div className="flex gap-2 mt-4">
-                <button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg flex items-center justify-center">
+                <Link
+                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg flex items-center justify-center"
+                  href="/admin/workers/1"
+                >
                   <Icon
                     icon="heroicons:eye"
                     className="ml-1"
@@ -1485,160 +1488,7 @@ export const AdminHomePage = () => {
                     height="16"
                   ></Icon>
                   عرض التفاصيل
-                </button>
-                <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                  <Icon
-                    icon="heroicons:pencil-square"
-                    className="ml-1"
-                    width="16"
-                    height="16"
-                  ></Icon>
-                  تعديل
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Worker 2 */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            <div className="bg-gradient-to-r from-green-500 to-green-600 p-4 text-white">
-              <div className="flex justify-between items-start">
-                <div className="flex items-center">
-                  <div className="bg-white rounded-full p-2 mr-3">
-                    <Icon
-                      icon="fluent-emoji:construction-worker"
-                      width="32"
-                      height="32"
-                    ></Icon>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg">محمد علي</h4>
-                    <p className="text-green-100">سباك خبير</p>
-                  </div>
-                </div>
-                <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                  متاح
-                </span>
-              </div>
-            </div>
-            <div className="p-4">
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">الوكالة:</span>
-                <span className="font-medium">شركة XYZ للتوظيف</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">الجنسية:</span>
-                <span className="font-medium">هندي</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">الخبرة:</span>
-                <span className="font-medium">5 سنوات</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">السعر الشهري:</span>
-                <span className="font-bold text-green-600">2,200 ريال</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">التقييم:</span>
-                <div className="flex text-yellow-400">
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon
-                    icon="heroicons:star"
-                    className="text-gray-300"
-                    width="16"
-                    height="16"
-                  ></Icon>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg flex items-center justify-center">
-                  <Icon
-                    icon="heroicons:eye"
-                    className="ml-1"
-                    width="16"
-                    height="16"
-                  ></Icon>
-                  عرض التفاصيل
-                </button>
-                <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg flex items-center justify-center">
-                  <Icon
-                    icon="heroicons:pencil-square"
-                    className="ml-1"
-                    width="16"
-                    height="16"
-                  ></Icon>
-                  تعديل
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Worker 3 */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-4 text-white">
-              <div className="flex justify-between items-start">
-                <div className="flex items-center">
-                  <div className="bg-white rounded-full p-2 mr-3">
-                    <Icon
-                      icon="fluent-emoji:construction-worker"
-                      width="32"
-                      height="32"
-                    ></Icon>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg">خالد عبدالله</h4>
-                    <p className="text-purple-100">دهان محترف</p>
-                  </div>
-                </div>
-                <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                  متاح
-                </span>
-              </div>
-            </div>
-            <div className="p-4">
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">الوكالة:</span>
-                <span className="font-medium">شركة QRS للتوظيف</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">الجنسية:</span>
-                <span className="font-medium">باكستاني</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">الخبرة:</span>
-                <span className="font-medium">6 سنوات</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">السعر الشهري:</span>
-                <span className="font-bold text-purple-600">2,300 ريال</span>
-              </div>
-              <div className="flex justify-between mb-2">
-                <span className="text-gray-600">التقييم:</span>
-                <div className="flex text-yellow-400">
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon icon="heroicons:star" width="16" height="16"></Icon>
-                  <Icon
-                    icon="heroicons:star-half"
-                    width="16"
-                    height="16"
-                  ></Icon>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg flex items-center justify-center">
-                  <Icon
-                    icon="heroicons:eye"
-                    className="ml-1"
-                    width="16"
-                    height="16"
-                  ></Icon>
-                  عرض التفاصيل
-                </button>
+                </Link>
                 <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg flex items-center justify-center">
                   <Icon
                     icon="heroicons:pencil-square"
@@ -1655,7 +1505,7 @@ export const AdminHomePage = () => {
 
         <div className="mt-6 text-center">
           <Link
-            href="#"
+            href="/admin/workers"
             className="inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
           >
             <Icon

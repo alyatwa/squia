@@ -45,7 +45,7 @@ export const AdminAddInterviewPage: React.FC<AddInterviewProps> = ({}) => {
           {interviewId && (
             <div className="flex space-x-2 ltr:space-x-reverse">
               <Link
-                href="/reschedule_interview/interviewId456"
+                href="/update-interview/interviewId456"
                 className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors text-sm flex items-center"
               >
                 <Icon
