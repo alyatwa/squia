@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { Metadata } from "next";
-import { CustomersPage } from "@/modules/Customers";
+import { CustomersPage } from "@/modules/classic/Customers";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/config/get-query-client";
-import { fetchCustomersOptions } from "@/modules/Customers/hooks/api/queries";
+import { fetchCustomersOptions } from "@/modules/classic/Customers/hooks/api/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

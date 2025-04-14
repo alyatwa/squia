@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Metadata } from "next";
-import { SupportPage } from "@/modules/Support";
+import { SupportPage } from "@/modules/classic/Support";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
