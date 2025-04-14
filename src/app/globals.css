@@ -811,3 +811,175 @@ select option {
   background: linear-gradient(to bottom, #0ea5e9, #38bdf8);
   border-radius: 4px;
 }
+
+/******************* admin reports ********************/
+/* تأثير ظهور العناصر */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.fade-in-up-1 {
+  animation-delay: 0.1s;
+}
+.fade-in-up-2 {
+  animation-delay: 0.2s;
+}
+.fade-in-up-3 {
+  animation-delay: 0.3s;
+}
+.fade-in-up-4 {
+  animation-delay: 0.4s;
+}
+.fade-in-up-5 {
+  animation-delay: 0.5s;
+}
+.fade-in-up-6 {
+  animation-delay: 0.6s;
+}
+
+/* تأثير النبض للأرقام */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-number {
+  animation: pulse 2s infinite;
+}
+
+/* تأثير التحويم على البطاقات */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* تأثير الشريط المتحرك */
+@keyframes progressBar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progressBar 1.5s ease-out forwards;
+}
+
+/* تأثير الرسم البياني */
+.chart-bar {
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 10px;
+}
+
+.chart-column {
+  flex: 1;
+  margin: 0 5px;
+  background: linear-gradient(to top, #0ea5e9, #38bdf8);
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  min-height: 20px;
+  transition: height 1s ease;
+}
+
+.chart-column-animate {
+  animation: growUp 1.5s ease-out forwards;
+}
+
+@keyframes growUp {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--height);
+  }
+}
+
+.chart-label {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.chart-value {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #0ea5e9;
+}
+
+/*******************admin settings ***********************/
+/* تأثيرات للبطاقات */
+.settings-card {
+  transition: all 0.3s ease;
+}
+
+.settings-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* تأثير ظهور العناصر */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.fade-in-up-1 {
+  animation-delay: 0.1s;
+}
+.fade-in-up-2 {
+  animation-delay: 0.2s;
+}
+.fade-in-up-3 {
+  animation-delay: 0.3s;
+}
+.fade-in-up-4 {
+  animation-delay: 0.4s;
+}

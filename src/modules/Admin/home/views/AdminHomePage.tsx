@@ -1,7 +1,8 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
-// Mock data for the stats that would come from an API in a real app
+
 
 export const AdminHomePage = () => {
   // In a real app, you would fetch this data from an API
@@ -39,8 +40,8 @@ export const AdminHomePage = () => {
 
         {/* تحسين تصميم المربعات البيضاء */}
         <div className="mt-6 grid grid-cols-6 gap-4">
-          <a
-            href="{{ url_for('admin_reports') }}"
+          <Link
+            href="/admin/reports"
             className="flex flex-col items-center bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg border-b-4 border-purple-500 transform hover:-translate-y-1 p-4"
           >
             <div className="bg-gradient-to-br from-purple-400 to-purple-600 rounded-full p-3 mb-2">
@@ -52,9 +53,9 @@ export const AdminHomePage = () => {
               ></Icon>
             </div>
             <span className="font-bold text-center">عرض التقارير</span>
-          </a>
-          <a
-            href="{{ url_for('admin_orders') }}"
+          </Link>
+          <Link
+            href="/admin/orders"
             className="flex flex-col items-center bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg border-b-4 border-orange-500 transform hover:-translate-y-1 p-4"
           >
             <div className="bg-gradient-to-br from-orange-400 to-orange-600 rounded-full p-3 mb-2">
@@ -66,9 +67,9 @@ export const AdminHomePage = () => {
               ></Icon>
             </div>
             <span className="font-bold text-center">الطلبات</span>
-          </a>
-          <a
-            href="{{ url_for('admin_pricing') }}"
+          </Link>
+          <Link
+            href="/admin/pricing"
             className="flex flex-col items-center bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg border-b-4 border-yellow-500 transform hover:-translate-y-1 p-4"
           >
             <div className="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full p-3 mb-2">
@@ -80,9 +81,9 @@ export const AdminHomePage = () => {
               ></Icon>
             </div>
             <span className="font-bold text-center">إدارة التسعير</span>
-          </a>
-          <a
-            href="{{ url_for('admin_settings') }}"
+          </Link>
+          <Link
+            href="/admin/settings"
             className="flex flex-col items-center bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg border-b-4 border-blue-500 transform hover:-translate-y-1 p-4"
           >
             <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-full p-3 mb-2">
@@ -94,9 +95,9 @@ export const AdminHomePage = () => {
               ></Icon>
             </div>
             <span className="font-bold text-center">الإعدادات</span>
-          </a>
-          <a
-            href="{{ url_for('admin_whatsapp') }}"
+          </Link>
+          <Link
+            href="/admin/whatsapp"
             className="flex flex-col items-center bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg border-b-4 border-green-500 transform hover:-translate-y-1 p-4"
           >
             <div className="bg-gradient-to-br from-green-400 to-green-600 rounded-full p-3 mb-2">
@@ -108,9 +109,9 @@ export const AdminHomePage = () => {
               ></Icon>
             </div>
             <span className="font-bold text-center">إدارة واتساب</span>
-          </a>
-          <a
-            href="{{ url_for('admin_message_templates') }}"
+          </Link>
+          <Link
+            href="/admin/message_templates"
             className="flex flex-col items-center bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg border-b-4 border-primary-500 transform hover:-translate-y-1 p-4"
           >
             <div className="bg-gradient-to-br from-primary-400 to-primary-600 rounded-full p-3 mb-2">
@@ -122,7 +123,7 @@ export const AdminHomePage = () => {
               ></Icon>
             </div>
             <span className="font-bold text-center">قوالب الرسائل</span>
-          </a>
+          </Link>
         </div>
 
         {/* قسم إضافة جديد */}
@@ -137,8 +138,8 @@ export const AdminHomePage = () => {
             إضافة جديد
           </div>
           <div className="grid grid-cols-4 gap-3">
-            <a
-              href="{{ url_for('admin_workers') }}"
+            <Link
+              href="/admin/workers"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -148,9 +149,9 @@ export const AdminHomePage = () => {
                 height="20"
               ></Icon>
               <span className="font-bold">إضافة عامل</span>
-            </a>
-            <a
-              href="{{ url_for('admin_clients') }}"
+            </Link>
+            <Link
+              href="/admin/clients"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -160,9 +161,9 @@ export const AdminHomePage = () => {
                 height="20"
               ></Icon>
               <span className="font-bold">إضافة عميل</span>
-            </a>
-            <a
-              href="{{ url_for('admin_add_order') }}"
+            </Link>
+            <Link
+              href="/admin/add_order"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -172,9 +173,9 @@ export const AdminHomePage = () => {
                 height="20"
               ></Icon>
               <span className="font-bold">إضافة طلب</span>
-            </a>
-            <a
-              href="{{ url_for('schedule_interview', worker_id=1) }}"
+            </Link>
+            <Link
+              href="/schedule_interview'?worker_id=1"
               className="flex items-center justify-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
             >
               <Icon
@@ -184,7 +185,7 @@ export const AdminHomePage = () => {
                 height="20"
               ></Icon>
               <span className="font-bold">إضافة مقابلة</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -213,8 +214,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-blue-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_clients') }}"
+            <Link
+              href="/admin/clients"
               className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center"
             >
               عرض العملاء
@@ -224,7 +225,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -250,8 +251,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-orange rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_workers') }}"
+            <Link
+              href="/admin/workers"
               className="text-orange hover:text-orange/80 text-sm font-medium flex items-center"
             >
               عرض العمال
@@ -261,7 +262,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -288,8 +289,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-accent-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_interviews') }}"
+            <Link
+              href="/admin/interviews"
               className="text-accent-600 hover:text-accent-700 text-sm font-medium flex items-center"
             >
               عرض المقابلات
@@ -299,7 +300,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -325,8 +326,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-green-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_payments') }}"
+            <Link
+              href="/admin/payments"
               className="text-green-600 hover:text-green-700 text-sm font-medium flex items-center"
             >
               عرض المدفوعات
@@ -336,7 +337,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -365,8 +366,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-red-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_orders') }}?status=new"
+            <Link
+              href="/admin_orders?status=new"
               className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center"
             >
               عرض الطلبات الجديدة
@@ -376,7 +377,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -403,8 +404,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-yellow-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_orders') }}?status=pending"
+            <Link
+              href="/admin_orders?status=pending"
               className="text-yellow-600 hover:text-yellow-700 text-sm font-medium flex items-center"
             >
               عرض الطلبات المعلقة
@@ -414,7 +415,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -440,8 +441,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-green-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_orders') }}?status=completed"
+            <Link
+              href="/admin_orders?status=completed"
               className="text-green-600 hover:text-green-700 text-sm font-medium flex items-center"
             >
               عرض الطلبات المكتملة
@@ -451,7 +452,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -477,8 +478,8 @@ export const AdminHomePage = () => {
             <div className="h-full bg-purple-500 rounded-full animate-progress w-full"></div>
           </div>
           <div className="mt-4">
-            <a
-              href="{{ url_for('admin_orders') }}?status=refund"
+            <Link
+              href="/admin_orders?status=refund"
               className="text-purple-600 hover:text-purple-700 text-sm font-medium flex items-center"
             >
               عرض طلبات الاسترجاع
@@ -488,7 +489,7 @@ export const AdminHomePage = () => {
                 width="16"
                 height="16"
               ></Icon>
-            </a>
+            </Link>
           </div>
         </div>
         <div className="bg-cherry/20 w-14 h-14 rounded-full flex items-center justify-center">
@@ -504,8 +505,8 @@ export const AdminHomePage = () => {
         <div className="h-full bg-cherry rounded-full animate-progress w-full"></div>
       </div>
       <div className="mt-4">
-        <a
-          href="{{ url_for('admin_payments') }}"
+        <Link
+          href="/admin/payments"
           className="text-cherry hover:text-cherry/80 text-sm font-medium flex items-center"
         >
           عرض المدفوعات
@@ -515,7 +516,7 @@ export const AdminHomePage = () => {
             width="16"
             height="16"
           ></Icon>
-        </a>
+        </Link>
       </div>
       {/* </div>
 </div> */}
@@ -609,7 +610,7 @@ export const AdminHomePage = () => {
 
       {/* أزرار إجراءات وكالات التوظيف */}
       <div className="mt-6 flex flex-wrap gap-3 fade-in-up fade-in-up-2">
-        <a
+        <Link
           href="#"
           className="flex items-center justify-center px-4 py-2 bg-white text-teal-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
         >
@@ -620,8 +621,8 @@ export const AdminHomePage = () => {
             height="20"
           ></Icon>
           <span className="font-bold">إدارة حسابات الوكالات</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="#"
           className="flex items-center justify-center px-4 py-2 bg-white text-teal-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
         >
@@ -632,8 +633,8 @@ export const AdminHomePage = () => {
             height="20"
           ></Icon>
           <span className="font-bold">عرض العمالة المتاحة</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="#"
           className="flex items-center justify-center px-4 py-2 bg-white text-teal-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
         >
@@ -644,7 +645,7 @@ export const AdminHomePage = () => {
             height="20"
           ></Icon>
           <span className="font-bold">مراجعة المدفوعات والتفويضات</span>
-        </a>
+        </Link>
       </div>
 
       {/* جدول وكالات التوظيف */}
@@ -877,7 +878,7 @@ export const AdminHomePage = () => {
 
       {/* أزرار إجراءات تأجير العمال */}
       <div className="mt-6 flex flex-wrap gap-3 fade-in-up fade-in-up-2">
-        <a
+        <Link
           href="#"
           className="flex items-center justify-center px-4 py-2 bg-white text-teal-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
         >
@@ -888,8 +889,8 @@ export const AdminHomePage = () => {
             height="20"
           ></Icon>
           <span className="font-bold">عرض جميع طلبات العملاء</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="#"
           className="flex items-center justify-center px-4 py-2 bg-white text-teal-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
         >
@@ -900,8 +901,8 @@ export const AdminHomePage = () => {
             height="20"
           ></Icon>
           <span className="font-bold">عرض عروض الأسعار</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="#"
           className="flex items-center justify-center px-4 py-2 bg-white text-teal-600 rounded-lg hover:bg-white/90 transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-1"
         >
@@ -912,7 +913,7 @@ export const AdminHomePage = () => {
             height="20"
           ></Icon>
           <span className="font-bold">إدارة شركات التوظيف</span>
-        </a>
+        </Link>
       </div>
 
       {/* جدول طلبات التأجير */}
@@ -1655,7 +1656,7 @@ export const AdminHomePage = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <a
+          <Link
             href="#"
             className="inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
           >
@@ -1666,7 +1667,7 @@ export const AdminHomePage = () => {
               height="20"
             ></Icon>
             عرض جميع العمالة المتاحة
-          </a>
+          </Link>
         </div>
       </div>
 
