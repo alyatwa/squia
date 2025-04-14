@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Metadata } from "next";
-import { AdminPage } from "@/modules/Admin";
 import { AdminAddOrderPage } from "@/modules/Admin/orders/views/AdminAddOrderPage";
 
 export async function generateMetadata(): Promise<Metadata> {
