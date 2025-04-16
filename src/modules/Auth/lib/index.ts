@@ -53,7 +53,9 @@ const authOptions: NextAuthConfig = {
   debug: true,
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60 * 30, // 30 days
   },
+
   providers: [
     CredentialsProvider({
       name: "Credentials",

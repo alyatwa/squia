@@ -16,58 +16,73 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Control } from "react-hook-form";
+import { Control, useFormContext, useWatch } from "react-hook-form";
+import { Activity, PricingListQuery, Specialty } from "@/gql/graphql";
+import { useEffect } from "react";
+import { OrderFormValues } from "../views/AdminAddOrderPage";
+
+type Nationality = {
+  id: string;
+  name: string;
+};
 
 type WorkerFormProps = {
   index: number;
-  control: Control<any>;
   onRemove: () => void;
   isRemovable: boolean;
+  nationalities: Nationality[];
+  specialties: Specialty[];
+  activities: Activity[];
+  pricingData?: PricingListQuery["pricingList"];
 };
 
 export const WorkerForm = ({
   index,
-  control,
   onRemove,
   isRemovable,
+  nationalities,
+  specialties,
+  activities,
+  pricingData = [],
 }: WorkerFormProps) => {
-  // Activities
-  const activities = [
-    { id: "المطاعم والمقاهي والفنادق", name: "المطاعم والمقاهي والفنادق" },
-    {
-      id: "البناء والصيانة والخدمات الفنية",
-      name: "البناء والصيانة والخدمات الفنية",
-    },
-    { id: "الرعاية الصحية", name: "الرعاية الصحية" },
-    { id: "تكنولوجيا المعلومات", name: "تكنولوجيا المعلومات" },
-    {
-      id: "المبيعات والمشتريات والتسويق",
-      name: "المبيعات والمشتريات والتسويق",
-    },
-    {
-      id: "صالونات التجميل وخدمات المساج",
-      name: "صالونات التجميل وخدمات المساج",
-    },
-  ];
+  const form = useFormContext<OrderFormValues>();
+  const { control } = form;
+  // Watch specialty, nationality, and activity to update salary range automatically
+  const specialty = useWatch({
+    control,
+    name: `workers.${index}.specialty`,
+  });
 
-  // Nationalities
-  const nationalities = [
-    { id: "فلبيني", name: "🇵🇭 فلبيني" },
-    { id: "نيبالي", name: "🇳🇵 نيبالي" },
-    { id: "هندي", name: "🇮🇳 هندي" },
-    { id: "بنغلاديشي", name: "🇧🇩 بنغالي" },
-    { id: "باكستاني", name: "🇵🇰 باكستاني" },
-  ];
+  const nationality = useWatch({
+    control,
+    name: `workers.${index}.nationality`,
+  });
 
-  // Job positions
-  const positions = [
-    { id: "عامل بناء", name: "عامل بناء" },
-    { id: "سائق", name: "سائق" },
-    { id: "كهربائي", name: "كهربائي" },
-    { id: "سباك", name: "سباك" },
-    { id: "حارس", name: "حارس" },
-    { id: "نجار", name: "نجار" },
-  ];
+  const activity = useWatch({
+    control,
+    name: `workers.${index}.activity`,
+  });
+
+  // Calculate salary range based on selections
+  useEffect(() => {
+    if (specialty && nationality && activity && pricingData.length > 0) {
+      const matchingPrice = pricingData.find(
+        (price) =>
+          price.specialty?.id === specialty &&
+          price.nationality?.id === nationality &&
+          price.activity?.id === activity
+      );
+
+      if (matchingPrice) {
+        const salaryRange = `${matchingPrice.minWage} - ${matchingPrice.maxWage}`;
+        // Update the salary field with the range
+        form.setValue(`workers.${index}.salary`, salaryRange, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
+      }
+    }
+  }, [specialty, nationality, activity, pricingData, form, index]);
 
   return (
     <Card className="bg-white shadow-sm">
@@ -128,25 +143,23 @@ export const WorkerForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <FormField
             control={control}
-            name={`workers.${index}.position`}
+            name={`workers.${index}.specialty`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-700 text-sm">
-                  المسمى الوظيفي
-                </FormLabel>
+                <FormLabel className="text-gray-700 text-sm">التخصص</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="اختر المسمى الوظيفي" />
+                      <SelectValue placeholder="اختر التخصص" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {positions.map((position) => (
-                      <SelectItem key={position.id} value={position.id}>
-                        {position.name}
+                    {specialties.map((specialty) => (
+                      <SelectItem key={specialty.id} value={specialty.id}>
+                        {specialty.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -220,8 +233,10 @@ export const WorkerForm = ({
                   <Input
                     type="text"
                     {...field}
+                    readOnly
                     placeholder="تلقائي"
                     title="الراتب المتوقع"
+                    className="bg-gray-50"
                   />
                 </FormControl>
                 <FormMessage />

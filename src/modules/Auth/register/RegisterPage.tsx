@@ -69,7 +69,7 @@ export const RegisterPage: React.FC = () => {
   // Use GraphQL mutation
   const [signup, { loading: isLoading }] = useMutation(SignupDocument, {
     onCompleted: (data) => {
-      router.push("/login?registered=true");
+      router.push("/auth/login?registered=true");
     },
     onError: ({ message }) => {
       console.error("Error during signup:", message);

@@ -3,7 +3,7 @@ import { auth } from "./modules/Auth/lib";
 
 export default auth(
   // @ts-ignore
-  (request) => {
+  async (request) => {
     const { pathname } = request.nextUrl;
     // If user is signed in and trying to access login/register, redirect to dashboard
     if (

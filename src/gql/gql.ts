@@ -14,10 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "mutation CreateOrder($createOrderInput: CreateOrderInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    isApproved\n    amount\n  }\n}": typeof types.CreateOrderDocument,
+    "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": typeof types.PricingListDocument,
     "mutation Login($loginInput: LoginInput!) {\n  login(loginInput: $loginInput) {\n    accessToken\n  }\n}": typeof types.LoginDocument,
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": typeof types.SignupDocument,
 };
 const documents: Documents = {
+    "mutation CreateOrder($createOrderInput: CreateOrderInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    isApproved\n    amount\n  }\n}": types.CreateOrderDocument,
+    "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": types.PricingListDocument,
     "mutation Login($loginInput: LoginInput!) {\n  login(loginInput: $loginInput) {\n    accessToken\n  }\n}": types.LoginDocument,
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": types.SignupDocument,
 };
@@ -36,6 +40,14 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateOrder($createOrderInput: CreateOrderInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    isApproved\n    amount\n  }\n}"): (typeof documents)["mutation CreateOrder($createOrderInput: CreateOrderInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    isApproved\n    amount\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}"): (typeof documents)["query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

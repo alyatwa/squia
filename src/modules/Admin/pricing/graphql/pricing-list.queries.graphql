@@ -1,0 +1,20 @@
+query PricingList {
+  pricingList {
+    specialty {
+      name
+      id
+    }
+
+    nationality {
+      id
+      name
+    }
+    activity {
+      name
+      id
+    }
+    maxWage
+    minWage
+    id
+  }
+}

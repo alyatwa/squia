@@ -1,8 +1,13 @@
 "use client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  useForm,
+  Controller,
+  useFieldArray,
+  FormProvider,
+} from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -28,9 +33,24 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { WorkerForm } from "../components/worker-form";
+import { useQuery } from "@apollo/client";
+import { PricingListDocument } from "@/gql/graphql";
+
+const workerSchema = z.object({
+  id: z.string(),
+  name: z.string().min(2, { message: "يرجى إدخال اسم العامل" }),
+  nationality: z.string().optional(),
+  occupation: z.string().optional(),
+  hourly_rate: z.number().nonnegative().optional(),
+  specialty: z.string().optional(),
+  activity: z.string().optional(),
+  salary: z.string().optional(),
+  quantity: z.number().min(1).default(1),
+  price: z.number().nonnegative().optional(),
+});
 
 // Form schema validation
-const orderFormSchema = z.object({
+export const orderFormSchema = z.object({
   client_id: z.string().min(1, { message: "يرجى اختيار العميل" }),
   title: z
     .string()
@@ -38,15 +58,7 @@ const orderFormSchema = z.object({
   description: z.string(),
   hours_duty: z.string().optional(),
   workers: z
-    .array(
-      z.object({
-        id: z.string(),
-        name: z.string().min(2, { message: "يرجى إدخال اسم العامل" }),
-        nationality: z.string().optional(),
-        occupation: z.string().optional(),
-        hourly_rate: z.number().nonnegative().optional(),
-      })
-    )
+    .array(workerSchema)
     .min(1, { message: "يجب إضافة عامل واحد على الأقل" }),
   amount: z.number().nonnegative({ message: "المبلغ يجب أن يكون إيجابياً" }),
   payment_percentage: z
@@ -64,7 +76,7 @@ const orderFormSchema = z.object({
   is_contract_approved: z.boolean().default(false),
 });
 
-type OrderFormValues = z.infer<typeof orderFormSchema>;
+export type OrderFormValues = z.infer<typeof orderFormSchema>;
 
 export const AdminAddOrderPage = () => {
   // Mock clients data - replace with actual API call
@@ -83,6 +95,52 @@ export const AdminAddOrderPage = () => {
     { value: "refund", label: "طلبات الاسترجاع" },
   ];
 
+  const { data, loading } = useQuery(PricingListDocument);
+
+  // Extract unique nationalities, specialties, and activities from pricing data
+  const nationalities = React.useMemo(() => {
+    if (!data?.pricingList) return [];
+
+    // Use a Set to ensure uniqueness based on id
+    const uniqueNationalities = new Map();
+
+    data.pricingList.forEach((item) => {
+      if (item.nationality && !uniqueNationalities.has(item.nationality.id)) {
+        uniqueNationalities.set(item.nationality.id, item.nationality);
+      }
+    });
+
+    return Array.from(uniqueNationalities.values());
+  }, [data?.pricingList]);
+
+  const specialties = React.useMemo(() => {
+    if (!data?.pricingList) return [];
+
+    const uniqueSpecialties = new Map();
+
+    data.pricingList.forEach((item) => {
+      if (item.specialty && !uniqueSpecialties.has(item.specialty.id)) {
+        uniqueSpecialties.set(item.specialty.id, item.specialty);
+      }
+    });
+
+    return Array.from(uniqueSpecialties.values());
+  }, [data?.pricingList]);
+
+  const activities = React.useMemo(() => {
+    if (!data?.pricingList) return [];
+
+    const uniqueActivities = new Map();
+
+    data.pricingList.forEach((item) => {
+      if (item.activity && !uniqueActivities.has(item.activity.id)) {
+        uniqueActivities.set(item.activity.id, item.activity);
+      }
+    });
+
+    return Array.from(uniqueActivities.values());
+  }, [data?.pricingList]);
+
   // Form setup with React Hook Form
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
@@ -97,6 +155,11 @@ export const AdminAddOrderPage = () => {
           nationality: "",
           occupation: "",
           hourly_rate: 0,
+          specialty: "",
+          activity: "",
+          salary: "",
+          quantity: 1,
+          price: 0,
         },
       ],
       amount: 0,
@@ -134,6 +197,11 @@ export const AdminAddOrderPage = () => {
       nationality: "",
       occupation: "",
       hourly_rate: 0,
+      specialty: "",
+      activity: "",
+      salary: "",
+      quantity: 1,
+      price: 0,
     });
   }, [append]);
 
@@ -248,7 +316,7 @@ export const AdminAddOrderPage = () => {
           </div>
         </CardHeader>
         <CardContent className="p-6">
-          <Form {...form}>
+          <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Client selection */}
@@ -365,9 +433,13 @@ export const AdminAddOrderPage = () => {
                           <WorkerForm
                             key={field.id}
                             index={index}
-                            control={form.control}
+                            specialties={specialties}
+                            activities={activities}
+                            nationalities={nationalities}
+                            // control={form.control}
                             onRemove={() => handleRemoveWorker(index)}
                             isRemovable={fields.length > 1}
+                            pricingData={data?.pricingList || []}
                           />
                         ))}
                       </div>
@@ -689,7 +761,7 @@ export const AdminAddOrderPage = () => {
                 </Button>
               </div>
             </form>
-          </Form>
+          </FormProvider>
         </CardContent>
       </Card>
     </div>

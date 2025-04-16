@@ -1,0 +1,6 @@
+mutation CreateOrder($createOrderInput: CreateOrderInput!) {
+  createOrder(createOrderInput: $createOrderInput) {
+    isApproved
+    amount
+  }
+}
