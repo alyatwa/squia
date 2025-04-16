@@ -1,5 +1,5 @@
 import RegisterPage from "@/modules/Auth/register/RegisterPage";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -9,9 +9,9 @@ export const metadata = {
 };
 
 export default async function register() {
-  const session = await getServerSession();
-  if (session) {
-    redirect("/admin");
-  }
+  // const session = await getServerSession();
+  // if (session) {
+  //   redirect("/admin");
+  // }
   return <RegisterPage />;
 }

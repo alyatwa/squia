@@ -1,12 +1,18 @@
 "use client";
 import { Button } from "@/components/ui";
 import { Icon } from "@iconify/react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export const Nav = () => {
   const { data: session } = useSession();
 
+  const logout = async () => {
+    await signOut({
+      redirect: false,
+      callbackUrl: "/auth/login",
+    });
+  };
   return (
     <nav className="bg-gradient-to-r from-teal-dark to-teal text-white shadow-lg">
       <div className="container mx-auto px-4 py-3">
@@ -40,7 +46,7 @@ export const Nav = () => {
             </div> */}
 
             <div className="relative flex gap-3">
-              {session ? (
+              {!session ? (
                 <>
                   <Button asChild variant="ghost">
                     <Link
@@ -60,7 +66,11 @@ export const Nav = () => {
                   </Button>
                 </>
               ) : (
-                <>{JSON.stringify(session)}</>
+                <div className="flex gap-2 items-center">
+                  <>{session.user?.name ?? session.user?.email}</>
+
+                  <Button onClick={logout}>Logout</Button>
+                </div>
               )}
 
               {/* 

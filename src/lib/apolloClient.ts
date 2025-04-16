@@ -1,8 +1,7 @@
-import { getSession as getServerSession } from "@/modules/Auth/lib";
+import { auth } from "@/modules/Auth/lib";
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-// import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 
 const isServer = typeof window === "undefined";
@@ -11,7 +10,7 @@ const getAccessToken = async () => {
   let session = null;
 
   if (isServer) {
-    const sessionServer = await getServerSession();
+    const sessionServer = await auth();
     // console.log("sessionServer: ", (sessionServer as any)?.jwt);
     session = `${(sessionServer as any)?.jwt}`;
   } else {

@@ -1,4 +1,4 @@
-import { getServerSession, NextAuthOptions, User } from "next-auth";
+import nextAuth, { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 import client from "@/lib/apolloClient";
@@ -146,15 +146,23 @@ const authOptions: NextAuthOptions = {
     signIn: `/auth/login`,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, session }) {
       console.log("jwt----------------", { token, user });
-      if (user) {
-        token.access_token = (user as any).jwt || (token as any).jwt;
-        token.accessToken = (user as any).jwt || (token as any).jwt;
-        token.jwt = (user as any).jwt || (token as any).jwt;
-        token.user = (user as any).user || (token as any).user;
-        token.validity = (user as any).validity || (token as any).validity;
+
+      token.access_token = (user as any)?.jwt ?? (token as any).jwt;
+      token.accessToken = (user as any)?.jwt ?? (token as any).jwt;
+      token.jwt = (user as any)?.jwt ?? (token as any).jwt;
+      token.user = (user as any)?.user ?? (token as any).user;
+      token.validity = (user as any)?.validity ?? (token as any).validity;
+
+      if (!user) {
+        user = token as any;
       }
+
+      if (!session) {
+        session = token as any;
+      }
+
       return token;
     },
     async session({ session, token, trigger, newSession }) {
@@ -177,6 +185,6 @@ const authOptions: NextAuthOptions = {
 };
 
 // Utility function to get server session
-const getSession = () => getServerSession(authOptions);
-
-export { authOptions, getSession };
+// const getSession = () => getServerSession(authOptions);
+export const { auth, handlers, signIn, signOut } = nextAuth(authOptions);
+export { authOptions };

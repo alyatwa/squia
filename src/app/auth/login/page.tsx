@@ -1,5 +1,4 @@
 import { LoginPage } from "@/modules/Auth/login/LoginPage";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -9,10 +8,5 @@ export const metadata = {
 };
 
 export default async function login() {
-  const session = await getServerSession();
-  if (session) {
-    redirect("/admin");
-  }
-  console.log(session);
   return <LoginPage />;
 }

@@ -1,29 +1,29 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
+import { auth } from "./modules/Auth/lib";
 
-export default withAuth(
-  // Augment the request handler with your custom logic
-  function middleware(request) {
+export default auth(
+  (request: any) => {
     const { pathname } = request.nextUrl;
     // If user is signed in and trying to access login/register, redirect to dashboard
-    // if (
-    //   (pathname.startsWith("/auth/login") ||
-    //     pathname.startsWith("/auth/register")) &&
-    //   request.nextauth?.token
-    // ) {
-    //   return NextResponse.redirect(new URL(`/admin`, request.url));
-    // }
+    if (
+      (pathname.startsWith("/auth/login") ||
+        pathname.startsWith("/auth/register")) &&
+      request.nextauth?.token
+    ) {
+      return NextResponse.redirect(new URL(`/admin`, request.url));
+    }
 
     // // Continue with the request if no redirection is needed
     return NextResponse.next();
   },
   {
-    callbacks: {
-      authorized: ({ token }) => {
-        // console.log("Token:", token);
-        return !!token;
-      },
-    },
+    // callbacks: {
+    //   authorized: (x) => {
+    //     // console.log("Token:", token);
+    //     return !!token;
+    //   },
+    // },
     pages: {
       signIn: "/auth/login", // Redirect to this page if not authorized
     },
