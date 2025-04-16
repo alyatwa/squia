@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { signIn } from "next-auth/react";
+import { useMutation } from "@apollo/client";
 
 // Shadcn components
 import { Button } from "@/components/ui/button";
@@ -27,52 +27,66 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { SignupDocument } from "@/gql/graphql";
 
 // Form schema with zod validation
-const loginSchema = z.object({
-  username: z.string().min(1, { message: "اسم المستخدم مطلوب" }),
-  password: z.string().min(1, { message: "كلمة المرور مطلوبة" }),
-});
+const registerSchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, { message: "اسم المستخدم يجب أن يكون على الأقل 3 أحرف" }),
+    email: z.string().email({ message: "يرجى إدخال بريد إلكتروني صحيح" }),
+    password: z
+      .string()
+      .min(8, { message: "كلمة المرور يجب أن تكون على الأقل 8 أحرف" }),
+    confirmPassword: z.string().min(1, { message: "تأكيد كلمة المرور مطلوب" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "كلمات المرور غير متطابقة",
+    path: ["confirmPassword"],
+  });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export const LoginPage: React.FC = () => {
+export const RegisterPage: React.FC = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<string | null>(null);
-
   // Initialize react-hook-form
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
+      email: "",
       password: "",
+      confirmPassword: "",
+    },
+  });
+
+  // Use GraphQL mutation
+  const [signup, { loading: isLoading }] = useMutation(SignupDocument, {
+    onCompleted: (data) => {
+      router.push("/login?registered=true");
+    },
+    onError: ({ message }) => {
+      console.error("Error during signup:", message);
+      form.setError("username", {
+        type: "manual",
+        message,
+      });
     },
   });
 
   // Form submission handler
-  const onSubmit = async (data: LoginFormValues) => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const result = await signIn("credentials", {
-        username: data.username,
-        password: data.password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError("بيانات الاعتماد غير صحيحة. يرجى المحاولة مرة أخرى.");
-      } else {
-        // Redirect to dashboard on successful login
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      setError("حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.");
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = async (data: RegisterFormValues) => {
+    await signup({
+      variables: {
+        signupInput: {
+          name: data.username,
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        },
+      },
+    });
   };
 
   return (
@@ -84,10 +98,10 @@ export const LoginPage: React.FC = () => {
               <Icon icon="fluent-emoji:office-worker" width={40} height={40} />
             </div>
             <CardTitle className="text-2xl font-bold text-white">
-              تسجيل دخول المدير
+              إنشاء حساب جديد
             </CardTitle>
             <CardDescription className="mt-2 text-white/80">
-              أدخل بياناتك للوصول إلى لوحة تحكم الإدارة
+              أنشئ حسابك للوصول إلى خدماتنا
             </CardDescription>
           </div>
 
@@ -97,16 +111,6 @@ export const LoginPage: React.FC = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6"
               >
-                {error && (
-                  <Alert variant="destructive">
-                    <Icon
-                      icon="heroicons:exclamation-circle"
-                      className="h-4 w-4 ml-2"
-                    />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-
                 <FormField
                   control={form.control}
                   name="username"
@@ -137,6 +141,35 @@ export const LoginPage: React.FC = () => {
 
                 <FormField
                   control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-dark-light font-medium flex items-center">
+                        <Icon
+                          icon="heroicons:envelope"
+                          className="ml-1"
+                          width={20}
+                          height={20}
+                        />
+                        البريد الإلكتروني
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="أدخل البريد الإلكتروني"
+                          {...field}
+                          className="px-4 py-3 rounded-lg"
+                          autoComplete="email"
+                          disabled={isLoading}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="password"
                   render={({ field }) => (
                     <FormItem>
@@ -155,7 +188,36 @@ export const LoginPage: React.FC = () => {
                           placeholder="أدخل كلمة المرور"
                           {...field}
                           className="px-4 py-3 rounded-lg"
-                          autoComplete="current-password"
+                          autoComplete="new-password"
+                          disabled={isLoading}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-dark-light font-medium flex items-center">
+                        <Icon
+                          icon="heroicons:lock-closed"
+                          className="ml-1"
+                          width={20}
+                          height={20}
+                        />
+                        تأكيد كلمة المرور
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="أعد إدخال كلمة المرور"
+                          {...field}
+                          className="px-4 py-3 rounded-lg"
+                          autoComplete="new-password"
                           disabled={isLoading}
                         />
                       </FormControl>
@@ -175,69 +237,21 @@ export const LoginPage: React.FC = () => {
                       className="mr-2 h-4 w-4 animate-spin"
                     />
                   ) : null}
-                  تسجيل الدخول
+                  إنشاء حساب
                 </Button>
               </form>
             </Form>
 
-            <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <Icon
-                    icon="heroicons:information-circle"
-                    className="text-blue-500"
-                    width={24}
-                    height={24}
-                  />
-                </div>
-                <div className="mr-3">
-                  <p className="text-sm text-blue-700">
-                    للاختبار، استخدم اسم المستخدم "admin" وكلمة المرور
-                    "admin123"
-                  </p>
-                </div>
-              </div>
-            </div>
-
             <div className="mt-4 text-center">
-              <Link
-                href="/register"
-                className="text-accent-600 hover:underline"
-              >
-                ليس لديك حساب؟ سجل الآن
+              <Link href="/login" className="text-accent-600 hover:underline">
+                لديك حساب بالفعل؟ سجل دخول
               </Link>
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
-          <Link
-            href="/login"
-            className="flex items-center text-gray-600 hover:text-accent-600 transition-colors"
-          >
-            <Icon
-              icon="fluent-emoji:person"
-              className="ml-1"
-              width={24}
-              height={24}
-            />
-            تسجيل دخول العميل
-          </Link>
-          <span className="text-gray-300">|</span>
-          <Link
-            href="/worker-login"
-            className="flex items-center text-gray-600 hover:text-accent-600 transition-colors"
-          >
-            <Icon
-              icon="fluent-emoji:construction-worker"
-              className="ml-1"
-              width={24}
-              height={24}
-            />
-            تسجيل دخول العامل
-          </Link>
-        </div>
       </div>
     </div>
   );
 };
+
+export default RegisterPage;
