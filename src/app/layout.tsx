@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { META_THEME_COLORS } from "@/config/site";
 import Providers from "./providers";
+import { getSession } from "@/modules/Auth/lib";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -29,11 +30,13 @@ export const metadata: Metadata = {
   description: "Home",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
+
   return (
     <html
       lang="ar"
@@ -64,7 +67,7 @@ export default function RootLayout({
           // geistMono.variable
         )}
       >
-        <Providers>
+        <Providers session={session}>
           <div vaul-drawer-wrapper="">
             <div className="relative flex min-h-svh flex-col bg-background">
               {children}

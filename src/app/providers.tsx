@@ -10,15 +10,15 @@ import React from "react";
 import client from "@/lib/apolloClient";
 import { ApolloProvider } from "@apollo/client";
 import { ThemeProvider } from "./providers/theme-provider";
+import { Session } from "next-auth";
 
 export default function Providers({
-  //   session,
+  session,
   children,
 }: {
-  //   session?: Session | null;
+  session?: Session | null;
   children: React.ReactNode;
 }) {
-  const { data: session } = useSession();
   return (
     <ApolloProvider client={client}>
       <SessionProvider session={session}>
