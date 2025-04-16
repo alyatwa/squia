@@ -57,16 +57,16 @@ export const LoginPage: React.FC = () => {
 
     try {
       const result = await signIn("credentials", {
-        username: data.username,
+        usernameOrEmail: data.username,
         password: data.password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError("بيانات الاعتماد غير صحيحة. يرجى المحاولة مرة أخرى.");
+        setError("اسم المستخدم أو كلمة المرور غير صحيحة.");
       } else {
         // Redirect to dashboard on successful login
-        router.push("/dashboard");
+        router.push("/admin");
       }
     } catch (error) {
       setError("حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.");
@@ -119,7 +119,7 @@ export const LoginPage: React.FC = () => {
                           width={20}
                           height={20}
                         />
-                        اسم المستخدم
+                        الايميل
                       </FormLabel>
                       <FormControl>
                         <Input

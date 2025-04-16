@@ -1,6 +1,7 @@
 import { getSession as getServerSession } from "@/modules/Auth/lib";
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 // import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 
@@ -32,9 +33,27 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.error(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+
+  if (networkError) {
+    console.error(`[Network error]: ${networkError}`);
+    // Access additional details for 401 errors
+    if ("statusCode" in networkError && networkError.statusCode === 401) {
+      console.error("Authentication error details:", networkError);
+    }
+  }
+});
+
 const client = new ApolloClient({
   link: from([
     authLink,
+    errorLink,
     new HttpLink({
       uri:
         process.env.NEXT_PUBLIC_GRAPHQL_URL ||
@@ -43,5 +62,7 @@ const client = new ApolloClient({
   ]),
   cache: new InMemoryCache(),
 });
+
+// Add this errorLink to your Apollo link chain
 
 export default client;

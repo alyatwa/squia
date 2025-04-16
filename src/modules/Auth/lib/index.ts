@@ -11,10 +11,9 @@ const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET ?? "default-secret";
 
 // Interface for user object
 interface UserObject {
-  name: string;
+  username: string;
   email: string;
-  _id: string;
-  orgId: string;
+  userId: string;
   role: Role;
   avatar: string;
 }
@@ -34,9 +33,25 @@ interface TokenObject {
 // Verify JWT token
 function verifyToken(token: string): UserObject | null {
   try {
-    return jwt.verify(token, NEXTAUTH_SECRET) as UserObject;
+    const decoded = jwt.verify(token, NEXTAUTH_SECRET) as any;
+
+    // Normalize the user object in case of duplicate fields
+    return {
+      username: decoded.username,
+      email: decoded.email,
+      userId: decoded.userId,
+      role: decoded.role,
+      avatar: decoded.avatar || "",
+    } as UserObject;
   } catch (error: any) {
-    console.error("Invalid token:", error.message);
+    console.error(
+      "Invalid token: ",
+      NEXTAUTH_SECRET,
+      " - ",
+      token,
+      " - ",
+      error.message
+    );
     return null;
   }
 }
@@ -52,22 +67,24 @@ const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "user@gmail.com" },
+        usernameOrEmail: {
+          label: "Email",
+          type: "text",
+          placeholder: "user@gmail.com",
+        },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { email: usernameOrEmail, password } = credentials as {
-          email: string;
+        const { usernameOrEmail, password } = credentials as {
+          usernameOrEmail: string;
           password: string;
         };
 
         try {
-          const { data } = await client.mutate({
+          const { data, errors } = await client.mutate({
             mutation: LoginDocument,
             variables: { loginInput: { password, usernameOrEmail } },
           });
-
-          console.log("data login: ", data);
 
           const access_token = data?.login.accessToken;
 
@@ -78,30 +95,15 @@ const authOptions: NextAuthOptions = {
           const decodedUser = verifyToken(access_token);
 
           if (!decodedUser) {
-            throw new Error("Invalid token");
+            throw new Error("Unauthorized - Invalid token");
           }
-
-          //           const userProfile = await useApollo({
-          //             query: `
-          //             query MyProfile {
-          //   myProfile {
-          //      _id
-          //     email
-          //     firstName
-          //     lastName
-          //     profileImage
-          //   }
-          // }`,
-          //             jwt: access_token,
-          //           });
-
+ 
           const user: UserObject = {
             avatar: "", //userProfile.myProfile.profileImage ??
-            name: decodedUser.name,
+            username: decodedUser.username,
             email: decodedUser.email,
-            orgId: decodedUser.orgId,
             role: decodedUser.role,
-            _id: decodedUser._id,
+            userId: decodedUser.userId,
           };
 
           const oneMonthInSeconds = 30 * 24 * 60 * 60;
@@ -109,7 +111,7 @@ const authOptions: NextAuthOptions = {
 
           return {
             user,
-            id: decodedUser._id,
+            id: decodedUser.userId,
             tokens: {
               access: access_token,
               accessToken: access_token,
@@ -120,15 +122,37 @@ const authOptions: NextAuthOptions = {
             },
             jwt: access_token,
           };
-        } catch (error) {
-          console.log(error);
-          throw new Error("bad_credentials");
+        } catch (error: any) {
+          // console.error("Authentication error:", error);
+
+          // Extract more details from Apollo errors
+          if (error.networkError) {
+            console.error("Network error:", error.networkError);
+
+            // Handle 401 errors specifically
+            if (error.networkError.statusCode === 401) {
+              console.error(
+                "Unauthorized - Check credentials or token validity"
+              );
+            }
+          }
+
+          if (error.graphQLErrors) {
+            console.error(
+              "GraphQL errors:",
+              error.graphQLErrors.map((e: any) => e.message).join(", ")
+            );
+          }
+
+          throw new Error(
+            `Authentication failed: ${error.message || "bad_credentials"}`
+          );
         }
       },
     }),
   ],
   pages: {
-    signIn: `/auth/login`,
+    signIn: `/login`,
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -147,27 +171,7 @@ const authOptions: NextAuthOptions = {
       (session as any).access_token = token.access_token;
       (session as any).jwt = token.jwt;
 
-      if (trigger === "update" && newSession?.name) {
-        //         const userProfile = await useApollo({
-        //           query: `
-        //           query MyProfile {
-        // myProfile {
-        //    _id
-        //   email
-        //   firstName
-        //   lastName
-        //   profileImage
-        // }
-        // }`,
-        //           jwt: token.access_token as string,
-        //         });
-
-        session.user = {
-          ...session.user,
-          // avatar: userProfile.myProfile.profileImage ?? "",
-        };
-      }
-
+    
       return session;
     },
     async redirect({ url, baseUrl }) {
