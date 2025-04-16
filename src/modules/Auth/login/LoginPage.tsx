@@ -180,7 +180,7 @@ export const LoginPage: React.FC = () => {
               </form>
             </Form>
 
-            <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            {/* <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <Icon
@@ -197,7 +197,7 @@ export const LoginPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="mt-4 text-center">
               <Link
