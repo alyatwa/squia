@@ -1,518 +1,697 @@
 "use client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-import { Worker } from "../components/worker-container";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { WorkerForm } from "../components/worker-form";
+
+// Form schema validation
+const orderFormSchema = z.object({
+  client_id: z.string().min(1, { message: "يرجى اختيار العميل" }),
+  title: z
+    .string()
+    .min(3, { message: "يرجى إدخال عنوان للطلب (3 أحرف على الأقل)" }),
+  description: z.string(),
+  hours_duty: z.string().optional(),
+  workers: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string().min(2, { message: "يرجى إدخال اسم العامل" }),
+        nationality: z.string().optional(),
+        occupation: z.string().optional(),
+        hourly_rate: z.number().nonnegative().optional(),
+      })
+    )
+    .min(1, { message: "يجب إضافة عامل واحد على الأقل" }),
+  amount: z.number().nonnegative({ message: "المبلغ يجب أن يكون إيجابياً" }),
+  payment_percentage: z
+    .number()
+    .min(0)
+    .max(100, { message: "النسبة يجب أن تكون بين 0 و 100" }),
+  initial_payment: z
+    .number()
+    .nonnegative({ message: "المبلغ يجب أن يكون إيجابياً" }),
+  final_payment: z
+    .number()
+    .nonnegative({ message: "المبلغ يجب أن يكون إيجابياً" }),
+  status: z.string(),
+  is_payment_authorized: z.boolean().default(false),
+  is_contract_approved: z.boolean().default(false),
+});
+
+type OrderFormValues = z.infer<typeof orderFormSchema>;
 
 export const AdminAddOrderPage = () => {
-  const clients: any[] = ["a", "b", "c"];
+  // Mock clients data - replace with actual API call
+  const clients = [
+    { id: "1", name: "عميل أ", email: "client-a@example.com" },
+    { id: "2", name: "عميل ب", email: "client-b@example.com" },
+    { id: "3", name: "عميل ج", email: "client-c@example.com" },
+  ];
 
-  const [workers, setWorkers] = useState(["a"]);
+  const statusOptions = [
+    { value: "unapproved", label: "الطلبات غير المعتمدة" },
+    { value: "authorized", label: "تعميد الطلبات المدفوعة" },
+    { value: "new", label: "الطلبات الجديدة" },
+    { value: "pending", label: "الطلبات المعلقة" },
+    { value: "completed", label: "الطلبات المكتملة" },
+    { value: "refund", label: "طلبات الاسترجاع" },
+  ];
 
-  const handleNewWorker = () => {
-    setWorkers([...workers, Math.random().toString(36).substring(7)]);
+  // Form setup with React Hook Form
+  const form = useForm<OrderFormValues>({
+    resolver: zodResolver(orderFormSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      hours_duty: "",
+      workers: [
+        {
+          id: crypto.randomUUID(),
+          name: "",
+          nationality: "",
+          occupation: "",
+          hourly_rate: 0,
+        },
+      ],
+      amount: 0,
+      payment_percentage: 25,
+      initial_payment: 0,
+      final_payment: 0,
+      status: "unapproved",
+      is_payment_authorized: false,
+      is_contract_approved: false,
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "workers",
+  });
+
+  const watchAmount = form.watch("amount");
+  const watchPaymentPercentage = form.watch("payment_percentage");
+  const isContractApproved = form.watch("is_contract_approved");
+
+  // Update initial and final payments when amount or percentage changes
+  useEffect(() => {
+    const initialPayment = (watchAmount * watchPaymentPercentage) / 100;
+    const finalPayment = watchAmount - initialPayment;
+
+    form.setValue("initial_payment", initialPayment);
+    form.setValue("final_payment", finalPayment);
+  }, [watchAmount, watchPaymentPercentage, form]);
+
+  const handleAddWorker = useCallback(() => {
+    append({
+      id: crypto.randomUUID(),
+      name: "",
+      nationality: "",
+      occupation: "",
+      hourly_rate: 0,
+    });
+  }, [append]);
+
+  const handleRemoveWorker = useCallback(
+    (index: number) => {
+      remove(index);
+    },
+    [remove]
+  );
+
+  const previewContract = useCallback(() => {
+    // Contract preview logic
+    alert("سيتم عرض معاينة للعقد هنا");
+    // After preview, enable the confirm button
+    form.setValue("is_contract_approved", true);
+  }, [form]);
+
+  const confirmContract = useCallback(() => {
+    alert("تم تأكيد العقد بنجاح");
+  }, []);
+
+  const onSubmit = (data: OrderFormValues) => {
+    console.log("Form submitted:", data);
+    // Submit logic here
   };
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-md p-4 mb-6 fade-in-up fade-in-up-1">
-        <div className="flex items-center justify-between relative">
-          <div className="absolute flex  top-1/2 px-10 w-full  h-1 -translate-y-1/2 z-0">
-            <div className="px-10 w-full h-1 bg-gray-200"></div>
-          </div>
-
-          <div className="mt-[20px]  relative z-10 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center mb-2">
-              <span>1</span>
+      {/* Header section */}
+      <Card className="bg-gradient-to-r from-primary-600 to-primary-500 rounded-2xl shadow-md mb-8 text-white fade-in-up fade-in-up-1">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2 flex items-center">
+                <Icon
+                  icon="fluent-emoji:package"
+                  width="36"
+                  height="36"
+                  className="ml-2"
+                />
+                إضافة طلب جديد
+              </h1>
+              <p className="text-white/80">
+                يمكنك من هنا إضافة طلب جديد إلى المنصة.
+              </p>
             </div>
-            <span className="text-sm font-medium text-gray-700">
-              تفاصيل الطلب
-            </span>
+            <Button variant="secondary" asChild>
+              <Link href="/admin/orders">
+                <Icon
+                  icon="heroicons:arrow-right"
+                  className="ml-1"
+                  width="20"
+                  height="20"
+                />
+                العودة إلى قائمة الطلبات
+              </Link>
+            </Button>
           </div>
+        </CardContent>
+      </Card>
 
-          <div className="mt-[20px] relative z-10 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center mb-2">
-              <span>2</span>
+      {/* Progress steps */}
+      <Card className="bg-white rounded-2xl shadow-md mb-6 fade-in-up fade-in-up-1">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between relative">
+            <div className="absolute flex top-1/2 px-10 w-full h-1 -translate-y-1/2 z-0">
+              <div className="px-10 w-full h-1 bg-gray-200"></div>
             </div>
-            <span className="text-sm font-medium text-gray-700">الدفع</span>
-          </div>
 
-          <div className="mt-[20px] relative z-10 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center mb-2">
-              <span>3</span>
-            </div>
-            <span className="text-sm font-medium text-gray-700">المقابلات</span>
-          </div>
-
-          <div className="mt-[20px] relative z-10 flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center mb-2">
-              <span>4</span>
-            </div>
-            <span className="text-sm font-medium text-gray-700">
-              اتمام الطلب
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-r from-primary-600 to-primary-500 rounded-2xl shadow-md p-6 mb-8 text-white fade-in-up fade-in-up-1">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2 flex items-center">
-              <Icon
-                icon="fluent-emoji:package"
-                width="36"
-                height="36"
-                className="ml-2"
-              ></Icon>
-              إضافة طلب جديد
-            </h1>
-            <p className="text-white/80">
-              يمكنك من هنا إضافة طلب جديد إلى المنصة.
-            </p>
-          </div>
-          <Link
-            href="/admin/orders"
-            className="inline-flex items-center px-4 py-2 bg-white text-primary-600 rounded-lg hover:bg-white/90 transition-colors"
-          >
-            <Icon
-              icon="heroicons:arrow-right"
-              className="ml-1"
-              width="20"
-              height="20"
-            ></Icon>
-            العودة إلى قائمة الطلبات
-          </Link>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-2xl shadow-md p-6 mb-8 fade-in-up fade-in-up-2">
-        <div className="flex items-center mb-6">
-          <Icon
-            icon="fluent-emoji:memo"
-            className="ml-2 text-accent-600"
-            width="24"
-            height="24"
-          ></Icon>
-          <h2 className="text-xl font-bold text-gray-800">معلومات الطلب</h2>
-        </div>
-
-        <form
-          method="POST"
-          action="{{ url_for('admin_add_order') }}"
-          className="space-y-6"
-        >
-          <input type="hidden" name="csrf_token" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="md:col-span-2">
-              <label
-                htmlFor="client_id"
-                className="block text-gray-700 text-sm font-medium mb-2"
+            {/* Step indicators */}
+            {[
+              { num: 1, label: "تفاصيل الطلب", active: true },
+              { num: 2, label: "الدفع", active: false },
+              { num: 3, label: "المقابلات", active: false },
+              { num: 4, label: "اتمام الطلب", active: false },
+            ].map((step, index) => (
+              <div
+                key={index}
+                className="mt-[20px] relative z-10 flex flex-col items-center"
               >
-                العميل
-              </label>
-              <div className="client-select-container relative">
-                <div className="dropdown-wrapper relative">
-                  <select
-                    id="client_id"
-                    name="client_id"
-                    required
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 enhanced-select"
-                  >
-                    <option value="" disabled selected>
-                      اختر العميل
-                    </option>
-                    {clients.map((client) => (
-                      <option
-                        key={client.id}
-                        value={client.id}
-                        data-email={client.email || ""}
-                      >
-                        {client.name}
-                      </option>
-                    ))}
-                  </select>
+                <div
+                  className={`w-10 h-10 rounded-full ${
+                    step.active
+                      ? "bg-primary-600 text-white"
+                      : "bg-gray-300 text-gray-700"
+                  } flex items-center justify-center mb-2`}
+                >
+                  <span>{step.num}</span>
+                </div>
+                <span className="text-sm font-medium text-gray-700">
+                  {step.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-                  <div
-                    id="custom_dropdown"
-                    className="custom-dropdown hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-lg border border-gray-300 shadow-lg z-50"
-                  >
-                    <div className="dropdown-search-container p-2 border-b border-gray-200">
-                      <div className="relative">
-                        <input
-                          type="text"
-                          id="dropdown_search"
-                          placeholder="ابحث عن عميل..."
-                          className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
-                        />
-                        <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
-                          <Icon
-                            icon="heroicons:magnifying-glass"
-                            width="16"
-                            height="16"
-                            className="text-gray-400"
-                          ></Icon>
-                        </div>
-                        <div
-                          id="dropdown_loading"
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 hidden"
+      {/* Form card */}
+      <Card className="bg-white rounded-2xl shadow-md mb-8 fade-in-up fade-in-up-2">
+        <CardHeader className="pb-0">
+          <div className="flex items-center">
+            <Icon
+              icon="fluent-emoji:memo"
+              className="ml-2 text-accent-600"
+              width="24"
+              height="24"
+            />
+            <CardTitle className="text-xl font-bold text-gray-800">
+              معلومات الطلب
+            </CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Client selection */}
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="client_id"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="block text-gray-700 text-sm font-medium">
+                          العميل
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
                         >
-                          <div className="w-4 h-4 border-2 border-accent-500 border-t-transparent rounded-full animate-spin"></div>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="اختر العميل" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {clients.map((client) => (
+                              <SelectItem key={client.id} value={client.id}>
+                                {client.name} ({client.email})
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Order title */}
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="block text-gray-700 text-sm font-medium">
+                          عنوان الطلب
+                        </FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="أدخل عنوان الطلب" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Order description */}
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="block text-gray-700 text-sm font-medium">
+                          وصف الطلب
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea
+                            rows={4}
+                            {...field}
+                            placeholder="أدخل وصفاً للطلب"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Working hours */}
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="hours_duty"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="block text-gray-700 text-sm font-medium">
+                          ساعات العمل
+                        </FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="أدخل ساعات العمل" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Workers section */}
+                <div className="md:col-span-2">
+                  <Card className="border border-accent-200">
+                    <CardHeader className="bg-accent-600 text-white rounded-t-lg p-4 flex justify-between items-center">
+                      <div className="flex items-center">
+                        <Icon
+                          icon="fluent-emoji:person-worker"
+                          className="ml-2"
+                          width="24"
+                          height="24"
+                        />
+                        <h3 className="font-bold">بيانات العمال</h3>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="bg-gray-50 p-4">
+                      <div className="space-y-4">
+                        {fields.map((field, index) => (
+                          <WorkerForm
+                            key={field.id}
+                            index={index}
+                            control={form.control}
+                            onRemove={() => handleRemoveWorker(index)}
+                            isRemovable={fields.length > 1}
+                          />
+                        ))}
+                      </div>
+
+                      <Button
+                        type="button"
+                        onClick={handleAddWorker}
+                        className="mt-4 bg-accent-600 hover:bg-accent-700"
+                      >
+                        <Icon
+                          icon="heroicons:plus"
+                          className="ml-1"
+                          width="20"
+                          height="20"
+                        />
+                        إضافة عامل جديد
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Contract preview section */}
+                <div className="md:col-span-2 w-full">
+                  <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between gap-2 items-center mb-4">
+                        <h3 className="text-lg font-bold text-gray-800 flex items-center">
+                          <Icon
+                            icon="fluent-emoji:page-facing-up"
+                            className="ml-2 text-primary-600"
+                            width="28"
+                            height="28"
+                          />
+                          معاينة العقد
+                        </h3>
+                        {form.watch("is_contract_approved") && (
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+                            <Icon
+                              icon="heroicons:check-circle"
+                              className="ml-1"
+                              width="16"
+                              height="16"
+                            />
+                            تمت الموافقة على العقد
+                          </Badge>
+                        )}
+                      </div>
+
+                      <div className="bg-white rounded-lg p-4 border border-blue-100 mb-4">
+                        <p className="text-gray-700">
+                          يمكنك معاينة العقد قبل إضافة الطلب. بعد المعاينة، يرجى
+                          الموافقة على العقد للمتابعة.
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col gap-2 sm:flex-row justify-center">
+                        <Button
+                          type="button"
+                          onClick={previewContract}
+                          variant="default"
+                          className="bg-primary-600 hover:bg-primary-700"
+                        >
+                          <Icon
+                            icon="heroicons:document-text"
+                            className="ml-2"
+                            width="20"
+                            height="20"
+                          />
+                          معاينة العقد
+                        </Button>
+
+                        <Button
+                          type="button"
+                          onClick={confirmContract}
+                          variant="default"
+                          className="bg-green-600 hover:bg-green-700"
+                          disabled={!isContractApproved}
+                        >
+                          <Icon
+                            icon="heroicons:check"
+                            className="ml-2"
+                            width="20"
+                            height="20"
+                          />
+                          الموافقة على العقد
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Payment summary section */}
+                <div className="md:col-span-2">
+                  <Card className="bg-gray-50 border border-gray-200">
+                    <CardContent className="p-4">
+                      <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <Icon
+                          icon="fluent-emoji:receipt"
+                          className="ml-2"
+                          width="24"
+                          height="24"
+                        />
+                        ملخص الفاتورة
+                      </h3>
+
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                          <span className="text-gray-700">
+                            المبلغ الإجمالي:
+                          </span>
+                          <div className="flex items-center">
+                            <FormField
+                              control={form.control}
+                              name="amount"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          parseFloat(e.target.value)
+                                        )
+                                      }
+                                      className="w-32 text-accent-600 text-right font-medium text-lg"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <span className="mr-1 text-gray-700">ريال</span>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                          <span className="text-gray-700">
+                            نسبة الدفعة الأولى:
+                          </span>
+                          <div className="flex items-center">
+                            <FormField
+                              control={form.control}
+                              name="payment_percentage"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          parseFloat(e.target.value)
+                                        )
+                                      }
+                                      className="w-20 text-right font-medium text-lg"
+                                      min={0}
+                                      max={100}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <span className="mr-1 text-gray-700">%</span>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                          <div>
+                            <span className="text-gray-700 font-medium">
+                              الدفعة الأولى (المطلوب دفعها الآن):
+                            </span>
+                            <p className="text-xs text-gray-500">
+                              هذه هي الدفعة المطلوبة لبدء العمل على الطلب
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            <FormField
+                              control={form.control}
+                              name="initial_payment"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          parseFloat(e.target.value)
+                                        )
+                                      }
+                                      className="w-32 text-accent-600 text-right font-medium text-lg bg-gray-100"
+                                      readOnly
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <span className="mr-1 text-gray-700">ريال</span>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-700">
+                            الدفعة النهائية:
+                          </span>
+                          <div className="flex items-center">
+                            <FormField
+                              control={form.control}
+                              name="final_payment"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          parseFloat(e.target.value)
+                                        )
+                                      }
+                                      className="w-32 text-accent-600 text-right font-medium text-lg bg-gray-100"
+                                      readOnly
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <span className="mr-1 text-gray-700">ريال</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div
-                      id="dropdown_items"
-                      className="dropdown-items max-h-60 overflow-y-auto py-1"
-                    ></div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 </div>
 
-                <div
-                  id="selected_client"
-                  className="mt-2 px-3 py-2 bg-blue-50 rounded-lg border border-blue-200 hidden"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span
-                        id="selected_client_name"
-                        className="font-medium text-gray-800"
-                      ></span>
-                      <span className="mx-2 text-gray-400">|</span>
-                      <span
-                        id="selected_client_email"
-                        className="text-sm text-gray-600"
-                      ></span>
-                    </div>
-                    <button
-                      type="button"
-                      id="clear_client"
-                      className="text-gray-500 hover:text-red-500"
-                    >
-                      <Icon
-                        icon="heroicons:x-mark"
-                        width="16"
-                        height="16"
-                      ></Icon>
-                    </button>
-                  </div>
+                {/* Order status */}
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="block text-gray-700 text-sm font-medium">
+                          حالة الطلب
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="اختر حالة الطلب" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {statusOptions.map((status) => (
+                              <SelectItem
+                                key={status.value}
+                                value={status.value}
+                              >
+                                {status.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-              </div>
-            </div>
 
-            <div className="md:col-span-2">
-              <label
-                htmlFor="title"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
-                عنوان الطلب
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                required
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 important-field"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <label
-                htmlFor="description"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
-                وصف الطلب
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                rows={4}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
-              ></textarea>
-            </div>
-
-            <div>
-              <label
-                htmlFor="hours_duty"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
-                ساعات العمل
-              </label>
-              <input
-                type="text"
-                id="hours_duty"
-                name="hours_duty"
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <div className="bg-accent-600 text-white rounded-t-lg p-4 flex justify-between items-center">
-                <div className="flex items-center">
-                  <Icon
-                    icon="fluent-emoji:person-worker"
-                    className="ml-2"
-                    width="24"
-                    height="24"
-                  ></Icon>
-                  <h3 className="font-bold">بيانات العمال</h3>
+                {/* Payment authorization */}
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="is_payment_authorized"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rtl:space-x-reverse">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel className="mr-2 block text-gray-700 text-sm font-medium">
+                            تعميد الطلب المدفوع
+                          </FormLabel>
+                          <p className="text-xs text-gray-500 mt-1">
+                            عند تحديد هذا الخيار، سيتم اعتبار الطلب معمداً بعد
+                            الدفع.
+                          </p>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-b-lg p-4">
-                <div id="workers-container">
-                  {workers.map((w) => (
-                    <Worker
-                      id={w}
-                      onRemove={(id: string) => {
-                        setWorkers(workers.filter((w) => w !== id));
-                      }}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => handleNewWorker()}
-                  id="add-worker-row"
-                  className="mt-2 flex px-4 py-2 bg-accent-600 text-white rounded-lg hover:bg-accent-700 transition-colors"
-                >
-                  <Icon
-                    icon="heroicons:plus"
-                    className="ml-1"
-                    width="20"
-                    height="20"
-                  ></Icon>
-                  إضافة عامل جديد
-                </button>
-              </div>
-            </div>
-            <input
-              type="hidden"
-              id="amount"
-              name="amount"
-              min="0"
-              step="0.01"
-              required
-              className="amount-field"
-            />
-
-            <div className="md:col-span-2 w-full bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200 mb-4 shadow-sm">
-              <div className="flex justify-between gap-2 items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-800 flex items-center">
-                  <Icon
-                    icon="fluent-emoji:page-facing-up"
-                    className="ml-2 text-primary-600"
-                    width="28"
-                    height="28"
-                  ></Icon>
-                  معاينة العقد
-                </h3>
-                <div id="contract-status" className="hidden">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                    <Icon
-                      icon="heroicons:check-circle"
-                      className="ml-1"
-                      width="16"
-                      height="16"
-                    ></Icon>
-                    تمت الموافقة على العقد
-                  </span>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-lg p-4 border border-blue-100 mb-4">
-                <p className="text-gray-700">
-                  يمكنك معاينة العقد قبل إضافة الطلب. بعد المعاينة، يرجى
-                  الموافقة على العقد للمتابعة.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2  sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4  ">
-                <button
-                  type="button"
-                  id="preview-contract-btn"
-                  className="px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center shadow-md hover:shadow-lg"
-                >
-                  <Icon
-                    icon="heroicons:document-text"
-                    className="ml-2"
-                    width="20"
-                    height="20"
-                  ></Icon>
-                  معاينة العقد
-                </button>
-
-                <button
-                  type="button"
-                  id="confirm-contract-btn"
-                  className="px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center shadow-md hover:shadow-lg opacity-50 cursor-not-allowed"
-                  disabled
+              <div className="flex justify-end gap-2 mt-6">
+                <Button variant="outline" asChild>
+                  <Link href="/admin/orders">إلغاء</Link>
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-accent-600 hover:bg-accent-700"
                 >
                   <Icon
                     icon="heroicons:check"
-                    className="ml-2"
+                    className="ml-1"
                     width="20"
                     height="20"
-                  ></Icon>
-                  الموافقة على العقد
-                </button>
+                  />
+                  إضافة الطلب
+                </Button>
               </div>
-            </div>
-
-            <div className="md:col-span-2 bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                <Icon
-                  icon="fluent-emoji:receipt"
-                  className="ml-2"
-                  width="24"
-                  height="24"
-                ></Icon>
-                ملخص الفاتورة
-              </h3>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <span className="text-gray-700">المبلغ الإجمالي:</span>
-                  <div className="flex items-center">
-                    <input
-                      type="number"
-                      id="summary_amount"
-                      name="amount"
-                      min="0"
-                      step="0.01"
-                      required
-                      className="w-32 px-3 py-2  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 bg-gray-100 amount-field font-medium text-lg text-accent-600 text-right"
-                    />
-                    <span className="mr-1 text-gray-700">ريال</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <span className="text-gray-700">نسبة الدفعة الأولى:</span>
-                  <div className="flex items-center">
-                    <input
-                      type="number"
-                      id="payment_percentage"
-                      name="payment_percentage"
-                      min="0"
-                      max="100"
-                      step="0.01"
-                      value="25"
-                      className="w-20 px-3 py-2   rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 font-medium text-lg text-right"
-                    />
-                    <span className="mr-1 text-gray-700">%</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <div>
-                    <span className="text-gray-700 font-medium">
-                      الدفعة الأولى (المطلوب دفعها الآن):
-                    </span>
-                    <p className="text-xs text-gray-500">
-                      هذه هي الدفعة المطلوبة لبدء العمل على الطلب
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="number"
-                      id="initial_payment"
-                      name="initial_payment"
-                      min="0"
-                      step="0.01"
-                      className="w-32 px-3 py-2  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 bg-gray-100 amount-field font-medium text-lg text-accent-600 text-right"
-                    />
-                    <span className="mr-1 text-gray-700">ريال</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-700">الدفعة النهائية:</span>
-                  <div className="flex items-center">
-                    <input
-                      type="number"
-                      id="final_payment"
-                      name="final_payment"
-                      min="0"
-                      step="0.01"
-                      className="w-32 px-3 py-2   rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 bg-gray-100 amount-field font-medium text-lg text-accent-600 text-right"
-                    />
-                    <span className="mr-1 text-gray-700">ريال</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="md:col-span-2">
-              <label
-                htmlFor="status"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
-                حالة الطلب
-              </label>
-              <select
-                id="status"
-                name="status"
-                required
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
-              >
-                <option value="unapproved" selected>
-                  الطلبات غير المعتمدة
-                </option>
-                <option value="authorized">تعميد الطلبات المدفوعة</option>
-                <option value="new">الطلبات الجديدة</option>
-                <option value="pending">الطلبات المعلقة</option>
-                <option value="completed">الطلبات المكتملة</option>
-                <option value="refund">طلبات الاسترجاع</option>
-              </select>
-            </div>
-
-            <div className="md:col-span-2">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="is_payment_authorized"
-                  name="is_payment_authorized"
-                  className="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500"
-                />
-                <label
-                  htmlFor="is_payment_authorized"
-                  className="mr-2 block text-gray-700 text-sm font-medium"
-                >
-                  تعميد الطلب المدفوع
-                </label>
-              </div>
-              <p className="text-xs text-gray-500 mt-1">
-                عند تحديد هذا الخيار، سيتم اعتبار الطلب معمداً بعد الدفع.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex justify-end space-x-2  ">
-            <Link
-              href="/admin/orders"
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
-            >
-              إلغاء
-            </Link>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-accent-600 text-white flex rounded-lg hover:bg-accent-700 transition-colors action-button"
-            >
-              <Icon
-                icon="heroicons:check"
-                className="ml-1"
-                width="20"
-                height="20"
-              ></Icon>
-              إضافة الطلب
-            </button>
-          </div>
-        </form>
-      </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
