@@ -210,7 +210,7 @@ export const LoginPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
+        {/* <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
           <Link
             href="/login"
             className="flex items-center text-gray-600 hover:text-accent-600 transition-colors"
@@ -236,7 +236,7 @@ export const LoginPage: React.FC = () => {
             />
             تسجيل دخول العامل
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
