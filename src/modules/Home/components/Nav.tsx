@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const Nav = () => {
   const { data: session } = useSession();
-
+  console.log("session-----------------", session);
   const logout = async () => {
     await signOut({
       redirect: false,

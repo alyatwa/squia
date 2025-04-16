@@ -20,8 +20,8 @@ export default function Providers({
   children: React.ReactNode;
 }) {
   return (
-    <ApolloProvider client={client}>
-      <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider
             attribute="class"
@@ -34,7 +34,7 @@ export default function Providers({
             <TailwindIndicator />
           </ThemeProvider>
         </QueryClientProvider>
-      </SessionProvider>
-    </ApolloProvider>
+      </ApolloProvider>{" "}
+    </SessionProvider>
   );
 }

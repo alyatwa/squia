@@ -50,7 +50,7 @@ function verifyToken(token: string): UserObject | null {
 // NextAuth configuration
 const authOptions: NextAuthConfig = {
   secret: NEXTAUTH_SECRET,
-
+  debug: true,
   session: {
     strategy: "jwt",
   },
