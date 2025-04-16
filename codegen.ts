@@ -3,7 +3,7 @@ import { CodegenConfig } from "@graphql-codegen/cli";
 const config: CodegenConfig = {
   schema: [
     {
-      "https://obscure-broccoli-r944pg66xrfwgj-8000.app.github.dev/graphql": {
+      "https://didactic-spoon-g9447qrpqghv9r4-8000.app.github.dev/graphql": {
         headers: {
           "x-admin-secret": "admin-secret",
         },

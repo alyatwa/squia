@@ -1,12 +1,13 @@
 "use client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   useForm,
   Controller,
   useFieldArray,
   FormProvider,
+  useWatch,
 } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -97,6 +98,42 @@ export const AdminAddOrderPage = () => {
 
   const { data, loading } = useQuery(PricingListDocument);
 
+  // const data = {
+  //   pricingList: [
+  //     {
+  //       specialty: {
+  //         name: "Healthcare",
+  //         id: "HyS9oKF6d7i5qGcpIkx58",
+  //       },
+  //       nationality: {
+  //         id: "rDyooCEHkRWPNR0cuzT89",
+  //         name: "Indian",
+  //       },
+  //       activity: {
+  //         name: "Nursing",
+  //         id: "HJVuYTNPPirz5le6IX9T_",
+  //       },
+  //       maxWage: 18870,
+  //       minWage: 14515,
+  //     },
+  //     {
+  //       specialty: {
+  //         name: "Healthcare",
+  //         id: "HyS9oKF6d7i5qGcpIkx58",
+  //       },
+  //       nationality: {
+  //         id: "rDyooCEHkRWPNR0cuzT89",
+  //         name: "Indian",
+  //       },
+  //       activity: {
+  //         name: "Nursing",
+  //         id: "HJVuYTNPPirz5le6IX9T_",
+  //       },
+  //       maxWage: 14677,
+  //       minWage: 11290,
+  //     },
+  //   ],
+  // };
   // Extract unique nationalities, specialties, and activities from pricing data
   const nationalities = React.useMemo(() => {
     if (!data?.pricingList) return [];
@@ -180,6 +217,48 @@ export const AdminAddOrderPage = () => {
   const watchAmount = form.watch("amount");
   const watchPaymentPercentage = form.watch("payment_percentage");
   const isContractApproved = form.watch("is_contract_approved");
+  const watchWorkers = form.watch("workers");
+  const watchWorkersNested = useWatch({
+    control: form.control,
+    name: "workers",
+  });
+  const totalQuantity = useMemo(() => {
+    return (
+      watchWorkersNested?.reduce(
+        (sum, worker) => sum + (worker.quantity || 0),
+        0
+      ) || 0
+    );
+  }, [watchWorkersNested]);
+
+  // Calculate total amount based on workers
+  useEffect(() => {
+    console.log("Calculating total amount...", watchWorkers);
+
+    if (!watchWorkers || watchWorkers.length === 0) return;
+
+    // Calculate total amount based on worker prices and quantities
+    const totalAmount = watchWorkers.reduce((sum, worker) => {
+      const workerPrice = worker.price || 0;
+      const quantity = worker.quantity || 1;
+      return sum + workerPrice * quantity;
+    }, 0);
+
+    // Update the amount field
+    form.setValue("amount", totalAmount);
+  }, [watchWorkers, totalQuantity, form]);
+
+  const updateBill = useCallback(() => {
+    if (!watchWorkers || watchWorkers.length === 0) return;
+    // Calculate total amount based on worker prices and quantities
+    const totalAmount = watchWorkers.reduce((sum, worker) => {
+      const workerPrice = worker.price || 0;
+      const quantity = worker.quantity || 1;
+      return sum + workerPrice * quantity;
+    }, 0);
+    // Update the amount field
+    form.setValue("amount", totalAmount);
+  }, [watchWorkers, form]);
 
   // Update initial and final payments when amount or percentage changes
   useEffect(() => {
@@ -433,10 +512,10 @@ export const AdminAddOrderPage = () => {
                           <WorkerForm
                             key={field.id}
                             index={index}
+                            updateBill={updateBill}
                             specialties={specialties}
                             activities={activities}
                             nationalities={nationalities}
-                            // control={form.control}
                             onRemove={() => handleRemoveWorker(index)}
                             isRemovable={fields.length > 1}
                             pricingData={data?.pricingList || []}
@@ -558,6 +637,7 @@ export const AdminAddOrderPage = () => {
                                 <FormItem>
                                   <FormControl>
                                     <Input
+                                      readOnly
                                       type="number"
                                       {...field}
                                       onChange={(e) =>
@@ -590,6 +670,7 @@ export const AdminAddOrderPage = () => {
                                     <Input
                                       type="number"
                                       {...field}
+                                      readOnly
                                       onChange={(e) =>
                                         field.onChange(
                                           parseFloat(e.target.value)

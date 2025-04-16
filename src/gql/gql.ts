@@ -15,13 +15,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "mutation CreateOrder($createOrderInput: CreateOrderInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    isApproved\n    amount\n  }\n}": typeof types.CreateOrderDocument,
-    "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": typeof types.PricingListDocument,
+    "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    adminCommission\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": typeof types.PricingListDocument,
     "mutation Login($loginInput: LoginInput!) {\n  login(loginInput: $loginInput) {\n    accessToken\n  }\n}": typeof types.LoginDocument,
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": typeof types.SignupDocument,
 };
 const documents: Documents = {
     "mutation CreateOrder($createOrderInput: CreateOrderInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    isApproved\n    amount\n  }\n}": types.CreateOrderDocument,
-    "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": types.PricingListDocument,
+    "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    adminCommission\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": types.PricingListDocument,
     "mutation Login($loginInput: LoginInput!) {\n  login(loginInput: $loginInput) {\n    accessToken\n  }\n}": types.LoginDocument,
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": types.SignupDocument,
 };
@@ -47,7 +47,7 @@ export function graphql(source: "mutation CreateOrder($createOrderInput: CreateO
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}"): (typeof documents)["query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}"];
+export function graphql(source: "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    adminCommission\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}"): (typeof documents)["query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    adminCommission\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

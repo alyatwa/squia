@@ -1,3 +1,4 @@
+"use client";
 import {
   FormControl,
   FormField,
@@ -33,6 +34,7 @@ type WorkerFormProps = {
   nationalities: Nationality[];
   specialties: Specialty[];
   activities: Activity[];
+  updateBill: () => void;
   pricingData?: PricingListQuery["pricingList"];
 };
 
@@ -41,6 +43,7 @@ export const WorkerForm = ({
   onRemove,
   isRemovable,
   nationalities,
+  updateBill,
   specialties,
   activities,
   pricingData = [],
@@ -63,6 +66,11 @@ export const WorkerForm = ({
     name: `workers.${index}.activity`,
   });
 
+  const quantity = useWatch({
+    control,
+    name: `workers.${index}.quantity`,
+  });
+
   // Calculate salary range based on selections
   useEffect(() => {
     if (specialty && nationality && activity && pricingData.length > 0) {
@@ -75,14 +83,17 @@ export const WorkerForm = ({
 
       if (matchingPrice) {
         const salaryRange = `${matchingPrice.minWage} - ${matchingPrice.maxWage}`;
+        const count = form.getValues(`workers.${index}.quantity`) || 1;
         // Update the salary field with the range
-        form.setValue(`workers.${index}.salary`, salaryRange, {
-          shouldDirty: true,
-          shouldValidate: true,
-        });
+        form.setValue(
+          `workers.${index}.price`,
+          matchingPrice.adminCommission * count
+        );
+        form.setValue(`workers.${index}.salary`, salaryRange);
+        updateBill();
       }
     }
-  }, [specialty, nationality, activity, pricingData, form, index]);
+  }, [specialty, nationality, activity, quantity, pricingData, index]);
 
   return (
     <Card className="bg-white shadow-sm">
@@ -255,8 +266,9 @@ export const WorkerForm = ({
                 <FormControl>
                   <Input
                     type="number"
-                    min="0"
-                    step="0.01"
+                    min="1"
+                    step="1"
+                    readOnly
                     {...field}
                     onChange={(e) => field.onChange(parseFloat(e.target.value))}
                     placeholder="تلقائي"

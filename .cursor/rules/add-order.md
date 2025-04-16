@@ -42,3 +42,10 @@ the workers.${index}.salary shloud have readonly value for wage range like 500-1
         "minWage": 11290
       },
 ```
+
+the code for updating bill summery and it pass the data to readonly fields
+
+amount
+initial_payment
+payment_percentage = 25%
+final_payment

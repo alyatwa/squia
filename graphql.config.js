@@ -1,5 +1,5 @@
 module.exports = {
-  schema: "https://obscure-broccoli-r944pg66xrfwgj-8000.app.github.dev/graphql",
+  schema: "https://didactic-spoon-g9447qrpqghv9r4-8000.app.github.dev/graphql",
   ignoreNoDocuments: true,
   documents: ["src/modules/**/*.graphql"],
   generates: {
