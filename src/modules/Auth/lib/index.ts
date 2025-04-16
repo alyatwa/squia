@@ -147,7 +147,7 @@ const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, session }) {
-      console.log("jwt----------------", { token, user });
+      // console.log("jwt----------------", { token, user });
 
       token.access_token = (user as any)?.jwt ?? (token as any).jwt;
       token.accessToken = (user as any)?.jwt ?? (token as any).jwt;
@@ -166,7 +166,7 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, trigger, newSession }) {
-      console.log("session----------------", session, token);
+      // console.log("session----------------", session, token);
       session.user = token.user as UserObject;
       // session.error = token.error;
       (session as any).access_token = token.jwt;
