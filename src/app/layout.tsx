@@ -4,14 +4,7 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { META_THEME_COLORS } from "@/config/site";
-import { ThemeProvider } from "./providers/theme-provider";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-// import { Toaster } from "@/components/ui/toaster";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/reactQuery";
-import client from "@/lib/apolloClient";
-import { ApolloProvider } from "@apollo/client";
-import { Toaster } from "@/components/ui/sonner";
+import Providers from "./providers";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -71,25 +64,13 @@ export default function RootLayout({
           // geistMono.variable
         )}
       >
-        <ApolloProvider client={client}>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="light"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div vaul-drawer-wrapper="">
-                <div className="relative flex min-h-svh flex-col bg-background">
-                  {children}
-                </div>
-              </div>
-              <Toaster />
-
-              <TailwindIndicator />
-            </ThemeProvider>
-          </QueryClientProvider>
-        </ApolloProvider>
+        <Providers>
+          <div vaul-drawer-wrapper="">
+            <div className="relative flex min-h-svh flex-col bg-background">
+              {children}
+            </div>
+          </div>
+        </Providers>
       </body>
     </html>
   );
