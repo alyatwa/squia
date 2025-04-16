@@ -26,6 +26,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SignupDocument } from "@/gql/graphql";
 import { useRouter } from "next/navigation";
 
@@ -40,6 +41,9 @@ const registerSchema = z
       .string()
       .min(8, { message: "كلمة المرور يجب أن تكون على الأقل 8 أحرف" }),
     confirmPassword: z.string().min(1, { message: "تأكيد كلمة المرور مطلوب" }),
+    role: z.enum(["worker", "client"], {
+      required_error: "يرجى اختيار نوع الحساب",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "كلمات المرور غير متطابقة",
@@ -58,6 +62,7 @@ export const RegisterPage: React.FC = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      role: "client",
     },
   });
 
@@ -84,7 +89,7 @@ export const RegisterPage: React.FC = () => {
           username: data.username,
           email: data.email,
           password: data.password,
-          role: "admin",
+          role: data.role,
         },
       },
     });
@@ -221,6 +226,66 @@ export const RegisterPage: React.FC = () => {
                           autoComplete="new-password"
                           disabled={isLoading}
                         />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem className="space-y-2">
+                      <FormLabel className="text-dark-light font-medium flex items-center">
+                        <Icon
+                          icon="heroicons:user-group"
+                          className="ml-1"
+                          width={20}
+                          height={20}
+                        />
+                        نوع الحساب
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex border rounded-lg p-2 gap-4"
+                          disabled={isLoading}
+                        >
+                          <FormItem className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                            <FormControl>
+                              <RadioGroupItem value="client" id="client" />
+                            </FormControl>
+                            <FormLabel
+                              htmlFor="client"
+                              className="font-normal cursor-pointer flex items-center gap-2"
+                            >
+                              <Icon
+                                icon="heroicons:user"
+                                width={18}
+                                height={18}
+                              />
+                              عميل
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                            <FormControl>
+                              <RadioGroupItem value="worker" id="worker" />
+                            </FormControl>
+                            <FormLabel
+                              htmlFor="worker"
+                              className="font-normal cursor-pointer flex items-center gap-2"
+                            >
+                              <Icon
+                                icon="fluent-emoji:office-worker"
+                                width={18}
+                                height={18}
+                              />
+                              عامل
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
