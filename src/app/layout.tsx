@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { META_THEME_COLORS } from "@/config/site";
 import Providers from "./providers";
 import { getSession } from "@/modules/Auth/lib";
+import { getServerSession } from "next-auth";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -35,8 +36,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getSession();
-
+  const session = await getServerSession();
+  console.log("layout----------------", session);
   return (
     <html
       lang="ar"

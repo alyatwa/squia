@@ -93,11 +93,11 @@ const authOptions: NextAuthOptions = {
           }
 
           const decodedUser = verifyToken(access_token);
-
+          // console.log(decodedUser);
           if (!decodedUser) {
             throw new Error("Unauthorized - Invalid token");
           }
- 
+
           const user: UserObject = {
             avatar: "", //userProfile.myProfile.profileImage ??
             username: decodedUser.username,
@@ -151,9 +151,9 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: `/login`,
-  },
+  // pages: {
+  //   signIn: `/login`,
+  // },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -171,7 +171,6 @@ const authOptions: NextAuthOptions = {
       (session as any).access_token = token.access_token;
       (session as any).jwt = token.jwt;
 
-    
       return session;
     },
     async redirect({ url, baseUrl }) {

@@ -11,7 +11,8 @@ export const metadata = {
 export default async function login() {
   const session = await getServerSession();
   if (session) {
-    redirect("/");
+    redirect("/admin");
   }
+  console.log(session);
   return <LoginPage />;
 }

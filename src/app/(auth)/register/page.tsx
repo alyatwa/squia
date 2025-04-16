@@ -11,7 +11,7 @@ export const metadata = {
 export default async function register() {
   const session = await getServerSession();
   if (session) {
-    redirect("/");
+    redirect("/admin");
   }
   return <RegisterPage />;
 }
