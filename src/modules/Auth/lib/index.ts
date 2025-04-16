@@ -1,4 +1,4 @@
-import nextAuth, { NextAuthOptions, User } from "next-auth";
+import nextAuth, { NextAuthConfig, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 import client from "@/lib/apolloClient";
@@ -48,7 +48,7 @@ function verifyToken(token: string): UserObject | null {
 }
 
 // NextAuth configuration
-const authOptions: NextAuthOptions = {
+const authOptions: NextAuthConfig = {
   secret: NEXTAUTH_SECRET,
 
   session: {
@@ -166,7 +166,7 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, trigger, newSession }) {
-      // console.log("session----------------", session, token);
+      // @ts-ignore
       session.user = token.user as UserObject;
       // session.error = token.error;
       (session as any).access_token = token.jwt;

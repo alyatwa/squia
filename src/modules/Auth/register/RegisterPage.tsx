@@ -296,7 +296,10 @@ export const RegisterPage: React.FC = () => {
             </Form>
 
             <div className="mt-4 text-center">
-              <Link href="/login" className="text-accent-600 hover:underline">
+              <Link
+                href="/auth/login"
+                className="text-accent-600 hover:underline"
+              >
                 لديك حساب بالفعل؟ سجل دخول
               </Link>
             </div>

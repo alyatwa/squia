@@ -35,7 +35,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/login"
+                  href="/auth/login"
                   className="text-gray-300 hover:text-white transition-colors flex items-center"
                 >
                   <Icon
@@ -49,7 +49,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/register"
+                  href="/auth/register"
                   className="text-gray-300 hover:text-white transition-colors flex items-center"
                 >
                   <Icon

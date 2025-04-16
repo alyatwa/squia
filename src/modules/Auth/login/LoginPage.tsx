@@ -202,7 +202,7 @@ export const LoginPage: React.FC = () => {
 
             <div className="mt-4 text-center">
               <Link
-                href="/register"
+                href="/auth/register"
                 className="text-accent-600 hover:underline"
               >
                 ليس لديك حساب؟ سجل الآن
@@ -213,7 +213,7 @@ export const LoginPage: React.FC = () => {
 
         {/* <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
           <Link
-            href="/login"
+            href="/auth/login"
             className="flex items-center text-gray-600 hover:text-accent-600 transition-colors"
           >
             <Icon

@@ -1,9 +1,9 @@
-import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import { auth } from "./modules/Auth/lib";
 
 export default auth(
-  (request: any) => {
+  // @ts-ignore
+  (request) => {
     const { pathname } = request.nextUrl;
     // If user is signed in and trying to access login/register, redirect to dashboard
     if (

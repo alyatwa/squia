@@ -50,7 +50,7 @@ export const Nav = () => {
                 <>
                   <Button asChild variant="ghost">
                     <Link
-                      href="/login"
+                      href="/auth/login"
                       className="py-2 rounded-md hover:bg-white/10 transition-colors"
                     >
                       Login
@@ -58,7 +58,7 @@ export const Nav = () => {
                   </Button>
                   <Button asChild variant="ghost">
                     <Link
-                      href="/register"
+                      href="/auth/register"
                       className="py-2 rounded-md hover:bg-white/10 transition-colors"
                     >
                       Signup
@@ -91,7 +91,7 @@ export const Nav = () => {
               </button> */}
               {/* <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
                 <a
-                  href="/login"
+                  href="/auth/login"
                   className="block px-4 py-2 text-dark hover:bg-gray-100"
                 >
                   تسجيل دخول العميل
@@ -110,7 +110,7 @@ export const Nav = () => {
                 </a>
                 <div className="border-t border-gray-100"></div>
                 <a
-                  href="/register"
+                  href="/auth/register"
                   className="block px-4 py-2 text-dark hover:bg-gray-100"
                 >
                   تسجيل حساب جديد

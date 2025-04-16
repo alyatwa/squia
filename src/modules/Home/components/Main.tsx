@@ -16,7 +16,7 @@ export const Main = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-4 mt-8">
                 <a
-                  href="/register"
+                  href="/auth/register"
                   className="bg-white text-teal hover:bg-gray-100 px-6 py-3 rounded-lg font-bold shadow-md transition-all flex items-center"
                 >
                   <Icon
@@ -28,7 +28,7 @@ export const Main = () => {
                   Register New Account
                 </a>
                 <a
-                  href="/login"
+                  href="/auth/login"
                   className="bg-transparent border-2 border-white hover:bg-white/10 text-white px-6 py-3 rounded-lg font-bold transition-all flex items-center"
                 >
                   <Icon
@@ -221,7 +221,7 @@ export const Main = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href="/register"
+                href="/auth/register"
                 className="bg-white text-teal hover:bg-gray-100 px-6 py-3 rounded-lg font-bold shadow-md transition-all flex items-center"
               >
                 <Icon
@@ -233,7 +233,7 @@ export const Main = () => {
                 تسجيل حساب جديد
               </a>
               <a
-                href="/login"
+                href="/auth/login"
                 className="bg-transparent border-2 border-white hover:bg-white/10 text-white px-6 py-3 rounded-lg font-bold transition-all flex items-center"
               >
                 <Icon
