@@ -38,7 +38,7 @@ const client = new ApolloClient({
     new HttpLink({
       uri:
         process.env.NEXT_PUBLIC_GRAPHQL_URL ||
-        "https://prod-server-dot-youtiva-server-updated.uc.r.appspot.com/graphql",
+        "https://obscure-broccoli-r944pg66xrfwgj-8000.app.github.dev/graphql",
     }),
   ]),
   cache: new InMemoryCache(),

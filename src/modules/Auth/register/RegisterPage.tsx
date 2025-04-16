@@ -84,6 +84,7 @@ export const RegisterPage: React.FC = () => {
           username: data.username,
           email: data.email,
           password: data.password,
+          role: "admin",
         },
       },
     });
