@@ -6,12 +6,13 @@ export default withAuth(
   function middleware(request) {
     const { pathname } = request.nextUrl;
     // If user is signed in and trying to access login/register, redirect to dashboard
-    if (
-      (pathname.startsWith("/login") || pathname.startsWith("/register")) &&
-      request.nextauth?.token
-    ) {
-      return NextResponse.redirect(new URL(`/admin`, request.url));
-    }
+    // if (
+    //   (pathname.startsWith("/auth/login") ||
+    //     pathname.startsWith("/auth/register")) &&
+    //   request.nextauth?.token
+    // ) {
+    //   return NextResponse.redirect(new URL(`/admin`, request.url));
+    // }
 
     // // Continue with the request if no redirection is needed
     return NextResponse.next();
@@ -24,7 +25,7 @@ export default withAuth(
       },
     },
     pages: {
-      signIn: "/login", // Redirect to this page if not authorized
+      signIn: "/auth/login", // Redirect to this page if not authorized
     },
   }
 );

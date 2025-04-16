@@ -33,16 +33,7 @@ interface TokenObject {
 // Verify JWT token
 function verifyToken(token: string): UserObject | null {
   try {
-    const decoded = jwt.verify(token, NEXTAUTH_SECRET) as any;
-
-    // Normalize the user object in case of duplicate fields
-    return {
-      username: decoded.username,
-      email: decoded.email,
-      userId: decoded.userId,
-      role: decoded.role,
-      avatar: decoded.avatar || "",
-    } as UserObject;
+    return jwt.verify(token, NEXTAUTH_SECRET) as UserObject;
   } catch (error: any) {
     console.error(
       "Invalid token: ",
@@ -151,24 +142,26 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  // pages: {
-  //   signIn: `/login`,
-  // },
+  pages: {
+    signIn: `/auth/login`,
+  },
   callbacks: {
     async jwt({ token, user }) {
+      console.log("jwt----------------", { token, user });
       if (user) {
-        token.access_token = (user as any).access_token;
-        token.accessToken = (user as any).accessToken;
-        token.jwt = (user as any).jwt;
-        token.user = (user as any).user;
-        token.validity = (user as any).validity;
+        token.access_token = (user as any).jwt || (token as any).jwt;
+        token.accessToken = (user as any).jwt || (token as any).jwt;
+        token.jwt = (user as any).jwt || (token as any).jwt;
+        token.user = (user as any).user || (token as any).user;
+        token.validity = (user as any).validity || (token as any).validity;
       }
       return token;
     },
     async session({ session, token, trigger, newSession }) {
+      console.log("session----------------", session, token);
       session.user = token.user as UserObject;
       // session.error = token.error;
-      (session as any).access_token = token.access_token;
+      (session as any).access_token = token.jwt;
       (session as any).jwt = token.jwt;
 
       return session;
