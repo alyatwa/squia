@@ -84,7 +84,7 @@ export const LoginPage: React.FC = () => {
               <Icon icon="fluent-emoji:office-worker" width={40} height={40} />
             </div>
             <CardTitle className="text-2xl font-bold text-white">
-              تسجيل دخول المدير
+              تسجيل الدخول
             </CardTitle>
             <CardDescription className="mt-2 text-white/80">
               أدخل بياناتك للوصول إلى لوحة تحكم الإدارة

@@ -106,9 +106,6 @@ export const RegisterPage: React.FC = () => {
             <CardTitle className="text-2xl font-bold text-white">
               إنشاء حساب جديد
             </CardTitle>
-            <CardDescription className="mt-2 text-white/80">
-              أنشئ حسابك للوصول إلى خدماتنا
-            </CardDescription>
           </div>
 
           <CardContent className="p-8">
@@ -250,10 +247,10 @@ export const RegisterPage: React.FC = () => {
                         <RadioGroup
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          className="flex border rounded-lg p-2 gap-4"
+                          className="flex   justify-around rounded-lg p-2 gap-4"
                           disabled={isLoading}
                         >
-                          <FormItem className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                          <FormItem className="flex items-center space-x-2 ltr:space-x-reverse cursor-pointer">
                             <FormControl>
                               <RadioGroupItem value="client" id="client" />
                             </FormControl>
@@ -261,15 +258,10 @@ export const RegisterPage: React.FC = () => {
                               htmlFor="client"
                               className="font-normal cursor-pointer flex items-center gap-2"
                             >
-                              <Icon
-                                icon="heroicons:user"
-                                width={18}
-                                height={18}
-                              />
                               عميل
                             </FormLabel>
                           </FormItem>
-                          <FormItem className="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                          <FormItem className="flex items-center space-x-2 ltr:space-x-reverse cursor-pointer">
                             <FormControl>
                               <RadioGroupItem value="worker" id="worker" />
                             </FormControl>
@@ -277,11 +269,6 @@ export const RegisterPage: React.FC = () => {
                               htmlFor="worker"
                               className="font-normal cursor-pointer flex items-center gap-2"
                             >
-                              <Icon
-                                icon="fluent-emoji:office-worker"
-                                width={18}
-                                height={18}
-                              />
                               عامل
                             </FormLabel>
                           </FormItem>
