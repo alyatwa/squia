@@ -1,6 +1,6 @@
-mutation CreateOrder($createOrderInput: CreateOrderInput!) {
+mutation CreateOrder($createOrderInput: OrderCreateInput!) {
   createOrder(createOrderInput: $createOrderInput) {
-    isApproved
     amount
+    id
   }
 }

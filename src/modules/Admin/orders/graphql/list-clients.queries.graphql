@@ -1,0 +1,10 @@
+query FindAllClients {
+  findAllClients {
+    id
+    name
+    email
+    client {
+      id
+    }
+  }
+}

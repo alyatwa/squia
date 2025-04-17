@@ -1,0 +1,20 @@
+query Order($orderId: ID!) {
+  order(id: $orderId) {
+    amount
+    id
+    description
+    initialPayment
+    finalPayment
+    title
+    status
+    isApproved
+    createdAt
+    client {
+      id
+      user {
+        id
+        name
+      }
+    }
+  }
+}
