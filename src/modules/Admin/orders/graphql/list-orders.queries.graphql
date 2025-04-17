@@ -8,6 +8,7 @@ query Orders($pagination: PaginationDto, $where: OrderWhereInput) {
     status
     isApproved
     finalPayment
+    paymentStatus
 
     client {
       user {

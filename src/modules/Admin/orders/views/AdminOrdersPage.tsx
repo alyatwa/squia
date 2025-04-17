@@ -20,6 +20,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui";
 import { useRemoveOrder } from "../hooks/useRemoveOrder";
+import { UpdateOrderForm } from "../components/update-order-form";
 
 export const AdminOrdersPage = () => {
   const [activeTab, setActiveTab] = useState<OrderUIStatus>(
@@ -140,11 +141,6 @@ export const AdminOrdersPage = () => {
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     return date.toTimeString().substring(0, 5); // HH:MM
-  };
-
-  // Handle delete order
-  const handleDeleteOrder = (orderId: string) => {
-    console.log(`Delete order with ID: ${orderId}`);
   };
 
   // Common empty state component
@@ -269,17 +265,24 @@ export const AdminOrdersPage = () => {
                 </TableCell>
                 <TableCell className="text-left">
                   <div className="flex items-center space-x-2 ltr:space-x-reverse">
-                    <a
-                      href={`/admin/edit-order/${order.id}`}
-                      className="text-blue-600 hover:text-blue-900"
-                      title="تعديل الطلب"
-                    >
-                      <Icon
-                        icon="heroicons:pencil-square"
-                        width="20"
-                        height="20"
-                      />
-                    </a>
+                    {/* update button */}
+                    <UpdateOrderForm
+                      order={order}
+                      button={
+                        <Button
+                          variant={"ghost"}
+                          size="icon"
+                          className="text-yellow-600 hover:text-yellow-900"
+                          title="تحديث الطلب"
+                        >
+                          <Icon
+                            icon="heroicons:pencil-square"
+                            width="20"
+                            height="20"
+                          />
+                        </Button>
+                      }
+                    />
 
                     {activeTab === OrderUIStatus.UNAPPROVED && (
                       <a

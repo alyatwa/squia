@@ -1,9 +1,12 @@
 export enum OrderStatus {
   PENDING = "pending",
   APPROVED = "approved",
-  REJECTED = "rejected",
-  SHIPPED = "shipped",
-  DELIVERED = "delivered",
+  UNAPPROVED = "unapproved",
+  COMPLETED = "completed",
+  REFUND = "refund",
+  CANCELLED = "cancelled",
+  NEW = "new",
+  IN_PROGRESS = "in_progress",
 }
 
 export enum OrderType {
