@@ -16,7 +16,6 @@ export const useUpdateOrder = () => {
       toast.success(
         "Order updated successfully, redirecting to orders page..."
       );
-      router.push(`/admin/orders`);
     },
     onError: (error) => {
       toast.error(error.message);

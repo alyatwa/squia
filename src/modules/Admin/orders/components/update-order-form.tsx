@@ -122,14 +122,14 @@ export const UpdateOrderForm: React.FC<UpdateOrderFormProps> = ({
         {/* <Button variant="outline">Update Order</Button> */}
         {button}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] ">
         <DialogHeader>
           <DialogTitle>Update Order</DialogTitle>
           <DialogDescription>
             Update the order details and click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <ScrollArea className="max-h-[80vh]">
+        <ScrollArea className="max-h-[70vh]">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}

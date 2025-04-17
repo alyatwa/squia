@@ -284,7 +284,7 @@ export const AdminOrdersPage = () => {
                       }
                     />
 
-                    {activeTab === OrderUIStatus.UNAPPROVED && (
+                    {/* {activeTab === OrderUIStatus.UNAPPROVED && (
                       <a
                         href={`/admin/order-payment/${order.id}`}
                         className="text-green-600 hover:text-green-900"
@@ -296,9 +296,9 @@ export const AdminOrdersPage = () => {
                           height="20"
                         />
                       </a>
-                    )}
+                    )} */}
 
-                    {activeTab === OrderUIStatus.APPROVED && (
+                    {/* {activeTab === OrderUIStatus.APPROVED && (
                       <button
                         type="button"
                         className="text-green-600 hover:text-green-900"
@@ -310,9 +310,9 @@ export const AdminOrdersPage = () => {
                           height="20"
                         />
                       </button>
-                    )}
+                    )} */}
 
-                    {activeTab === OrderUIStatus.UNAPPROVED && (
+                    {/* {activeTab === OrderUIStatus.UNAPPROVED && (
                       <div className="status-dropdown relative">
                         <button
                           type="button"
@@ -326,7 +326,7 @@ export const AdminOrdersPage = () => {
                           />
                         </button>
                       </div>
-                    )}
+                    )} */}
 
                     <AlertConfirm
                       onConfirm={() => handleDeleteOrder(order.id)}
