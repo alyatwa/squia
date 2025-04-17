@@ -16,8 +16,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 type Documents = {
     "mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {\n  createNoonCheckout(input: $input) {\n    checkoutId\n    redirectUrl\n  }\n}": typeof types.CreateNoonCheckoutDocument,
     "mutation CreateOrder($createOrderInput: OrderCreateInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    amount\n    id\n  }\n}": typeof types.CreateOrderDocument,
+    "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}": typeof types.RemoveOrderDocument,
     "query Order($orderId: ID!) {\n  order(id: $orderId) {\n    amount\n    id\n    description\n    initialPayment\n    finalPayment\n    title\n    status\n    isApproved\n    createdAt\n    client {\n      id\n      user {\n        id\n        name\n      }\n    }\n  }\n}": typeof types.OrderDocument,
     "query FindAllClients {\n  findAllClients {\n    id\n    name\n    email\n    client {\n      id\n    }\n  }\n}": typeof types.FindAllClientsDocument,
+    "query Orders($pagination: PaginationDto, $where: OrderWhereInput) {\n  orders(pagination: $pagination, where: $where) {\n    amount\n    id\n    createdAt\n    title\n    amount\n    status\n    isApproved\n    finalPayment\n    client {\n      user {\n        username\n      }\n    }\n  }\n}": typeof types.OrdersDocument,
+    "mutation UpdateOrder($updateOrderId: String!, $updateOrderInput: OrderUpdateInput!) {\n  updateOrder(id: $updateOrderId, updateOrderInput: $updateOrderInput) {\n    id\n  }\n}": typeof types.UpdateOrderDocument,
     "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    adminCommission\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": typeof types.PricingListDocument,
     "mutation Login($loginInput: LoginInput!) {\n  login(loginInput: $loginInput) {\n    accessToken\n  }\n}": typeof types.LoginDocument,
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": typeof types.SignupDocument,
@@ -25,8 +28,11 @@ type Documents = {
 const documents: Documents = {
     "mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {\n  createNoonCheckout(input: $input) {\n    checkoutId\n    redirectUrl\n  }\n}": types.CreateNoonCheckoutDocument,
     "mutation CreateOrder($createOrderInput: OrderCreateInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    amount\n    id\n  }\n}": types.CreateOrderDocument,
+    "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}": types.RemoveOrderDocument,
     "query Order($orderId: ID!) {\n  order(id: $orderId) {\n    amount\n    id\n    description\n    initialPayment\n    finalPayment\n    title\n    status\n    isApproved\n    createdAt\n    client {\n      id\n      user {\n        id\n        name\n      }\n    }\n  }\n}": types.OrderDocument,
     "query FindAllClients {\n  findAllClients {\n    id\n    name\n    email\n    client {\n      id\n    }\n  }\n}": types.FindAllClientsDocument,
+    "query Orders($pagination: PaginationDto, $where: OrderWhereInput) {\n  orders(pagination: $pagination, where: $where) {\n    amount\n    id\n    createdAt\n    title\n    amount\n    status\n    isApproved\n    finalPayment\n    client {\n      user {\n        username\n      }\n    }\n  }\n}": types.OrdersDocument,
+    "mutation UpdateOrder($updateOrderId: String!, $updateOrderInput: OrderUpdateInput!) {\n  updateOrder(id: $updateOrderId, updateOrderInput: $updateOrderInput) {\n    id\n  }\n}": types.UpdateOrderDocument,
     "query PricingList {\n  pricingList {\n    specialty {\n      name\n      id\n    }\n    adminCommission\n    nationality {\n      id\n      name\n    }\n    activity {\n      name\n      id\n    }\n    maxWage\n    minWage\n    id\n  }\n}": types.PricingListDocument,
     "mutation Login($loginInput: LoginInput!) {\n  login(loginInput: $loginInput) {\n    accessToken\n  }\n}": types.LoginDocument,
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": types.SignupDocument,
@@ -57,11 +63,23 @@ export function graphql(source: "mutation CreateOrder($createOrderInput: OrderCr
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}"): (typeof documents)["mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "query Order($orderId: ID!) {\n  order(id: $orderId) {\n    amount\n    id\n    description\n    initialPayment\n    finalPayment\n    title\n    status\n    isApproved\n    createdAt\n    client {\n      id\n      user {\n        id\n        name\n      }\n    }\n  }\n}"): (typeof documents)["query Order($orderId: ID!) {\n  order(id: $orderId) {\n    amount\n    id\n    description\n    initialPayment\n    finalPayment\n    title\n    status\n    isApproved\n    createdAt\n    client {\n      id\n      user {\n        id\n        name\n      }\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query FindAllClients {\n  findAllClients {\n    id\n    name\n    email\n    client {\n      id\n    }\n  }\n}"): (typeof documents)["query FindAllClients {\n  findAllClients {\n    id\n    name\n    email\n    client {\n      id\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Orders($pagination: PaginationDto, $where: OrderWhereInput) {\n  orders(pagination: $pagination, where: $where) {\n    amount\n    id\n    createdAt\n    title\n    amount\n    status\n    isApproved\n    finalPayment\n    client {\n      user {\n        username\n      }\n    }\n  }\n}"): (typeof documents)["query Orders($pagination: PaginationDto, $where: OrderWhereInput) {\n  orders(pagination: $pagination, where: $where) {\n    amount\n    id\n    createdAt\n    title\n    amount\n    status\n    isApproved\n    finalPayment\n    client {\n      user {\n        username\n      }\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateOrder($updateOrderId: String!, $updateOrderInput: OrderUpdateInput!) {\n  updateOrder(id: $updateOrderId, updateOrderInput: $updateOrderInput) {\n    id\n  }\n}"): (typeof documents)["mutation UpdateOrder($updateOrderId: String!, $updateOrderInput: OrderUpdateInput!) {\n  updateOrder(id: $updateOrderId, updateOrderInput: $updateOrderInput) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

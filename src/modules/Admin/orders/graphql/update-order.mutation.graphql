@@ -1,0 +1,8 @@
+mutation UpdateOrder(
+  $updateOrderId: String!
+  $updateOrderInput: OrderUpdateInput!
+) {
+  updateOrder(id: $updateOrderId, updateOrderInput: $updateOrderInput) {
+    id
+  }
+}

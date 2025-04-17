@@ -1,0 +1,18 @@
+query Orders($pagination: PaginationDto, $where: OrderWhereInput) {
+  orders(pagination: $pagination, where: $where) {
+    amount
+    id
+    createdAt
+    title
+    amount
+    status
+    isApproved
+    finalPayment
+
+    client {
+      user {
+        username
+      }
+    }
+  }
+}

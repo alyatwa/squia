@@ -6,10 +6,10 @@ export enum OrderStatus {
   DELIVERED = "delivered",
 }
 
-export enum OrderType{
-    FRIDGES = "fridges",
-    PACKAGES = "packages"
-  }
+export enum OrderType {
+  FRIDGES = "fridges",
+  PACKAGES = "packages",
+}
 
 export enum OrderCategory {
   PACKAGE_10 = "package_10",
@@ -19,6 +19,17 @@ export enum OrderCategory {
 export enum OrderServiceType {
   DELIVERY = "delivery",
   PICKUP = "pickup",
+}
+
+// Updated order status to match the UI tabs
+export enum OrderUIStatus {
+  UNAPPROVED = "unapproved",
+  APPROVED = "approved",
+  NEW = "new",
+  PENDING = "pending",
+  COMPLETED = "completed",
+  REFUND = "refund",
+  CANCELLED = "cancelled",
 }
 
 export interface Order {
