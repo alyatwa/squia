@@ -1,0 +1,6 @@
+mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {
+  createNoonCheckout(input: $input) {
+    checkoutId
+    redirectUrl
+  }
+}

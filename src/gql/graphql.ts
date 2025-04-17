@@ -368,7 +368,7 @@ export type Client = {
   orders?: Maybe<Array<Order>>;
   payments?: Maybe<Array<Payment>>;
   updatedAt: Scalars['DateTime']['output'];
-  user: User;
+  user?: Maybe<User>;
   userId: Scalars['String']['output'];
   whatsAppMessages?: Maybe<Array<WhatsAppMessage>>;
 };
@@ -735,6 +735,10 @@ export type ClientWhereUniqueInput = {
   user?: InputMaybe<UserScalarRelationFilter>;
   userId?: InputMaybe<Scalars['String']['input']>;
   whatsAppMessages?: InputMaybe<WhatsAppMessageListRelationFilter>;
+};
+
+export type CreateNoonCheckoutInput = {
+  orderId: Scalars['String']['input'];
 };
 
 export type CreateOrderWorkerRequirementInput = {
@@ -1667,6 +1671,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addOrderWorkerRequirement: Order;
   approveOrder: Order;
+  createNoonCheckout: NoonCheckoutResponse;
   createOrder: Order;
   createPricing: Pricing;
   createUser: User;
@@ -1693,6 +1698,11 @@ export type MutationAddOrderWorkerRequirementArgs = {
 
 export type MutationApproveOrderArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationCreateNoonCheckoutArgs = {
+  input: CreateNoonCheckoutInput;
 };
 
 
@@ -2047,6 +2057,12 @@ export type NestedStringNullableFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type NoonCheckoutResponse = {
+  __typename?: 'NoonCheckoutResponse';
+  checkoutId: Scalars['String']['output'];
+  redirectUrl: Scalars['String']['output'];
+};
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -2067,7 +2083,7 @@ export type Order = {
   __typename?: 'Order';
   _count: OrderCount;
   amount: Scalars['Float']['output'];
-  client: Client;
+  client?: Maybe<Client>;
   clientId: Scalars['String']['output'];
   completedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt: Scalars['DateTime']['output'];
@@ -5906,6 +5922,13 @@ export type WorkerWhereUniqueInput = {
   whatsAppMessages?: InputMaybe<WhatsAppMessageListRelationFilter>;
 };
 
+export type CreateNoonCheckoutMutationVariables = Exact<{
+  input: CreateNoonCheckoutInput;
+}>;
+
+
+export type CreateNoonCheckoutMutation = { __typename?: 'Mutation', createNoonCheckout: { __typename?: 'NoonCheckoutResponse', checkoutId: string, redirectUrl: string } };
+
 export type CreateOrderMutationVariables = Exact<{
   createOrderInput: OrderCreateInput;
 }>;
@@ -5918,7 +5941,7 @@ export type OrderQueryVariables = Exact<{
 }>;
 
 
-export type OrderQuery = { __typename?: 'Query', order: { __typename?: 'Order', amount: number, id: string, description?: string | null, initialPayment?: number | null, finalPayment?: number | null, title: string, status: string, isApproved: boolean, createdAt: any, client: { __typename?: 'Client', id: string, user: { __typename?: 'User', id: string, name: string } } } };
+export type OrderQuery = { __typename?: 'Query', order: { __typename?: 'Order', amount: number, id: string, description?: string | null, initialPayment?: number | null, finalPayment?: number | null, title: string, status: string, isApproved: boolean, createdAt: any, client?: { __typename?: 'Client', id: string, user?: { __typename?: 'User', id: string, name: string } | null } | null } };
 
 export type FindAllClientsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5945,6 +5968,7 @@ export type SignupMutationVariables = Exact<{
 export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthToken', accessToken: string } };
 
 
+export const CreateNoonCheckoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateNoonCheckout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateNoonCheckoutInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createNoonCheckout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkoutId"}},{"kind":"Field","name":{"kind":"Name","value":"redirectUrl"}}]}}]}}]} as unknown as DocumentNode<CreateNoonCheckoutMutation, CreateNoonCheckoutMutationVariables>;
 export const CreateOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createOrderInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createOrderInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createOrderInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateOrderMutation, CreateOrderMutationVariables>;
 export const OrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Order"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"initialPayment"}},{"kind":"Field","name":{"kind":"Name","value":"finalPayment"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isApproved"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"client"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<OrderQuery, OrderQueryVariables>;
 export const FindAllClientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAllClients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAllClients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"client"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<FindAllClientsQuery, FindAllClientsQueryVariables>;

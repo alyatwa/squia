@@ -1,14 +1,15 @@
 "use client";
 import { Button } from "@/components/ui";
-import { OrderDocument } from "@/gql/graphql";
-import { useQuery } from "@apollo/client";
+import { CreateNoonCheckoutDocument, OrderDocument } from "@/gql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const AdminOrderPayment: React.FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
-
+  const router = useRouter();
   const { data, loading } = useQuery(OrderDocument, {
     variables: {
       orderId,
@@ -16,6 +17,28 @@ export const AdminOrderPayment: React.FC = () => {
     fetchPolicy: "network-only",
     skip: !orderId,
   });
+
+  const [createCheckout, { loading: loadingCheckout }] = useMutation(
+    CreateNoonCheckoutDocument,
+    {
+      onCompleted: ({ createNoonCheckout }) => {
+        router.push(createNoonCheckout.redirectUrl);
+        toast.success("Redirecting to payment page...");
+      },
+      onError: (error) => {
+        console.error("Error creating payment link:", error);
+        toast.error("حدث خطأ أثناء إنشاء رابط الدفع. يرجى المحاولة مرة أخرى.");
+      },
+    }
+  );
+
+  const handlePayment = async () => {
+    await createCheckout({
+      variables: {
+        input: { orderId },
+      },
+    });
+  };
   return (
     <>
       {/* تفاصيل الطلب والفاتورة */}
@@ -41,7 +64,7 @@ export const AdminOrderPayment: React.FC = () => {
             <div className="flex justify-between border-b border-gray-100 pb-3">
               <span className="text-gray-600">العميل:</span>
               <span className="font-medium text-dark">
-                {data?.order.client.user.name}
+                {data?.order.client?.user?.name}
               </span>
             </div>
 
@@ -258,7 +281,9 @@ export const AdminOrderPayment: React.FC = () => {
           {/* زر الدفع */}
           <div className="flex justify-center mt-6">
             <Button
+              onClick={() => handlePayment()}
               type="button"
+              disabled={loading || loadingCheckout}
               className="inline-flex items-center px-8 py-6 border border-transparent text-lg font-bold rounded-lg shadow-lg text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-4 focus:ring-accent-300 transition-all duration-300 transform hover:scale-105"
             >
               <Icon
