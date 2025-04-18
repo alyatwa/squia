@@ -257,7 +257,7 @@ export const AddOrderForm = () => {
     alert("تم تأكيد العقد بنجاح");
   }, []);
 
-  const { addOrder } = useAddOrder();
+  const { addOrder, loading: addOrderLoading } = useAddOrder();
   const onSubmit = async (data: OrderFormValues) => {
     console.log("Form submitted:", data);
     await addOrder({
@@ -752,11 +752,12 @@ export const AddOrderForm = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 mt-6">
+              <div className="flex justify-end items-center gap-2 mt-6">
                 <Button variant="outline" asChild>
                   <Link href="/admin/orders">إلغاء</Link>
                 </Button>
                 <Button
+                  loading={addOrderLoading}
                   type="submit"
                   className="bg-accent-600 hover:bg-accent-700"
                 >

@@ -1,0 +1,5 @@
+mutation DeleteInterview($where: InterviewWhereUniqueInput!) {
+  deleteInterview(where: $where) {
+    id
+  }
+}

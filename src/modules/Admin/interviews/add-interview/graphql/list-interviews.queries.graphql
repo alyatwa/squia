@@ -1,0 +1,27 @@
+query Interviews($where: InterviewWhereInput) {
+  interviews(where: $where) {
+    duration
+    dateTime
+    meetingType
+    scheduledAt
+    status
+    worker {
+      id
+      user {
+        id
+        name
+      }
+    }
+    order {
+      id
+      title
+    }
+    Client {
+      companyType
+      id
+      user {
+        name
+      }
+    }
+  }
+}

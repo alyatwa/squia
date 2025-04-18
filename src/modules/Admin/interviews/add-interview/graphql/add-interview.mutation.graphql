@@ -1,0 +1,5 @@
+mutation CreateInterview($data: InterviewCreateInput!) {
+  createInterview(data: $data) {
+    id
+  }
+}

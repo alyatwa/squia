@@ -14,6 +14,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "mutation CreateInterview($data: InterviewCreateInput!) {\n  createInterview(data: $data) {\n    id\n  }\n}": typeof types.CreateInterviewDocument,
+    "query Interviews($where: InterviewWhereInput) {\n  interviews(where: $where) {\n    duration\n    dateTime\n    meetingType\n    scheduledAt\n    status\n    worker {\n      id\n      user {\n        id\n        name\n      }\n    }\n    order {\n      id\n      title\n    }\n    Client {\n      companyType\n      id\n      user {\n        name\n      }\n    }\n  }\n}": typeof types.InterviewsDocument,
+    "mutation DeleteInterview($where: InterviewWhereUniqueInput!) {\n  deleteInterview(where: $where) {\n    id\n  }\n}": typeof types.DeleteInterviewDocument,
     "mutation CreateNoonCheckout($orderId: String!, $purpose: String) {\n  createNoonCheckout(orderId: $orderId, purpose: $purpose) {\n    checkoutId\n    paymentId\n    redirectUrl\n  }\n}": typeof types.CreateNoonCheckoutDocument,
     "mutation CreateOrder($createOrderInput: OrderCreateInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    amount\n    id\n  }\n}": typeof types.CreateOrderDocument,
     "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}": typeof types.RemoveOrderDocument,
@@ -26,6 +29,9 @@ type Documents = {
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": typeof types.SignupDocument,
 };
 const documents: Documents = {
+    "mutation CreateInterview($data: InterviewCreateInput!) {\n  createInterview(data: $data) {\n    id\n  }\n}": types.CreateInterviewDocument,
+    "query Interviews($where: InterviewWhereInput) {\n  interviews(where: $where) {\n    duration\n    dateTime\n    meetingType\n    scheduledAt\n    status\n    worker {\n      id\n      user {\n        id\n        name\n      }\n    }\n    order {\n      id\n      title\n    }\n    Client {\n      companyType\n      id\n      user {\n        name\n      }\n    }\n  }\n}": types.InterviewsDocument,
+    "mutation DeleteInterview($where: InterviewWhereUniqueInput!) {\n  deleteInterview(where: $where) {\n    id\n  }\n}": types.DeleteInterviewDocument,
     "mutation CreateNoonCheckout($orderId: String!, $purpose: String) {\n  createNoonCheckout(orderId: $orderId, purpose: $purpose) {\n    checkoutId\n    paymentId\n    redirectUrl\n  }\n}": types.CreateNoonCheckoutDocument,
     "mutation CreateOrder($createOrderInput: OrderCreateInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    amount\n    id\n  }\n}": types.CreateOrderDocument,
     "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}": types.RemoveOrderDocument,
@@ -52,6 +58,18 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateInterview($data: InterviewCreateInput!) {\n  createInterview(data: $data) {\n    id\n  }\n}"): (typeof documents)["mutation CreateInterview($data: InterviewCreateInput!) {\n  createInterview(data: $data) {\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Interviews($where: InterviewWhereInput) {\n  interviews(where: $where) {\n    duration\n    dateTime\n    meetingType\n    scheduledAt\n    status\n    worker {\n      id\n      user {\n        id\n        name\n      }\n    }\n    order {\n      id\n      title\n    }\n    Client {\n      companyType\n      id\n      user {\n        name\n      }\n    }\n  }\n}"): (typeof documents)["query Interviews($where: InterviewWhereInput) {\n  interviews(where: $where) {\n    duration\n    dateTime\n    meetingType\n    scheduledAt\n    status\n    worker {\n      id\n      user {\n        id\n        name\n      }\n    }\n    order {\n      id\n      title\n    }\n    Client {\n      companyType\n      id\n      user {\n        name\n      }\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation DeleteInterview($where: InterviewWhereUniqueInput!) {\n  deleteInterview(where: $where) {\n    id\n  }\n}"): (typeof documents)["mutation DeleteInterview($where: InterviewWhereUniqueInput!) {\n  deleteInterview(where: $where) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
