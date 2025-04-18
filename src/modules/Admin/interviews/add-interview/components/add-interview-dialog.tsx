@@ -15,7 +15,11 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useMutation } from "@apollo/client";
-import { CreateInterviewDocument } from "@/gql/graphql";
+import {
+  CreateInterviewDocument,
+  InterviewStatus,
+  MeetingType,
+} from "@/gql/graphql";
 import { useToast } from "@/hooks/use-toast";
 import {
   Select,
@@ -48,7 +52,7 @@ export const AddInterviewDialog = ({
     workerId: "",
     clientId: "",
     orderId: "",
-    meetingType: "",
+    meetingType: MeetingType.Online,
     duration: 60, // Default duration in minutes
     notes: "",
   });
@@ -83,7 +87,7 @@ export const AddInterviewDialog = ({
       workerId: "",
       clientId: "",
       orderId: "",
-      meetingType: "",
+      meetingType: MeetingType.Online,
       duration: 60,
       notes: "",
     });
@@ -120,7 +124,7 @@ export const AddInterviewDialog = ({
           duration: interviewData.duration,
           dateTime: dateTime.toISOString(),
           notes: interviewData.notes || undefined,
-          status: "pending", // Default status
+          status: InterviewStatus.Pending, // Default status
         },
       },
     });
@@ -273,7 +277,10 @@ export const AddInterviewDialog = ({
                 <Select
                   value={interviewData.meetingType}
                   onValueChange={(value) =>
-                    setInterviewData({ ...interviewData, meetingType: value })
+                    setInterviewData({
+                      ...interviewData,
+                      meetingType: value as MeetingType,
+                    })
                   }
                   required
                 >
@@ -281,8 +288,11 @@ export const AddInterviewDialog = ({
                     <SelectValue placeholder="اختر نوع المقابلة" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ONLINE">عن بعد</SelectItem>
-                    <SelectItem value="IN_PERSON">شخصية</SelectItem>
+                    {Object.values(MeetingType).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type === MeetingType.Online ? "عن بعد" : "شخصية"}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

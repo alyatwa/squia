@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { cn } from "@/lib/utils";
-import { InterviewsDocument } from "@/gql/graphql";
+import {
+  InterviewsDocument,
+  InterviewStatus as GQLInterviewStatus,
+} from "@/gql/graphql";
 import { AlertConfirm } from "@/components/shared/alert-confirm";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,20 +20,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AddInterviewDialog } from "../components/add-interview-dialog";
+import { AddInterviewDialog } from "../../add-interview/components/add-interview-dialog";
 
 // Define interview status types with UI properties
 export enum InterviewStatus {
-  PENDING = "pending",
-  CONFIRMED = "confirmed",
-  COMPLETED = "completed",
-  CANCELLED = "cancelled",
+  Pending = "pending",
+  Confirmed = "confirmed",
+  Completed = "completed",
+  Cancelled = "cancelled",
 }
 
 export const AdminInterviewsPage = () => {
   // Active tab state
   const [activeTab, setActiveTab] = useState<InterviewStatus>(
-    InterviewStatus.PENDING
+    InterviewStatus.Pending
   );
 
   // Queries for each status tab
@@ -39,7 +42,7 @@ export const AdminInterviewsPage = () => {
     loading: pendingLoading,
     refetch: refetchPending,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: InterviewStatus.PENDING } } },
+    variables: { where: { status: { equals: GQLInterviewStatus.Pending } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -48,7 +51,7 @@ export const AdminInterviewsPage = () => {
     loading: confirmedLoading,
     refetch: refetchConfirmed,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: InterviewStatus.CONFIRMED } } },
+    variables: { where: { status: { equals: GQLInterviewStatus.Confirmed } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -57,7 +60,7 @@ export const AdminInterviewsPage = () => {
     loading: completedLoading,
     refetch: refetchCompleted,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: InterviewStatus.COMPLETED } } },
+    variables: { where: { status: { equals: GQLInterviewStatus.Completed } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -66,7 +69,7 @@ export const AdminInterviewsPage = () => {
     loading: cancelledLoading,
     refetch: refetchCancelled,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: InterviewStatus.CANCELLED } } },
+    variables: { where: { status: { equals: GQLInterviewStatus.Canceled } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -80,7 +83,7 @@ export const AdminInterviewsPage = () => {
 
   // Organize the data
   const interviewsByStatus = {
-    [InterviewStatus.PENDING]: {
+    [InterviewStatus.Pending]: {
       data: pendingData?.interviews || [],
       loading: pendingLoading,
       icon: "fluent-emoji:hourglass-not-done",
@@ -89,7 +92,7 @@ export const AdminInterviewsPage = () => {
       emptyDescription: "لم يتم العثور على أي مقابلات في الانتظار في النظام.",
       badgeClass: "bg-yellow-100 text-yellow-800",
     },
-    [InterviewStatus.CONFIRMED]: {
+    [InterviewStatus.Confirmed]: {
       data: confirmedData?.interviews || [],
       loading: confirmedLoading,
       icon: "fluent-emoji:check-mark-button",
@@ -98,7 +101,7 @@ export const AdminInterviewsPage = () => {
       emptyDescription: "لم يتم العثور على أي مقابلات مؤكدة في النظام.",
       badgeClass: "bg-blue-100 text-blue-800",
     },
-    [InterviewStatus.COMPLETED]: {
+    [InterviewStatus.Completed]: {
       data: completedData?.interviews || [],
       loading: completedLoading,
       icon: "fluent-emoji:check-mark-button",
@@ -107,7 +110,7 @@ export const AdminInterviewsPage = () => {
       emptyDescription: "لم يتم العثور على أي مقابلات مكتملة في النظام.",
       badgeClass: "bg-green-100 text-green-800",
     },
-    [InterviewStatus.CANCELLED]: {
+    [InterviewStatus.Cancelled]: {
       data: cancelledData?.interviews || [],
       loading: cancelledLoading,
       icon: "fluent-emoji:counterclockwise-arrows-button",
@@ -440,20 +443,20 @@ export const AdminInterviewsPage = () => {
                             <span
                               className={cn(
                                 "px-2 py-1 rounded-full text-xs font-medium",
-                                status === InterviewStatus.PENDING
+                                status === InterviewStatus.Pending
                                   ? "bg-yellow-100 text-yellow-800"
-                                  : status === InterviewStatus.CONFIRMED
+                                  : status === InterviewStatus.Confirmed
                                   ? "bg-blue-100 text-blue-800"
-                                  : status === InterviewStatus.COMPLETED
+                                  : status === InterviewStatus.Completed
                                   ? "bg-green-100 text-green-800"
                                   : "bg-red-100 text-red-800"
                               )}
                             >
-                              {status === InterviewStatus.PENDING
+                              {status === InterviewStatus.Pending
                                 ? "قيد الانتظار"
-                                : status === InterviewStatus.CONFIRMED
+                                : status === InterviewStatus.Confirmed
                                 ? "مؤكدة"
-                                : status === InterviewStatus.COMPLETED
+                                : status === InterviewStatus.Completed
                                 ? "مكتملة"
                                 : "ملغية"}
                             </span>
