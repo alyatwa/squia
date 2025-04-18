@@ -209,24 +209,22 @@ export const AdminInterviewsPage = () => {
             <AddInterviewDialog
               onSuccess={refetchAllInterviews}
               trigger={
-                <Button className="inline-flex items-center px-5 py-3 bg-gradient-to-l from-teal-600 to-teal-500 text-white font-medium rounded-xl shadow-lg hover:shadow-xl hover:from-teal-500 hover:to-teal-400 transform hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
-                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-                  <span className="absolute -inset-x-1 bottom-0 h-1 bg-teal-300 opacity-50 rounded-full"></span>
-                  <span className="relative flex items-center">
-                    <span className="flex items-center justify-center bg-opacity-20 rounded-full p-1.5 mr-2">
-                      <Icon
-                        icon="heroicons:plus"
-                        className="text-white"
-                        width="18"
-                        height="18"
-                      />
-                    </span>
-                    <span>إنشاء مقابلة جديدة</span>
-                  </span>
+                <Button
+                  rightSection={
+                    <Icon
+                      icon="heroicons:plus"
+                      className="text-white"
+                      width="18"
+                      height="18"
+                    />
+                  }
+                  className="inline-flex items-center px-5 py-4 bg-gradient-to-l from-teal-600 to-teal-500 text-white font-medium rounded-xl shadow-lg hover:shadow-xl hover:from-teal-500 hover:to-teal-400 transform hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+                >
+                  <span>إنشاء مقابلة جديدة</span>
                 </Button>
               }
             />
-            <button
+            {/* <button
               type="button"
               className="inline-flex items-center px-5 py-3 bg-gradient-to-l from-blue-600 to-blue-500 text-white font-medium rounded-xl shadow-lg hover:shadow-xl hover:from-blue-500 hover:to-blue-400 transform hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
             >
@@ -243,13 +241,13 @@ export const AdminInterviewsPage = () => {
                 </span>
                 <span>إرسال إشعارات المقابلات</span>
               </span>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
 
       {/* Search and Filter Card */}
-      <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
+      {/* <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div className="w-full md:w-1/2">
             <label
@@ -314,7 +312,7 @@ export const AdminInterviewsPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Interviews Tabs and Content */}
       <div className="bg-white rounded-2xl shadow-md p-6 mb-8 fade-in-up fade-in-up-2">
