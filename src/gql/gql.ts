@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {\n  createNoonCheckout(input: $input) {\n    checkoutId\n    redirectUrl\n  }\n}": typeof types.CreateNoonCheckoutDocument,
+    "mutation CreateNoonCheckout($orderId: String!, $purpose: String) {\n  createNoonCheckout(orderId: $orderId, purpose: $purpose) {\n    checkoutId\n    paymentId\n    redirectUrl\n  }\n}": typeof types.CreateNoonCheckoutDocument,
     "mutation CreateOrder($createOrderInput: OrderCreateInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    amount\n    id\n  }\n}": typeof types.CreateOrderDocument,
     "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}": typeof types.RemoveOrderDocument,
     "query Order($orderId: ID!) {\n  order(id: $orderId) {\n    amount\n    id\n    description\n    initialPayment\n    finalPayment\n    title\n    status\n    isApproved\n    createdAt\n    client {\n      id\n      user {\n        id\n        name\n      }\n    }\n  }\n}": typeof types.OrderDocument,
@@ -26,7 +26,7 @@ type Documents = {
     "mutation Signup($signupInput: SignupInput!) {\n  signup(signupInput: $signupInput) {\n    accessToken\n  }\n}": typeof types.SignupDocument,
 };
 const documents: Documents = {
-    "mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {\n  createNoonCheckout(input: $input) {\n    checkoutId\n    redirectUrl\n  }\n}": types.CreateNoonCheckoutDocument,
+    "mutation CreateNoonCheckout($orderId: String!, $purpose: String) {\n  createNoonCheckout(orderId: $orderId, purpose: $purpose) {\n    checkoutId\n    paymentId\n    redirectUrl\n  }\n}": types.CreateNoonCheckoutDocument,
     "mutation CreateOrder($createOrderInput: OrderCreateInput!) {\n  createOrder(createOrderInput: $createOrderInput) {\n    amount\n    id\n  }\n}": types.CreateOrderDocument,
     "mutation RemoveOrder($removeOrderId: ID!) {\n  removeOrder(id: $removeOrderId) {\n    id\n  }\n}": types.RemoveOrderDocument,
     "query Order($orderId: ID!) {\n  order(id: $orderId) {\n    amount\n    id\n    description\n    initialPayment\n    finalPayment\n    title\n    status\n    isApproved\n    createdAt\n    client {\n      id\n      user {\n        id\n        name\n      }\n    }\n  }\n}": types.OrderDocument,
@@ -55,7 +55,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {\n  createNoonCheckout(input: $input) {\n    checkoutId\n    redirectUrl\n  }\n}"): (typeof documents)["mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {\n  createNoonCheckout(input: $input) {\n    checkoutId\n    redirectUrl\n  }\n}"];
+export function graphql(source: "mutation CreateNoonCheckout($orderId: String!, $purpose: String) {\n  createNoonCheckout(orderId: $orderId, purpose: $purpose) {\n    checkoutId\n    paymentId\n    redirectUrl\n  }\n}"): (typeof documents)["mutation CreateNoonCheckout($orderId: String!, $purpose: String) {\n  createNoonCheckout(orderId: $orderId, purpose: $purpose) {\n    checkoutId\n    paymentId\n    redirectUrl\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

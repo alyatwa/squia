@@ -1,6 +1,8 @@
-mutation CreateNoonCheckout($input: CreateNoonCheckoutInput!) {
-  createNoonCheckout(input: $input) {
+ 
+mutation CreateNoonCheckout($orderId: String!, $purpose: String ) {
+  createNoonCheckout(orderId: $orderId, purpose: $purpose) {
     checkoutId
+    paymentId
     redirectUrl
   }
 }

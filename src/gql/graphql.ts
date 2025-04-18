@@ -94,6 +94,14 @@ export type ActivityNullableScalarRelationFilter = {
   isNot?: InputMaybe<ActivityWhereInput>;
 };
 
+export type ActivityOrderByWithRelationInput = {
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  orderRequirements?: InputMaybe<OrderWorkerRequirementOrderByRelationAggregateInput>;
+  pricings?: InputMaybe<PricingOrderByRelationAggregateInput>;
+  workers?: InputMaybe<WorkerOrderByRelationAggregateInput>;
+};
+
 export type ActivityScalarRelationFilter = {
   is?: InputMaybe<ActivityWhereInput>;
   isNot?: InputMaybe<ActivityWhereInput>;
@@ -205,10 +213,10 @@ export type ActivityWhereUniqueInput = {
 
 export type Admin = {
   __typename?: 'Admin';
+  Interview?: Maybe<Array<Interview>>;
   _count: AdminCount;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  interviews?: Maybe<Array<Interview>>;
   updatedAt: Scalars['DateTime']['output'];
   user: User;
   userId: Scalars['String']['output'];
@@ -216,13 +224,13 @@ export type Admin = {
 
 export type AdminCount = {
   __typename?: 'AdminCount';
-  interviews: Scalars['Int']['output'];
+  Interview: Scalars['Int']['output'];
 };
 
-export type AdminCreateNestedOneWithoutInterviewsInput = {
+export type AdminCreateNestedOneWithoutInterviewInput = {
   connect?: InputMaybe<AdminWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<AdminCreateOrConnectWithoutInterviewsInput>;
-  create?: InputMaybe<AdminCreateWithoutInterviewsInput>;
+  connectOrCreate?: InputMaybe<AdminCreateOrConnectWithoutInterviewInput>;
+  create?: InputMaybe<AdminCreateWithoutInterviewInput>;
 };
 
 export type AdminCreateNestedOneWithoutUserInput = {
@@ -231,8 +239,8 @@ export type AdminCreateNestedOneWithoutUserInput = {
   create?: InputMaybe<AdminCreateWithoutUserInput>;
 };
 
-export type AdminCreateOrConnectWithoutInterviewsInput = {
-  create: AdminCreateWithoutInterviewsInput;
+export type AdminCreateOrConnectWithoutInterviewInput = {
+  create: AdminCreateWithoutInterviewInput;
   where: AdminWhereUniqueInput;
 };
 
@@ -241,7 +249,7 @@ export type AdminCreateOrConnectWithoutUserInput = {
   where: AdminWhereUniqueInput;
 };
 
-export type AdminCreateWithoutInterviewsInput = {
+export type AdminCreateWithoutInterviewInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -249,9 +257,9 @@ export type AdminCreateWithoutInterviewsInput = {
 };
 
 export type AdminCreateWithoutUserInput = {
+  Interview?: InputMaybe<InterviewCreateNestedManyWithoutAdminInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviews?: InputMaybe<InterviewCreateNestedManyWithoutAdminInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -260,14 +268,23 @@ export type AdminNullableScalarRelationFilter = {
   isNot?: InputMaybe<AdminWhereInput>;
 };
 
-export type AdminUpdateOneWithoutInterviewsNestedInput = {
+export type AdminOrderByWithRelationInput = {
+  Interview?: InputMaybe<InterviewOrderByRelationAggregateInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type AdminUpdateOneWithoutInterviewNestedInput = {
   connect?: InputMaybe<AdminWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<AdminCreateOrConnectWithoutInterviewsInput>;
-  create?: InputMaybe<AdminCreateWithoutInterviewsInput>;
+  connectOrCreate?: InputMaybe<AdminCreateOrConnectWithoutInterviewInput>;
+  create?: InputMaybe<AdminCreateWithoutInterviewInput>;
   delete?: InputMaybe<AdminWhereInput>;
   disconnect?: InputMaybe<AdminWhereInput>;
-  update?: InputMaybe<AdminUpdateToOneWithWhereWithoutInterviewsInput>;
-  upsert?: InputMaybe<AdminUpsertWithoutInterviewsInput>;
+  update?: InputMaybe<AdminUpdateToOneWithWhereWithoutInterviewInput>;
+  upsert?: InputMaybe<AdminUpsertWithoutInterviewInput>;
 };
 
 export type AdminUpdateOneWithoutUserNestedInput = {
@@ -280,8 +297,8 @@ export type AdminUpdateOneWithoutUserNestedInput = {
   upsert?: InputMaybe<AdminUpsertWithoutUserInput>;
 };
 
-export type AdminUpdateToOneWithWhereWithoutInterviewsInput = {
-  data: AdminUpdateWithoutInterviewsInput;
+export type AdminUpdateToOneWithWhereWithoutInterviewInput = {
+  data: AdminUpdateWithoutInterviewInput;
   where?: InputMaybe<AdminWhereInput>;
 };
 
@@ -290,7 +307,7 @@ export type AdminUpdateToOneWithWhereWithoutUserInput = {
   where?: InputMaybe<AdminWhereInput>;
 };
 
-export type AdminUpdateWithoutInterviewsInput = {
+export type AdminUpdateWithoutInterviewInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -298,15 +315,15 @@ export type AdminUpdateWithoutInterviewsInput = {
 };
 
 export type AdminUpdateWithoutUserInput = {
+  Interview?: InputMaybe<InterviewUpdateManyWithoutAdminNestedInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  interviews?: InputMaybe<InterviewUpdateManyWithoutAdminNestedInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type AdminUpsertWithoutInterviewsInput = {
-  create: AdminCreateWithoutInterviewsInput;
-  update: AdminUpdateWithoutInterviewsInput;
+export type AdminUpsertWithoutInterviewInput = {
+  create: AdminCreateWithoutInterviewInput;
+  update: AdminUpdateWithoutInterviewInput;
   where?: InputMaybe<AdminWhereInput>;
 };
 
@@ -318,11 +335,11 @@ export type AdminUpsertWithoutUserInput = {
 
 export type AdminWhereInput = {
   AND?: InputMaybe<Array<AdminWhereInput>>;
+  Interview?: InputMaybe<InterviewListRelationFilter>;
   NOT?: InputMaybe<Array<AdminWhereInput>>;
   OR?: InputMaybe<Array<AdminWhereInput>>;
   createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
-  interviews?: InputMaybe<InterviewListRelationFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   user?: InputMaybe<UserScalarRelationFilter>;
   userId?: InputMaybe<StringFilter>;
@@ -330,11 +347,11 @@ export type AdminWhereInput = {
 
 export type AdminWhereUniqueInput = {
   AND?: InputMaybe<Array<AdminWhereInput>>;
+  Interview?: InputMaybe<InterviewListRelationFilter>;
   NOT?: InputMaybe<Array<AdminWhereInput>>;
   OR?: InputMaybe<Array<AdminWhereInput>>;
   createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviews?: InputMaybe<InterviewListRelationFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   user?: InputMaybe<UserScalarRelationFilter>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -368,7 +385,7 @@ export type Client = {
   orders?: Maybe<Array<Order>>;
   payments?: Maybe<Array<Payment>>;
   updatedAt: Scalars['DateTime']['output'];
-  user?: Maybe<User>;
+  user: User;
   userId: Scalars['String']['output'];
   whatsAppMessages?: Maybe<Array<WhatsAppMessage>>;
 };
@@ -516,17 +533,26 @@ export type ClientNullableScalarRelationFilter = {
   isNot?: InputMaybe<ClientWhereInput>;
 };
 
+export type ClientOrderByWithRelationInput = {
+  commercialRegistration?: InputMaybe<SortOrderInput>;
+  companyAddress?: InputMaybe<SortOrderInput>;
+  companyName?: InputMaybe<SortOrderInput>;
+  companyType?: InputMaybe<SortOrderInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  groupId?: InputMaybe<SortOrderInput>;
+  id?: InputMaybe<SortOrder>;
+  interviews?: InputMaybe<InterviewOrderByRelationAggregateInput>;
+  orders?: InputMaybe<OrderOrderByRelationAggregateInput>;
+  payments?: InputMaybe<PaymentOrderByRelationAggregateInput>;
+  updatedAt?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+  whatsAppMessages?: InputMaybe<WhatsAppMessageOrderByRelationAggregateInput>;
+};
+
 export type ClientScalarRelationFilter = {
   is?: InputMaybe<ClientWhereInput>;
   isNot?: InputMaybe<ClientWhereInput>;
-};
-
-export type ClientUpdateOneRequiredWithoutInterviewsNestedInput = {
-  connect?: InputMaybe<ClientWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<ClientCreateOrConnectWithoutInterviewsInput>;
-  create?: InputMaybe<ClientCreateWithoutInterviewsInput>;
-  update?: InputMaybe<ClientUpdateToOneWithWhereWithoutInterviewsInput>;
-  upsert?: InputMaybe<ClientUpsertWithoutInterviewsInput>;
 };
 
 export type ClientUpdateOneRequiredWithoutOrdersNestedInput = {
@@ -535,6 +561,16 @@ export type ClientUpdateOneRequiredWithoutOrdersNestedInput = {
   create?: InputMaybe<ClientCreateWithoutOrdersInput>;
   update?: InputMaybe<ClientUpdateToOneWithWhereWithoutOrdersInput>;
   upsert?: InputMaybe<ClientUpsertWithoutOrdersInput>;
+};
+
+export type ClientUpdateOneWithoutInterviewsNestedInput = {
+  connect?: InputMaybe<ClientWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ClientCreateOrConnectWithoutInterviewsInput>;
+  create?: InputMaybe<ClientCreateWithoutInterviewsInput>;
+  delete?: InputMaybe<ClientWhereInput>;
+  disconnect?: InputMaybe<ClientWhereInput>;
+  update?: InputMaybe<ClientUpdateToOneWithWhereWithoutInterviewsInput>;
+  upsert?: InputMaybe<ClientUpsertWithoutInterviewsInput>;
 };
 
 export type ClientUpdateOneWithoutPaymentsNestedInput = {
@@ -737,8 +773,11 @@ export type ClientWhereUniqueInput = {
   whatsAppMessages?: InputMaybe<WhatsAppMessageListRelationFilter>;
 };
 
-export type CreateNoonCheckoutInput = {
-  orderId: Scalars['String']['input'];
+export type CreateCheckoutOutput = {
+  __typename?: 'CreateCheckoutOutput';
+  checkoutId: Scalars['String']['output'];
+  paymentId: Scalars['String']['output'];
+  redirectUrl: Scalars['String']['output'];
 };
 
 export type CreateOrderWorkerRequirementInput = {
@@ -773,6 +812,33 @@ export type CreateUserInput = {
   username: Scalars['String']['input'];
 };
 
+export type CreateWorkerInput = {
+  accommodationType?: InputMaybe<Scalars['String']['input']>;
+  activityId?: InputMaybe<Scalars['String']['input']>;
+  currentCity?: InputMaybe<Scalars['String']['input']>;
+  currentSalary?: InputMaybe<Scalars['Float']['input']>;
+  currentWorkplace?: InputMaybe<Scalars['String']['input']>;
+  cvFile?: InputMaybe<Scalars['String']['input']>;
+  dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
+  expectedSalary?: InputMaybe<Scalars['Float']['input']>;
+  experience?: InputMaybe<Scalars['String']['input']>;
+  expiryDate?: InputMaybe<Scalars['DateTime']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
+  hourlyRate?: InputMaybe<Scalars['Float']['input']>;
+  iban?: InputMaybe<Scalars['String']['input']>;
+  iqamaImage?: InputMaybe<Scalars['String']['input']>;
+  iqamaNumber?: InputMaybe<Scalars['String']['input']>;
+  nationalityId?: InputMaybe<Scalars['String']['input']>;
+  portfolioFiles?: InputMaybe<Scalars['String']['input']>;
+  positionId?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['String']['input']>;
+  referralSource?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Scalars['String']['input']>;
+  specialtyId?: InputMaybe<Scalars['String']['input']>;
+  transferCount?: InputMaybe<Scalars['Int']['input']>;
+  userId: Scalars['String']['input'];
+};
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -797,6 +863,46 @@ export type DateTimeNullableFilter = {
   lte?: InputMaybe<Scalars['DateTime']['input']>;
   not?: InputMaybe<NestedDateTimeNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type EnumInterviewStatusFieldUpdateOperationsInput = {
+  set?: InputMaybe<InterviewStatus>;
+};
+
+export type EnumInterviewStatusFilter = {
+  equals?: InputMaybe<InterviewStatus>;
+  in?: InputMaybe<Array<InterviewStatus>>;
+  not?: InputMaybe<NestedEnumInterviewStatusFilter>;
+  notIn?: InputMaybe<Array<InterviewStatus>>;
+};
+
+export type EnumMeetingTypeFieldUpdateOperationsInput = {
+  set?: InputMaybe<MeetingType>;
+};
+
+export type EnumMeetingTypeFilter = {
+  equals?: InputMaybe<MeetingType>;
+  in?: InputMaybe<Array<MeetingType>>;
+  not?: InputMaybe<NestedEnumMeetingTypeFilter>;
+  notIn?: InputMaybe<Array<MeetingType>>;
+};
+
+export type EnumPaymentPurposeNullableFilter = {
+  equals?: InputMaybe<PaymentPurpose>;
+  in?: InputMaybe<Array<PaymentPurpose>>;
+  not?: InputMaybe<NestedEnumPaymentPurposeNullableFilter>;
+  notIn?: InputMaybe<Array<PaymentPurpose>>;
+};
+
+export type EnumPaymentStatusFieldUpdateOperationsInput = {
+  set?: InputMaybe<PaymentStatus>;
+};
+
+export type EnumPaymentStatusFilter = {
+  equals?: InputMaybe<PaymentStatus>;
+  in?: InputMaybe<Array<PaymentStatus>>;
+  not?: InputMaybe<NestedEnumPaymentStatusFilter>;
+  notIn?: InputMaybe<Array<PaymentStatus>>;
 };
 
 export type FloatFieldUpdateOperationsInput = {
@@ -852,33 +958,46 @@ export type IntFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type Interview = {
   __typename?: 'Interview';
+  Client?: Maybe<Client>;
   _count: InterviewCount;
   admin?: Maybe<Admin>;
   adminAttended: Scalars['Boolean']['output'];
   adminId: Scalars['String']['output'];
   adminName?: Maybe<Scalars['String']['output']>;
   availableTimes?: Maybe<Scalars['String']['output']>;
-  client: Client;
   clientAttended: Scalars['Boolean']['output'];
   clientConfirmationTime?: Maybe<Scalars['DateTime']['output']>;
   clientConfirmed: Scalars['Boolean']['output'];
-  clientId: Scalars['String']['output'];
+  clientId?: Maybe<Scalars['String']['output']>;
   clientNotificationTime?: Maybe<Scalars['DateTime']['output']>;
   clientNotified: Scalars['Boolean']['output'];
   createdAt: Scalars['DateTime']['output'];
   dateTime: Scalars['DateTime']['output'];
+  duration?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
-  meetingType: Scalars['String']['output'];
+  meetingType: MeetingType;
   notes?: Maybe<Scalars['String']['output']>;
+  order?: Maybe<Order>;
+  orderId?: Maybe<Scalars['String']['output']>;
   payments?: Maybe<Array<Payment>>;
   rating?: Maybe<Scalars['String']['output']>;
-  rejectionReason?: Maybe<Scalars['String']['output']>;
   result?: Maybe<Scalars['String']['output']>;
   resultNotes?: Maybe<Scalars['String']['output']>;
   scheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  status: Scalars['String']['output'];
+  status: InterviewStatus;
   updatedAt: Scalars['DateTime']['output'];
   worker: Worker;
   workerAttended: Scalars['Boolean']['output'];
@@ -887,13 +1006,46 @@ export type Interview = {
   workerId: Scalars['String']['output'];
   workerNotificationTime?: Maybe<Scalars['DateTime']['output']>;
   workerNotified: Scalars['Boolean']['output'];
-  workerRequirements?: Maybe<Array<OrderWorkerRequirement>>;
+  zoomMeeting?: Maybe<ZoomMeeting>;
 };
 
 export type InterviewCount = {
   __typename?: 'InterviewCount';
   payments: Scalars['Int']['output'];
-  workerRequirements: Scalars['Int']['output'];
+};
+
+export type InterviewCreateInput = {
+  Client?: InputMaybe<ClientCreateNestedOneWithoutInterviewsInput>;
+  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewInput>;
+  adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  adminName?: InputMaybe<Scalars['String']['input']>;
+  availableTimes?: InputMaybe<Scalars['String']['input']>;
+  clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  clientNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<OrderCreateNestedOneWithoutInterviewsInput>;
+  payments?: InputMaybe<PaymentCreateNestedManyWithoutInterviewInput>;
+  rating?: InputMaybe<Scalars['String']['input']>;
+  result?: InputMaybe<Scalars['String']['input']>;
+  resultNotes?: InputMaybe<Scalars['String']['input']>;
+  scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
+  status?: InputMaybe<InterviewStatus>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  worker: WorkerCreateNestedOneWithoutInterviewsInput;
+  workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
+  zoomMeeting?: InputMaybe<ZoomMeetingCreateNestedOneWithoutInterviewInput>;
 };
 
 export type InterviewCreateManyAdminInput = {
@@ -903,20 +1055,21 @@ export type InterviewCreateManyAdminInput = {
   clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
   clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
-  clientId: Scalars['String']['input'];
+  clientId?: InputMaybe<Scalars['String']['input']>;
   clientNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  orderId?: InputMaybe<Scalars['String']['input']>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
   workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
@@ -943,15 +1096,16 @@ export type InterviewCreateManyClientInput = {
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  orderId?: InputMaybe<Scalars['String']['input']>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
   workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
@@ -966,6 +1120,42 @@ export type InterviewCreateManyClientInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type InterviewCreateManyOrderInput = {
+  adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  adminId: Scalars['String']['input'];
+  adminName?: InputMaybe<Scalars['String']['input']>;
+  availableTimes?: InputMaybe<Scalars['String']['input']>;
+  clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  clientId?: InputMaybe<Scalars['String']['input']>;
+  clientNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  rating?: InputMaybe<Scalars['String']['input']>;
+  result?: InputMaybe<Scalars['String']['input']>;
+  resultNotes?: InputMaybe<Scalars['String']['input']>;
+  scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
+  status?: InputMaybe<InterviewStatus>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  workerId: Scalars['String']['input'];
+  workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type InterviewCreateManyOrderInputEnvelope = {
+  data: Array<InterviewCreateManyOrderInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type InterviewCreateManyWorkerInput = {
   adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
   adminId: Scalars['String']['input'];
@@ -974,20 +1164,21 @@ export type InterviewCreateManyWorkerInput = {
   clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
   clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
-  clientId: Scalars['String']['input'];
+  clientId?: InputMaybe<Scalars['String']['input']>;
   clientNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  orderId?: InputMaybe<Scalars['String']['input']>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
   workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1015,6 +1206,13 @@ export type InterviewCreateNestedManyWithoutClientInput = {
   createMany?: InputMaybe<InterviewCreateManyClientInputEnvelope>;
 };
 
+export type InterviewCreateNestedManyWithoutOrderInput = {
+  connect?: InputMaybe<Array<InterviewWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<InterviewCreateOrConnectWithoutOrderInput>>;
+  create?: InputMaybe<Array<InterviewCreateWithoutOrderInput>>;
+  createMany?: InputMaybe<InterviewCreateManyOrderInputEnvelope>;
+};
+
 export type InterviewCreateNestedManyWithoutWorkerInput = {
   connect?: InputMaybe<Array<InterviewWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<InterviewCreateOrConnectWithoutWorkerInput>>;
@@ -1028,12 +1226,6 @@ export type InterviewCreateNestedOneWithoutPaymentsInput = {
   create?: InputMaybe<InterviewCreateWithoutPaymentsInput>;
 };
 
-export type InterviewCreateNestedOneWithoutWorkerRequirementsInput = {
-  connect?: InputMaybe<InterviewWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<InterviewCreateOrConnectWithoutWorkerRequirementsInput>;
-  create?: InputMaybe<InterviewCreateWithoutWorkerRequirementsInput>;
-};
-
 export type InterviewCreateOrConnectWithoutAdminInput = {
   create: InterviewCreateWithoutAdminInput;
   where: InterviewWhereUniqueInput;
@@ -1041,6 +1233,11 @@ export type InterviewCreateOrConnectWithoutAdminInput = {
 
 export type InterviewCreateOrConnectWithoutClientInput = {
   create: InterviewCreateWithoutClientInput;
+  where: InterviewWhereUniqueInput;
+};
+
+export type InterviewCreateOrConnectWithoutOrderInput = {
+  create: InterviewCreateWithoutOrderInput;
   where: InterviewWhereUniqueInput;
 };
 
@@ -1054,16 +1251,11 @@ export type InterviewCreateOrConnectWithoutWorkerInput = {
   where: InterviewWhereUniqueInput;
 };
 
-export type InterviewCreateOrConnectWithoutWorkerRequirementsInput = {
-  create: InterviewCreateWithoutWorkerRequirementsInput;
-  where: InterviewWhereUniqueInput;
-};
-
 export type InterviewCreateWithoutAdminInput = {
+  Client?: InputMaybe<ClientCreateNestedOneWithoutInterviewsInput>;
   adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
   adminName?: InputMaybe<Scalars['String']['input']>;
   availableTimes?: InputMaybe<Scalars['String']['input']>;
-  client: ClientCreateNestedOneWithoutInterviewsInput;
   clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
   clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1071,16 +1263,17 @@ export type InterviewCreateWithoutAdminInput = {
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<OrderCreateNestedOneWithoutInterviewsInput>;
   payments?: InputMaybe<PaymentCreateNestedManyWithoutInterviewInput>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   worker: WorkerCreateNestedOneWithoutInterviewsInput;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1088,11 +1281,11 @@ export type InterviewCreateWithoutAdminInput = {
   workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
   workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
   workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementCreateNestedManyWithoutInterviewInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingCreateNestedOneWithoutInterviewInput>;
 };
 
 export type InterviewCreateWithoutClientInput = {
-  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewsInput>;
+  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewInput>;
   adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
   adminName?: InputMaybe<Scalars['String']['input']>;
   availableTimes?: InputMaybe<Scalars['String']['input']>;
@@ -1103,16 +1296,17 @@ export type InterviewCreateWithoutClientInput = {
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<OrderCreateNestedOneWithoutInterviewsInput>;
   payments?: InputMaybe<PaymentCreateNestedManyWithoutInterviewInput>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   worker: WorkerCreateNestedOneWithoutInterviewsInput;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1120,15 +1314,48 @@ export type InterviewCreateWithoutClientInput = {
   workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
   workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
   workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementCreateNestedManyWithoutInterviewInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingCreateNestedOneWithoutInterviewInput>;
+};
+
+export type InterviewCreateWithoutOrderInput = {
+  Client?: InputMaybe<ClientCreateNestedOneWithoutInterviewsInput>;
+  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewInput>;
+  adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  adminName?: InputMaybe<Scalars['String']['input']>;
+  availableTimes?: InputMaybe<Scalars['String']['input']>;
+  clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  clientNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  payments?: InputMaybe<PaymentCreateNestedManyWithoutInterviewInput>;
+  rating?: InputMaybe<Scalars['String']['input']>;
+  result?: InputMaybe<Scalars['String']['input']>;
+  resultNotes?: InputMaybe<Scalars['String']['input']>;
+  scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
+  status?: InputMaybe<InterviewStatus>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  worker: WorkerCreateNestedOneWithoutInterviewsInput;
+  workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
+  workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
+  workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
+  workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
+  zoomMeeting?: InputMaybe<ZoomMeetingCreateNestedOneWithoutInterviewInput>;
 };
 
 export type InterviewCreateWithoutPaymentsInput = {
-  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewsInput>;
+  Client?: InputMaybe<ClientCreateNestedOneWithoutInterviewsInput>;
+  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewInput>;
   adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
   adminName?: InputMaybe<Scalars['String']['input']>;
   availableTimes?: InputMaybe<Scalars['String']['input']>;
-  client: ClientCreateNestedOneWithoutInterviewsInput;
   clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
   clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1136,15 +1363,16 @@ export type InterviewCreateWithoutPaymentsInput = {
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<OrderCreateNestedOneWithoutInterviewsInput>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   worker: WorkerCreateNestedOneWithoutInterviewsInput;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1152,15 +1380,15 @@ export type InterviewCreateWithoutPaymentsInput = {
   workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
   workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
   workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementCreateNestedManyWithoutInterviewInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingCreateNestedOneWithoutInterviewInput>;
 };
 
 export type InterviewCreateWithoutWorkerInput = {
-  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewsInput>;
+  Client?: InputMaybe<ClientCreateNestedOneWithoutInterviewsInput>;
+  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewInput>;
   adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
   adminName?: InputMaybe<Scalars['String']['input']>;
   availableTimes?: InputMaybe<Scalars['String']['input']>;
-  client: ClientCreateNestedOneWithoutInterviewsInput;
   clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
   clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
   clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1168,55 +1396,24 @@ export type InterviewCreateWithoutWorkerInput = {
   clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
+  meetingType?: InputMaybe<MeetingType>;
   notes?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<OrderCreateNestedOneWithoutInterviewsInput>;
   payments?: InputMaybe<PaymentCreateNestedManyWithoutInterviewInput>;
   rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   resultNotes?: InputMaybe<Scalars['String']['input']>;
   scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<InterviewStatus>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
   workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
   workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
   workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
   workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementCreateNestedManyWithoutInterviewInput>;
-};
-
-export type InterviewCreateWithoutWorkerRequirementsInput = {
-  admin?: InputMaybe<AdminCreateNestedOneWithoutInterviewsInput>;
-  adminAttended?: InputMaybe<Scalars['Boolean']['input']>;
-  adminName?: InputMaybe<Scalars['String']['input']>;
-  availableTimes?: InputMaybe<Scalars['String']['input']>;
-  client: ClientCreateNestedOneWithoutInterviewsInput;
-  clientAttended?: InputMaybe<Scalars['Boolean']['input']>;
-  clientConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
-  clientConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
-  clientNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
-  clientNotified?: InputMaybe<Scalars['Boolean']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  dateTime?: InputMaybe<Scalars['DateTime']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<Scalars['String']['input']>;
-  notes?: InputMaybe<Scalars['String']['input']>;
-  payments?: InputMaybe<PaymentCreateNestedManyWithoutInterviewInput>;
-  rating?: InputMaybe<Scalars['String']['input']>;
-  rejectionReason?: InputMaybe<Scalars['String']['input']>;
-  result?: InputMaybe<Scalars['String']['input']>;
-  resultNotes?: InputMaybe<Scalars['String']['input']>;
-  scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  worker: WorkerCreateNestedOneWithoutInterviewsInput;
-  workerAttended?: InputMaybe<Scalars['Boolean']['input']>;
-  workerConfirmationTime?: InputMaybe<Scalars['DateTime']['input']>;
-  workerConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
-  workerNotificationTime?: InputMaybe<Scalars['DateTime']['input']>;
-  workerNotified?: InputMaybe<Scalars['Boolean']['input']>;
+  zoomMeeting?: InputMaybe<ZoomMeetingCreateNestedOneWithoutInterviewInput>;
 };
 
 export type InterviewListRelationFilter = {
@@ -1230,6 +1427,80 @@ export type InterviewNullableScalarRelationFilter = {
   isNot?: InputMaybe<InterviewWhereInput>;
 };
 
+export type InterviewOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type InterviewOrderByWithRelationInput = {
+  Client?: InputMaybe<ClientOrderByWithRelationInput>;
+  admin?: InputMaybe<AdminOrderByWithRelationInput>;
+  adminAttended?: InputMaybe<SortOrder>;
+  adminId?: InputMaybe<SortOrder>;
+  adminName?: InputMaybe<SortOrderInput>;
+  availableTimes?: InputMaybe<SortOrderInput>;
+  clientAttended?: InputMaybe<SortOrder>;
+  clientConfirmationTime?: InputMaybe<SortOrderInput>;
+  clientConfirmed?: InputMaybe<SortOrder>;
+  clientId?: InputMaybe<SortOrderInput>;
+  clientNotificationTime?: InputMaybe<SortOrderInput>;
+  clientNotified?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  dateTime?: InputMaybe<SortOrder>;
+  duration?: InputMaybe<SortOrderInput>;
+  id?: InputMaybe<SortOrder>;
+  meetingType?: InputMaybe<SortOrder>;
+  notes?: InputMaybe<SortOrderInput>;
+  order?: InputMaybe<OrderOrderByWithRelationInput>;
+  orderId?: InputMaybe<SortOrderInput>;
+  payments?: InputMaybe<PaymentOrderByRelationAggregateInput>;
+  rating?: InputMaybe<SortOrderInput>;
+  result?: InputMaybe<SortOrderInput>;
+  resultNotes?: InputMaybe<SortOrderInput>;
+  scheduledAt?: InputMaybe<SortOrderInput>;
+  status?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  worker?: InputMaybe<WorkerOrderByWithRelationInput>;
+  workerAttended?: InputMaybe<SortOrder>;
+  workerConfirmationTime?: InputMaybe<SortOrderInput>;
+  workerConfirmed?: InputMaybe<SortOrder>;
+  workerId?: InputMaybe<SortOrder>;
+  workerNotificationTime?: InputMaybe<SortOrderInput>;
+  workerNotified?: InputMaybe<SortOrder>;
+  zoomMeeting?: InputMaybe<ZoomMeetingOrderByWithRelationInput>;
+};
+
+export enum InterviewScalarFieldEnum {
+  AdminAttended = 'adminAttended',
+  AdminId = 'adminId',
+  AdminName = 'adminName',
+  AvailableTimes = 'availableTimes',
+  ClientAttended = 'clientAttended',
+  ClientConfirmationTime = 'clientConfirmationTime',
+  ClientConfirmed = 'clientConfirmed',
+  ClientId = 'clientId',
+  ClientNotificationTime = 'clientNotificationTime',
+  ClientNotified = 'clientNotified',
+  CreatedAt = 'createdAt',
+  DateTime = 'dateTime',
+  Duration = 'duration',
+  Id = 'id',
+  MeetingType = 'meetingType',
+  Notes = 'notes',
+  OrderId = 'orderId',
+  Rating = 'rating',
+  Result = 'result',
+  ResultNotes = 'resultNotes',
+  ScheduledAt = 'scheduledAt',
+  Status = 'status',
+  UpdatedAt = 'updatedAt',
+  WorkerAttended = 'workerAttended',
+  WorkerConfirmationTime = 'workerConfirmationTime',
+  WorkerConfirmed = 'workerConfirmed',
+  WorkerId = 'workerId',
+  WorkerNotificationTime = 'workerNotificationTime',
+  WorkerNotified = 'workerNotified'
+}
+
 export type InterviewScalarWhereInput = {
   AND?: InputMaybe<Array<InterviewScalarWhereInput>>;
   NOT?: InputMaybe<Array<InterviewScalarWhereInput>>;
@@ -1241,20 +1512,21 @@ export type InterviewScalarWhereInput = {
   clientAttended?: InputMaybe<BoolFilter>;
   clientConfirmationTime?: InputMaybe<DateTimeNullableFilter>;
   clientConfirmed?: InputMaybe<BoolFilter>;
-  clientId?: InputMaybe<StringFilter>;
+  clientId?: InputMaybe<StringNullableFilter>;
   clientNotificationTime?: InputMaybe<DateTimeNullableFilter>;
   clientNotified?: InputMaybe<BoolFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   dateTime?: InputMaybe<DateTimeFilter>;
+  duration?: InputMaybe<IntNullableFilter>;
   id?: InputMaybe<StringFilter>;
-  meetingType?: InputMaybe<StringFilter>;
+  meetingType?: InputMaybe<EnumMeetingTypeFilter>;
   notes?: InputMaybe<StringNullableFilter>;
+  orderId?: InputMaybe<StringNullableFilter>;
   rating?: InputMaybe<StringNullableFilter>;
-  rejectionReason?: InputMaybe<StringNullableFilter>;
   result?: InputMaybe<StringNullableFilter>;
   resultNotes?: InputMaybe<StringNullableFilter>;
   scheduledAt?: InputMaybe<DateTimeNullableFilter>;
-  status?: InputMaybe<StringFilter>;
+  status?: InputMaybe<EnumInterviewStatusFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   workerAttended?: InputMaybe<BoolFilter>;
   workerConfirmationTime?: InputMaybe<DateTimeNullableFilter>;
@@ -1262,6 +1534,48 @@ export type InterviewScalarWhereInput = {
   workerId?: InputMaybe<StringFilter>;
   workerNotificationTime?: InputMaybe<DateTimeNullableFilter>;
   workerNotified?: InputMaybe<BoolFilter>;
+};
+
+export enum InterviewStatus {
+  Canceled = 'CANCELED',
+  Completed = 'COMPLETED',
+  Confirmed = 'CONFIRMED',
+  Pending = 'PENDING',
+  Scheduled = 'SCHEDULED'
+}
+
+export type InterviewUpdateInput = {
+  Client?: InputMaybe<ClientUpdateOneWithoutInterviewsNestedInput>;
+  admin?: InputMaybe<AdminUpdateOneWithoutInterviewNestedInput>;
+  adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  clientAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  clientConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  clientConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  clientNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
+  notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  order?: InputMaybe<OrderUpdateOneWithoutInterviewsNestedInput>;
+  payments?: InputMaybe<PaymentUpdateManyWithoutInterviewNestedInput>;
+  rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  worker?: InputMaybe<WorkerUpdateOneRequiredWithoutInterviewsNestedInput>;
+  workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  workerConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingUpdateOneWithoutInterviewNestedInput>;
 };
 
 export type InterviewUpdateManyMutationInput = {
@@ -1275,15 +1589,15 @@ export type InterviewUpdateManyMutationInput = {
   clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  meetingType?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
   notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  rejectionReason?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   workerConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1298,6 +1612,11 @@ export type InterviewUpdateManyWithWhereWithoutAdminInput = {
 };
 
 export type InterviewUpdateManyWithWhereWithoutClientInput = {
+  data: InterviewUpdateManyMutationInput;
+  where: InterviewScalarWhereInput;
+};
+
+export type InterviewUpdateManyWithWhereWithoutOrderInput = {
   data: InterviewUpdateManyMutationInput;
   where: InterviewScalarWhereInput;
 };
@@ -1335,6 +1654,20 @@ export type InterviewUpdateManyWithoutClientNestedInput = {
   upsert?: InputMaybe<Array<InterviewUpsertWithWhereUniqueWithoutClientInput>>;
 };
 
+export type InterviewUpdateManyWithoutOrderNestedInput = {
+  connect?: InputMaybe<Array<InterviewWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<InterviewCreateOrConnectWithoutOrderInput>>;
+  create?: InputMaybe<Array<InterviewCreateWithoutOrderInput>>;
+  createMany?: InputMaybe<InterviewCreateManyOrderInputEnvelope>;
+  delete?: InputMaybe<Array<InterviewWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<InterviewScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<InterviewWhereUniqueInput>>;
+  set?: InputMaybe<Array<InterviewWhereUniqueInput>>;
+  update?: InputMaybe<Array<InterviewUpdateWithWhereUniqueWithoutOrderInput>>;
+  updateMany?: InputMaybe<Array<InterviewUpdateManyWithWhereWithoutOrderInput>>;
+  upsert?: InputMaybe<Array<InterviewUpsertWithWhereUniqueWithoutOrderInput>>;
+};
+
 export type InterviewUpdateManyWithoutWorkerNestedInput = {
   connect?: InputMaybe<Array<InterviewWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<InterviewCreateOrConnectWithoutWorkerInput>>;
@@ -1359,23 +1692,8 @@ export type InterviewUpdateOneWithoutPaymentsNestedInput = {
   upsert?: InputMaybe<InterviewUpsertWithoutPaymentsInput>;
 };
 
-export type InterviewUpdateOneWithoutWorkerRequirementsNestedInput = {
-  connect?: InputMaybe<InterviewWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<InterviewCreateOrConnectWithoutWorkerRequirementsInput>;
-  create?: InputMaybe<InterviewCreateWithoutWorkerRequirementsInput>;
-  delete?: InputMaybe<InterviewWhereInput>;
-  disconnect?: InputMaybe<InterviewWhereInput>;
-  update?: InputMaybe<InterviewUpdateToOneWithWhereWithoutWorkerRequirementsInput>;
-  upsert?: InputMaybe<InterviewUpsertWithoutWorkerRequirementsInput>;
-};
-
 export type InterviewUpdateToOneWithWhereWithoutPaymentsInput = {
   data: InterviewUpdateWithoutPaymentsInput;
-  where?: InputMaybe<InterviewWhereInput>;
-};
-
-export type InterviewUpdateToOneWithWhereWithoutWorkerRequirementsInput = {
-  data: InterviewUpdateWithoutWorkerRequirementsInput;
   where?: InputMaybe<InterviewWhereInput>;
 };
 
@@ -1389,16 +1707,21 @@ export type InterviewUpdateWithWhereUniqueWithoutClientInput = {
   where: InterviewWhereUniqueInput;
 };
 
+export type InterviewUpdateWithWhereUniqueWithoutOrderInput = {
+  data: InterviewUpdateWithoutOrderInput;
+  where: InterviewWhereUniqueInput;
+};
+
 export type InterviewUpdateWithWhereUniqueWithoutWorkerInput = {
   data: InterviewUpdateWithoutWorkerInput;
   where: InterviewWhereUniqueInput;
 };
 
 export type InterviewUpdateWithoutAdminInput = {
+  Client?: InputMaybe<ClientUpdateOneWithoutInterviewsNestedInput>;
   adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  client?: InputMaybe<ClientUpdateOneRequiredWithoutInterviewsNestedInput>;
   clientAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   clientConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   clientConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -1406,16 +1729,17 @@ export type InterviewUpdateWithoutAdminInput = {
   clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  meetingType?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
   notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  order?: InputMaybe<OrderUpdateOneWithoutInterviewsNestedInput>;
   payments?: InputMaybe<PaymentUpdateManyWithoutInterviewNestedInput>;
   rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  rejectionReason?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   worker?: InputMaybe<WorkerUpdateOneRequiredWithoutInterviewsNestedInput>;
   workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -1423,11 +1747,11 @@ export type InterviewUpdateWithoutAdminInput = {
   workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementUpdateManyWithoutInterviewNestedInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingUpdateOneWithoutInterviewNestedInput>;
 };
 
 export type InterviewUpdateWithoutClientInput = {
-  admin?: InputMaybe<AdminUpdateOneWithoutInterviewsNestedInput>;
+  admin?: InputMaybe<AdminUpdateOneWithoutInterviewNestedInput>;
   adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -1438,16 +1762,17 @@ export type InterviewUpdateWithoutClientInput = {
   clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  meetingType?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
   notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  order?: InputMaybe<OrderUpdateOneWithoutInterviewsNestedInput>;
   payments?: InputMaybe<PaymentUpdateManyWithoutInterviewNestedInput>;
   rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  rejectionReason?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   worker?: InputMaybe<WorkerUpdateOneRequiredWithoutInterviewsNestedInput>;
   workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -1455,15 +1780,48 @@ export type InterviewUpdateWithoutClientInput = {
   workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementUpdateManyWithoutInterviewNestedInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingUpdateOneWithoutInterviewNestedInput>;
+};
+
+export type InterviewUpdateWithoutOrderInput = {
+  Client?: InputMaybe<ClientUpdateOneWithoutInterviewsNestedInput>;
+  admin?: InputMaybe<AdminUpdateOneWithoutInterviewNestedInput>;
+  adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  clientAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  clientConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  clientConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  clientNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
+  notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  payments?: InputMaybe<PaymentUpdateManyWithoutInterviewNestedInput>;
+  rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  worker?: InputMaybe<WorkerUpdateOneRequiredWithoutInterviewsNestedInput>;
+  workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  workerConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingUpdateOneWithoutInterviewNestedInput>;
 };
 
 export type InterviewUpdateWithoutPaymentsInput = {
-  admin?: InputMaybe<AdminUpdateOneWithoutInterviewsNestedInput>;
+  Client?: InputMaybe<ClientUpdateOneWithoutInterviewsNestedInput>;
+  admin?: InputMaybe<AdminUpdateOneWithoutInterviewNestedInput>;
   adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  client?: InputMaybe<ClientUpdateOneRequiredWithoutInterviewsNestedInput>;
   clientAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   clientConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   clientConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -1471,15 +1829,16 @@ export type InterviewUpdateWithoutPaymentsInput = {
   clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  meetingType?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
   notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  order?: InputMaybe<OrderUpdateOneWithoutInterviewsNestedInput>;
   rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  rejectionReason?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   worker?: InputMaybe<WorkerUpdateOneRequiredWithoutInterviewsNestedInput>;
   workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -1487,15 +1846,15 @@ export type InterviewUpdateWithoutPaymentsInput = {
   workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementUpdateManyWithoutInterviewNestedInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingUpdateOneWithoutInterviewNestedInput>;
 };
 
 export type InterviewUpdateWithoutWorkerInput = {
-  admin?: InputMaybe<AdminUpdateOneWithoutInterviewsNestedInput>;
+  Client?: InputMaybe<ClientUpdateOneWithoutInterviewsNestedInput>;
+  admin?: InputMaybe<AdminUpdateOneWithoutInterviewNestedInput>;
   adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  client?: InputMaybe<ClientUpdateOneRequiredWithoutInterviewsNestedInput>;
   clientAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   clientConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   clientConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -1503,55 +1862,24 @@ export type InterviewUpdateWithoutWorkerInput = {
   clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  duration?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  meetingType?: InputMaybe<StringFieldUpdateOperationsInput>;
+  meetingType?: InputMaybe<EnumMeetingTypeFieldUpdateOperationsInput>;
   notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  order?: InputMaybe<OrderUpdateOneWithoutInterviewsNestedInput>;
   payments?: InputMaybe<PaymentUpdateManyWithoutInterviewNestedInput>;
   rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  rejectionReason?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumInterviewStatusFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
   workerConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementUpdateManyWithoutInterviewNestedInput>;
-};
-
-export type InterviewUpdateWithoutWorkerRequirementsInput = {
-  admin?: InputMaybe<AdminUpdateOneWithoutInterviewsNestedInput>;
-  adminAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  adminName?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  availableTimes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  client?: InputMaybe<ClientUpdateOneRequiredWithoutInterviewsNestedInput>;
-  clientAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  clientConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  clientConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  clientNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  clientNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  meetingType?: InputMaybe<StringFieldUpdateOperationsInput>;
-  notes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  payments?: InputMaybe<PaymentUpdateManyWithoutInterviewNestedInput>;
-  rating?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  rejectionReason?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  result?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  resultNotes?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  scheduledAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
-  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  worker?: InputMaybe<WorkerUpdateOneRequiredWithoutInterviewsNestedInput>;
-  workerAttended?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  workerConfirmationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  workerConfirmed?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  workerNotificationTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  workerNotified?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  zoomMeeting?: InputMaybe<ZoomMeetingUpdateOneWithoutInterviewNestedInput>;
 };
 
 export type InterviewUpsertWithWhereUniqueWithoutAdminInput = {
@@ -1563,6 +1891,12 @@ export type InterviewUpsertWithWhereUniqueWithoutAdminInput = {
 export type InterviewUpsertWithWhereUniqueWithoutClientInput = {
   create: InterviewCreateWithoutClientInput;
   update: InterviewUpdateWithoutClientInput;
+  where: InterviewWhereUniqueInput;
+};
+
+export type InterviewUpsertWithWhereUniqueWithoutOrderInput = {
+  create: InterviewCreateWithoutOrderInput;
+  update: InterviewUpdateWithoutOrderInput;
   where: InterviewWhereUniqueInput;
 };
 
@@ -1578,14 +1912,9 @@ export type InterviewUpsertWithoutPaymentsInput = {
   where?: InputMaybe<InterviewWhereInput>;
 };
 
-export type InterviewUpsertWithoutWorkerRequirementsInput = {
-  create: InterviewCreateWithoutWorkerRequirementsInput;
-  update: InterviewUpdateWithoutWorkerRequirementsInput;
-  where?: InputMaybe<InterviewWhereInput>;
-};
-
 export type InterviewWhereInput = {
   AND?: InputMaybe<Array<InterviewWhereInput>>;
+  Client?: InputMaybe<ClientNullableScalarRelationFilter>;
   NOT?: InputMaybe<Array<InterviewWhereInput>>;
   OR?: InputMaybe<Array<InterviewWhereInput>>;
   admin?: InputMaybe<AdminNullableScalarRelationFilter>;
@@ -1593,25 +1922,26 @@ export type InterviewWhereInput = {
   adminId?: InputMaybe<StringFilter>;
   adminName?: InputMaybe<StringNullableFilter>;
   availableTimes?: InputMaybe<StringNullableFilter>;
-  client?: InputMaybe<ClientScalarRelationFilter>;
   clientAttended?: InputMaybe<BoolFilter>;
   clientConfirmationTime?: InputMaybe<DateTimeNullableFilter>;
   clientConfirmed?: InputMaybe<BoolFilter>;
-  clientId?: InputMaybe<StringFilter>;
+  clientId?: InputMaybe<StringNullableFilter>;
   clientNotificationTime?: InputMaybe<DateTimeNullableFilter>;
   clientNotified?: InputMaybe<BoolFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   dateTime?: InputMaybe<DateTimeFilter>;
+  duration?: InputMaybe<IntNullableFilter>;
   id?: InputMaybe<StringFilter>;
-  meetingType?: InputMaybe<StringFilter>;
+  meetingType?: InputMaybe<EnumMeetingTypeFilter>;
   notes?: InputMaybe<StringNullableFilter>;
+  order?: InputMaybe<OrderNullableScalarRelationFilter>;
+  orderId?: InputMaybe<StringNullableFilter>;
   payments?: InputMaybe<PaymentListRelationFilter>;
   rating?: InputMaybe<StringNullableFilter>;
-  rejectionReason?: InputMaybe<StringNullableFilter>;
   result?: InputMaybe<StringNullableFilter>;
   resultNotes?: InputMaybe<StringNullableFilter>;
   scheduledAt?: InputMaybe<DateTimeNullableFilter>;
-  status?: InputMaybe<StringFilter>;
+  status?: InputMaybe<EnumInterviewStatusFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   worker?: InputMaybe<WorkerScalarRelationFilter>;
   workerAttended?: InputMaybe<BoolFilter>;
@@ -1620,11 +1950,12 @@ export type InterviewWhereInput = {
   workerId?: InputMaybe<StringFilter>;
   workerNotificationTime?: InputMaybe<DateTimeNullableFilter>;
   workerNotified?: InputMaybe<BoolFilter>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementListRelationFilter>;
+  zoomMeeting?: InputMaybe<ZoomMeetingNullableScalarRelationFilter>;
 };
 
 export type InterviewWhereUniqueInput = {
   AND?: InputMaybe<Array<InterviewWhereInput>>;
+  Client?: InputMaybe<ClientNullableScalarRelationFilter>;
   NOT?: InputMaybe<Array<InterviewWhereInput>>;
   OR?: InputMaybe<Array<InterviewWhereInput>>;
   admin?: InputMaybe<AdminNullableScalarRelationFilter>;
@@ -1632,25 +1963,26 @@ export type InterviewWhereUniqueInput = {
   adminId?: InputMaybe<StringFilter>;
   adminName?: InputMaybe<StringNullableFilter>;
   availableTimes?: InputMaybe<StringNullableFilter>;
-  client?: InputMaybe<ClientScalarRelationFilter>;
   clientAttended?: InputMaybe<BoolFilter>;
   clientConfirmationTime?: InputMaybe<DateTimeNullableFilter>;
   clientConfirmed?: InputMaybe<BoolFilter>;
-  clientId?: InputMaybe<StringFilter>;
+  clientId?: InputMaybe<StringNullableFilter>;
   clientNotificationTime?: InputMaybe<DateTimeNullableFilter>;
   clientNotified?: InputMaybe<BoolFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   dateTime?: InputMaybe<DateTimeFilter>;
+  duration?: InputMaybe<IntNullableFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
-  meetingType?: InputMaybe<StringFilter>;
+  meetingType?: InputMaybe<EnumMeetingTypeFilter>;
   notes?: InputMaybe<StringNullableFilter>;
+  order?: InputMaybe<OrderNullableScalarRelationFilter>;
+  orderId?: InputMaybe<StringNullableFilter>;
   payments?: InputMaybe<PaymentListRelationFilter>;
   rating?: InputMaybe<StringNullableFilter>;
-  rejectionReason?: InputMaybe<StringNullableFilter>;
   result?: InputMaybe<StringNullableFilter>;
   resultNotes?: InputMaybe<StringNullableFilter>;
   scheduledAt?: InputMaybe<DateTimeNullableFilter>;
-  status?: InputMaybe<StringFilter>;
+  status?: InputMaybe<EnumInterviewStatusFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   worker?: InputMaybe<WorkerScalarRelationFilter>;
   workerAttended?: InputMaybe<BoolFilter>;
@@ -1659,7 +1991,7 @@ export type InterviewWhereUniqueInput = {
   workerId?: InputMaybe<StringFilter>;
   workerNotificationTime?: InputMaybe<DateTimeNullableFilter>;
   workerNotified?: InputMaybe<BoolFilter>;
-  workerRequirements?: InputMaybe<OrderWorkerRequirementListRelationFilter>;
+  zoomMeeting?: InputMaybe<ZoomMeetingNullableScalarRelationFilter>;
 };
 
 export type LoginInput = {
@@ -1667,26 +1999,39 @@ export type LoginInput = {
   usernameOrEmail: Scalars['String']['input'];
 };
 
+export enum MeetingType {
+  InPerson = 'IN_PERSON',
+  Online = 'ONLINE'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   addOrderWorkerRequirement: Order;
   approveOrder: Order;
-  createNoonCheckout: NoonCheckoutResponse;
+  createInterview: Interview;
+  createNoonCheckout: CreateCheckoutOutput;
   createOrder: Order;
   createPricing: Pricing;
   createUser: User;
+  createWorker: Worker;
+  deleteInterview: Interview;
   forgotPassword: Scalars['Boolean']['output'];
   login: AuthToken;
   removeOrder: Order;
   removeOrderWorkerRequirement: Order;
   removePricing: Pricing;
   removeUser: User;
+  removeWorker: Worker;
   resetPassword: Scalars['Boolean']['output'];
+  scheduleInterview: Interview;
   signup: AuthToken;
+  updateInterview: Interview;
+  updateInterviewStatus: Interview;
   updateOrder: Order;
   updateOrderPaymentStatus: Order;
   updatePricing: Pricing;
   updateUser: User;
+  updateWorker: Worker;
 };
 
 
@@ -1701,8 +2046,14 @@ export type MutationApproveOrderArgs = {
 };
 
 
+export type MutationCreateInterviewArgs = {
+  data: InterviewCreateInput;
+};
+
+
 export type MutationCreateNoonCheckoutArgs = {
-  input: CreateNoonCheckoutInput;
+  orderId: Scalars['String']['input'];
+  purpose?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1718,6 +2069,16 @@ export type MutationCreatePricingArgs = {
 
 export type MutationCreateUserArgs = {
   createUserInput: CreateUserInput;
+};
+
+
+export type MutationCreateWorkerArgs = {
+  createWorkerInput: CreateWorkerInput;
+};
+
+
+export type MutationDeleteInterviewArgs = {
+  where: InterviewWhereUniqueInput;
 };
 
 
@@ -1752,13 +2113,34 @@ export type MutationRemoveUserArgs = {
 };
 
 
+export type MutationRemoveWorkerArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationResetPasswordArgs = {
   resetPasswordInput: ResetPasswordInput;
 };
 
 
+export type MutationScheduleInterviewArgs = {
+  input: ScheduleInterviewInput;
+};
+
+
 export type MutationSignupArgs = {
   signupInput: SignupInput;
+};
+
+
+export type MutationUpdateInterviewArgs = {
+  data: InterviewUpdateInput;
+  where: InterviewWhereUniqueInput;
+};
+
+
+export type MutationUpdateInterviewStatusArgs = {
+  input: UpdateInterviewStatusInput;
 };
 
 
@@ -1782,6 +2164,12 @@ export type MutationUpdatePricingArgs = {
 
 export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
+};
+
+
+export type MutationUpdateWorkerArgs = {
+  id: Scalars['String']['input'];
+  updateWorkerInput: UpdateWorkerInput;
 };
 
 export type Nationality = {
@@ -1858,6 +2246,14 @@ export type NationalityCreateWithoutWorkersInput = {
 export type NationalityNullableScalarRelationFilter = {
   is?: InputMaybe<NationalityWhereInput>;
   isNot?: InputMaybe<NationalityWhereInput>;
+};
+
+export type NationalityOrderByWithRelationInput = {
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  orderRequirements?: InputMaybe<OrderWorkerRequirementOrderByRelationAggregateInput>;
+  pricings?: InputMaybe<PricingOrderByRelationAggregateInput>;
+  workers?: InputMaybe<WorkerOrderByRelationAggregateInput>;
 };
 
 export type NationalityScalarRelationFilter = {
@@ -1996,6 +2392,34 @@ export type NestedDateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
+export type NestedEnumInterviewStatusFilter = {
+  equals?: InputMaybe<InterviewStatus>;
+  in?: InputMaybe<Array<InterviewStatus>>;
+  not?: InputMaybe<NestedEnumInterviewStatusFilter>;
+  notIn?: InputMaybe<Array<InterviewStatus>>;
+};
+
+export type NestedEnumMeetingTypeFilter = {
+  equals?: InputMaybe<MeetingType>;
+  in?: InputMaybe<Array<MeetingType>>;
+  not?: InputMaybe<NestedEnumMeetingTypeFilter>;
+  notIn?: InputMaybe<Array<MeetingType>>;
+};
+
+export type NestedEnumPaymentPurposeNullableFilter = {
+  equals?: InputMaybe<PaymentPurpose>;
+  in?: InputMaybe<Array<PaymentPurpose>>;
+  not?: InputMaybe<NestedEnumPaymentPurposeNullableFilter>;
+  notIn?: InputMaybe<Array<PaymentPurpose>>;
+};
+
+export type NestedEnumPaymentStatusFilter = {
+  equals?: InputMaybe<PaymentStatus>;
+  in?: InputMaybe<Array<PaymentStatus>>;
+  not?: InputMaybe<NestedEnumPaymentStatusFilter>;
+  notIn?: InputMaybe<Array<PaymentStatus>>;
+};
+
 export type NestedFloatFilter = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   gt?: InputMaybe<Scalars['Float']['input']>;
@@ -2029,6 +2453,17 @@ export type NestedIntFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type NestedIntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type NestedStringFilter = {
   contains?: InputMaybe<Scalars['String']['input']>;
   endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -2057,14 +2492,12 @@ export type NestedStringNullableFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type NoonCheckoutResponse = {
-  __typename?: 'NoonCheckoutResponse';
-  checkoutId: Scalars['String']['output'];
-  redirectUrl: Scalars['String']['output'];
-};
-
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NullableEnumPaymentPurposeFieldUpdateOperationsInput = {
+  set?: InputMaybe<PaymentPurpose>;
 };
 
 export type NullableFloatFieldUpdateOperationsInput = {
@@ -2075,15 +2508,28 @@ export type NullableFloatFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type NullableIntFieldUpdateOperationsInput = {
+  decrement?: InputMaybe<Scalars['Int']['input']>;
+  divide?: InputMaybe<Scalars['Int']['input']>;
+  increment?: InputMaybe<Scalars['Int']['input']>;
+  multiply?: InputMaybe<Scalars['Int']['input']>;
+  set?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type NullableStringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']['input']>;
 };
+
+export enum NullsOrder {
+  First = 'first',
+  Last = 'last'
+}
 
 export type Order = {
   __typename?: 'Order';
   _count: OrderCount;
   amount: Scalars['Float']['output'];
-  client?: Maybe<Client>;
+  client: Client;
   clientId: Scalars['String']['output'];
   completedAt?: Maybe<Scalars['DateTime']['output']>;
   createdAt: Scalars['DateTime']['output'];
@@ -2092,12 +2538,12 @@ export type Order = {
   hoursDuty?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   initialPayment?: Maybe<Scalars['Float']['output']>;
+  interviews?: Maybe<Array<Interview>>;
   isApproved: Scalars['Boolean']['output'];
-  paymentId?: Maybe<Scalars['String']['output']>;
   paymentMethod?: Maybe<Scalars['String']['output']>;
   paymentPercentage?: Maybe<Scalars['Float']['output']>;
   paymentProof?: Maybe<Scalars['String']['output']>;
-  paymentStatus: Scalars['String']['output'];
+  paymentStatus: PaymentStatus;
   payments?: Maybe<Array<Payment>>;
   price?: Maybe<Scalars['Float']['output']>;
   status: Scalars['String']['output'];
@@ -2108,6 +2554,7 @@ export type Order = {
 
 export type OrderCount = {
   __typename?: 'OrderCount';
+  interviews: Scalars['Int']['output'];
   payments: Scalars['Int']['output'];
   workerRequirements: Scalars['Int']['output'];
 };
@@ -2122,12 +2569,12 @@ export type OrderCreateInput = {
   hoursDuty?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   initialPayment?: InputMaybe<Scalars['Float']['input']>;
+  interviews?: InputMaybe<InterviewCreateNestedManyWithoutOrderInput>;
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
-  paymentId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
   paymentPercentage?: InputMaybe<Scalars['Float']['input']>;
   paymentProof?: InputMaybe<Scalars['String']['input']>;
-  paymentStatus?: InputMaybe<Scalars['String']['input']>;
+  paymentStatus?: InputMaybe<PaymentStatus>;
   payments?: InputMaybe<PaymentCreateNestedManyWithoutOrderInput>;
   price?: InputMaybe<Scalars['Float']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -2146,11 +2593,10 @@ export type OrderCreateManyClientInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   initialPayment?: InputMaybe<Scalars['Float']['input']>;
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
-  paymentId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
   paymentPercentage?: InputMaybe<Scalars['Float']['input']>;
   paymentProof?: InputMaybe<Scalars['String']['input']>;
-  paymentStatus?: InputMaybe<Scalars['String']['input']>;
+  paymentStatus?: InputMaybe<PaymentStatus>;
   price?: InputMaybe<Scalars['Float']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
@@ -2169,6 +2615,12 @@ export type OrderCreateNestedManyWithoutClientInput = {
   createMany?: InputMaybe<OrderCreateManyClientInputEnvelope>;
 };
 
+export type OrderCreateNestedOneWithoutInterviewsInput = {
+  connect?: InputMaybe<OrderWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<OrderCreateOrConnectWithoutInterviewsInput>;
+  create?: InputMaybe<OrderCreateWithoutInterviewsInput>;
+};
+
 export type OrderCreateNestedOneWithoutPaymentsInput = {
   connect?: InputMaybe<OrderWhereUniqueInput>;
   connectOrCreate?: InputMaybe<OrderCreateOrConnectWithoutPaymentsInput>;
@@ -2183,6 +2635,11 @@ export type OrderCreateNestedOneWithoutWorkerRequirementsInput = {
 
 export type OrderCreateOrConnectWithoutClientInput = {
   create: OrderCreateWithoutClientInput;
+  where: OrderWhereUniqueInput;
+};
+
+export type OrderCreateOrConnectWithoutInterviewsInput = {
+  create: OrderCreateWithoutInterviewsInput;
   where: OrderWhereUniqueInput;
 };
 
@@ -2205,12 +2662,35 @@ export type OrderCreateWithoutClientInput = {
   hoursDuty?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   initialPayment?: InputMaybe<Scalars['Float']['input']>;
+  interviews?: InputMaybe<InterviewCreateNestedManyWithoutOrderInput>;
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
-  paymentId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
   paymentPercentage?: InputMaybe<Scalars['Float']['input']>;
   paymentProof?: InputMaybe<Scalars['String']['input']>;
-  paymentStatus?: InputMaybe<Scalars['String']['input']>;
+  paymentStatus?: InputMaybe<PaymentStatus>;
+  payments?: InputMaybe<PaymentCreateNestedManyWithoutOrderInput>;
+  price?: InputMaybe<Scalars['Float']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  workerRequirements?: InputMaybe<OrderWorkerRequirementCreateNestedManyWithoutOrderInput>;
+};
+
+export type OrderCreateWithoutInterviewsInput = {
+  amount: Scalars['Float']['input'];
+  client: ClientCreateNestedOneWithoutOrdersInput;
+  completedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  finalPayment?: InputMaybe<Scalars['Float']['input']>;
+  hoursDuty?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  initialPayment?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+  paymentMethod?: InputMaybe<Scalars['String']['input']>;
+  paymentPercentage?: InputMaybe<Scalars['Float']['input']>;
+  paymentProof?: InputMaybe<Scalars['String']['input']>;
+  paymentStatus?: InputMaybe<PaymentStatus>;
   payments?: InputMaybe<PaymentCreateNestedManyWithoutOrderInput>;
   price?: InputMaybe<Scalars['Float']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -2229,12 +2709,12 @@ export type OrderCreateWithoutPaymentsInput = {
   hoursDuty?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   initialPayment?: InputMaybe<Scalars['Float']['input']>;
+  interviews?: InputMaybe<InterviewCreateNestedManyWithoutOrderInput>;
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
-  paymentId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
   paymentPercentage?: InputMaybe<Scalars['Float']['input']>;
   paymentProof?: InputMaybe<Scalars['String']['input']>;
-  paymentStatus?: InputMaybe<Scalars['String']['input']>;
+  paymentStatus?: InputMaybe<PaymentStatus>;
   price?: InputMaybe<Scalars['Float']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
@@ -2252,12 +2732,12 @@ export type OrderCreateWithoutWorkerRequirementsInput = {
   hoursDuty?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   initialPayment?: InputMaybe<Scalars['Float']['input']>;
+  interviews?: InputMaybe<InterviewCreateNestedManyWithoutOrderInput>;
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
-  paymentId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
   paymentPercentage?: InputMaybe<Scalars['Float']['input']>;
   paymentProof?: InputMaybe<Scalars['String']['input']>;
-  paymentStatus?: InputMaybe<Scalars['String']['input']>;
+  paymentStatus?: InputMaybe<PaymentStatus>;
   payments?: InputMaybe<PaymentCreateNestedManyWithoutOrderInput>;
   price?: InputMaybe<Scalars['Float']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -2274,6 +2754,35 @@ export type OrderListRelationFilter = {
 export type OrderNullableScalarRelationFilter = {
   is?: InputMaybe<OrderWhereInput>;
   isNot?: InputMaybe<OrderWhereInput>;
+};
+
+export type OrderOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type OrderOrderByWithRelationInput = {
+  amount?: InputMaybe<SortOrder>;
+  client?: InputMaybe<ClientOrderByWithRelationInput>;
+  clientId?: InputMaybe<SortOrder>;
+  completedAt?: InputMaybe<SortOrderInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrderInput>;
+  finalPayment?: InputMaybe<SortOrderInput>;
+  hoursDuty?: InputMaybe<SortOrderInput>;
+  id?: InputMaybe<SortOrder>;
+  initialPayment?: InputMaybe<SortOrderInput>;
+  interviews?: InputMaybe<InterviewOrderByRelationAggregateInput>;
+  isApproved?: InputMaybe<SortOrder>;
+  paymentMethod?: InputMaybe<SortOrderInput>;
+  paymentPercentage?: InputMaybe<SortOrderInput>;
+  paymentProof?: InputMaybe<SortOrderInput>;
+  paymentStatus?: InputMaybe<SortOrder>;
+  payments?: InputMaybe<PaymentOrderByRelationAggregateInput>;
+  price?: InputMaybe<SortOrderInput>;
+  status?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  workerRequirements?: InputMaybe<OrderWorkerRequirementOrderByRelationAggregateInput>;
 };
 
 export type OrderScalarRelationFilter = {
@@ -2295,11 +2804,10 @@ export type OrderScalarWhereInput = {
   id?: InputMaybe<StringFilter>;
   initialPayment?: InputMaybe<FloatNullableFilter>;
   isApproved?: InputMaybe<BoolFilter>;
-  paymentId?: InputMaybe<StringNullableFilter>;
   paymentMethod?: InputMaybe<StringNullableFilter>;
   paymentPercentage?: InputMaybe<FloatNullableFilter>;
   paymentProof?: InputMaybe<StringNullableFilter>;
-  paymentStatus?: InputMaybe<StringFilter>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFilter>;
   price?: InputMaybe<FloatNullableFilter>;
   status?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
@@ -2316,12 +2824,12 @@ export type OrderUpdateInput = {
   hoursDuty?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   initialPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  interviews?: InputMaybe<InterviewUpdateManyWithoutOrderNestedInput>;
   isApproved?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  paymentId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentPercentage?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   paymentProof?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  paymentStatus?: InputMaybe<StringFieldUpdateOperationsInput>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   payments?: InputMaybe<PaymentUpdateManyWithoutOrderNestedInput>;
   price?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   status?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2340,11 +2848,10 @@ export type OrderUpdateManyMutationInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   initialPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   isApproved?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  paymentId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentPercentage?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   paymentProof?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  paymentStatus?: InputMaybe<StringFieldUpdateOperationsInput>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   price?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   status?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2378,6 +2885,16 @@ export type OrderUpdateOneRequiredWithoutWorkerRequirementsNestedInput = {
   upsert?: InputMaybe<OrderUpsertWithoutWorkerRequirementsInput>;
 };
 
+export type OrderUpdateOneWithoutInterviewsNestedInput = {
+  connect?: InputMaybe<OrderWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<OrderCreateOrConnectWithoutInterviewsInput>;
+  create?: InputMaybe<OrderCreateWithoutInterviewsInput>;
+  delete?: InputMaybe<OrderWhereInput>;
+  disconnect?: InputMaybe<OrderWhereInput>;
+  update?: InputMaybe<OrderUpdateToOneWithWhereWithoutInterviewsInput>;
+  upsert?: InputMaybe<OrderUpsertWithoutInterviewsInput>;
+};
+
 export type OrderUpdateOneWithoutPaymentsNestedInput = {
   connect?: InputMaybe<OrderWhereUniqueInput>;
   connectOrCreate?: InputMaybe<OrderCreateOrConnectWithoutPaymentsInput>;
@@ -2386,6 +2903,11 @@ export type OrderUpdateOneWithoutPaymentsNestedInput = {
   disconnect?: InputMaybe<OrderWhereInput>;
   update?: InputMaybe<OrderUpdateToOneWithWhereWithoutPaymentsInput>;
   upsert?: InputMaybe<OrderUpsertWithoutPaymentsInput>;
+};
+
+export type OrderUpdateToOneWithWhereWithoutInterviewsInput = {
+  data: OrderUpdateWithoutInterviewsInput;
+  where?: InputMaybe<OrderWhereInput>;
 };
 
 export type OrderUpdateToOneWithWhereWithoutPaymentsInput = {
@@ -2412,12 +2934,35 @@ export type OrderUpdateWithoutClientInput = {
   hoursDuty?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   initialPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  interviews?: InputMaybe<InterviewUpdateManyWithoutOrderNestedInput>;
   isApproved?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  paymentId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentPercentage?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   paymentProof?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  paymentStatus?: InputMaybe<StringFieldUpdateOperationsInput>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
+  payments?: InputMaybe<PaymentUpdateManyWithoutOrderNestedInput>;
+  price?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  workerRequirements?: InputMaybe<OrderWorkerRequirementUpdateManyWithoutOrderNestedInput>;
+};
+
+export type OrderUpdateWithoutInterviewsInput = {
+  amount?: InputMaybe<FloatFieldUpdateOperationsInput>;
+  client?: InputMaybe<ClientUpdateOneRequiredWithoutOrdersNestedInput>;
+  completedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  finalPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  hoursDuty?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  initialPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  isApproved?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  paymentPercentage?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  paymentProof?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   payments?: InputMaybe<PaymentUpdateManyWithoutOrderNestedInput>;
   price?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   status?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2436,12 +2981,12 @@ export type OrderUpdateWithoutPaymentsInput = {
   hoursDuty?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   initialPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  interviews?: InputMaybe<InterviewUpdateManyWithoutOrderNestedInput>;
   isApproved?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  paymentId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentPercentage?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   paymentProof?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  paymentStatus?: InputMaybe<StringFieldUpdateOperationsInput>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   price?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   status?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2459,12 +3004,12 @@ export type OrderUpdateWithoutWorkerRequirementsInput = {
   hoursDuty?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   initialPayment?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
+  interviews?: InputMaybe<InterviewUpdateManyWithoutOrderNestedInput>;
   isApproved?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  paymentId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentPercentage?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   paymentProof?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  paymentStatus?: InputMaybe<StringFieldUpdateOperationsInput>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   payments?: InputMaybe<PaymentUpdateManyWithoutOrderNestedInput>;
   price?: InputMaybe<NullableFloatFieldUpdateOperationsInput>;
   status?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2476,6 +3021,12 @@ export type OrderUpsertWithWhereUniqueWithoutClientInput = {
   create: OrderCreateWithoutClientInput;
   update: OrderUpdateWithoutClientInput;
   where: OrderWhereUniqueInput;
+};
+
+export type OrderUpsertWithoutInterviewsInput = {
+  create: OrderCreateWithoutInterviewsInput;
+  update: OrderUpdateWithoutInterviewsInput;
+  where?: InputMaybe<OrderWhereInput>;
 };
 
 export type OrderUpsertWithoutPaymentsInput = {
@@ -2504,12 +3055,12 @@ export type OrderWhereInput = {
   hoursDuty?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
   initialPayment?: InputMaybe<FloatNullableFilter>;
+  interviews?: InputMaybe<InterviewListRelationFilter>;
   isApproved?: InputMaybe<BoolFilter>;
-  paymentId?: InputMaybe<StringNullableFilter>;
   paymentMethod?: InputMaybe<StringNullableFilter>;
   paymentPercentage?: InputMaybe<FloatNullableFilter>;
   paymentProof?: InputMaybe<StringNullableFilter>;
-  paymentStatus?: InputMaybe<StringFilter>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFilter>;
   payments?: InputMaybe<PaymentListRelationFilter>;
   price?: InputMaybe<FloatNullableFilter>;
   status?: InputMaybe<StringFilter>;
@@ -2532,12 +3083,12 @@ export type OrderWhereUniqueInput = {
   hoursDuty?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
   initialPayment?: InputMaybe<FloatNullableFilter>;
+  interviews?: InputMaybe<InterviewListRelationFilter>;
   isApproved?: InputMaybe<BoolFilter>;
-  paymentId?: InputMaybe<StringNullableFilter>;
   paymentMethod?: InputMaybe<StringNullableFilter>;
   paymentPercentage?: InputMaybe<FloatNullableFilter>;
   paymentProof?: InputMaybe<StringNullableFilter>;
-  paymentStatus?: InputMaybe<StringFilter>;
+  paymentStatus?: InputMaybe<EnumPaymentStatusFilter>;
   payments?: InputMaybe<PaymentListRelationFilter>;
   price?: InputMaybe<FloatNullableFilter>;
   status?: InputMaybe<StringFilter>;
@@ -2552,8 +3103,6 @@ export type OrderWorkerRequirement = {
   activityId?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  interview?: Maybe<Interview>;
-  interviewId?: Maybe<Scalars['String']['output']>;
   nationality?: Maybe<Nationality>;
   nationalityId?: Maybe<Scalars['String']['output']>;
   order: Order;
@@ -2569,7 +3118,6 @@ export type OrderWorkerRequirement = {
 export type OrderWorkerRequirementCreateManyActivityInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviewId?: InputMaybe<Scalars['String']['input']>;
   nationalityId?: InputMaybe<Scalars['String']['input']>;
   orderId: Scalars['String']['input'];
   positionId?: InputMaybe<Scalars['String']['input']>;
@@ -2583,28 +3131,10 @@ export type OrderWorkerRequirementCreateManyActivityInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type OrderWorkerRequirementCreateManyInterviewInput = {
-  activityId?: InputMaybe<Scalars['String']['input']>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  nationalityId?: InputMaybe<Scalars['String']['input']>;
-  orderId: Scalars['String']['input'];
-  positionId?: InputMaybe<Scalars['String']['input']>;
-  quantity?: InputMaybe<Scalars['Int']['input']>;
-  specialtyId?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type OrderWorkerRequirementCreateManyInterviewInputEnvelope = {
-  data: Array<OrderWorkerRequirementCreateManyInterviewInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type OrderWorkerRequirementCreateManyNationalityInput = {
   activityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviewId?: InputMaybe<Scalars['String']['input']>;
   orderId: Scalars['String']['input'];
   positionId?: InputMaybe<Scalars['String']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -2621,7 +3151,6 @@ export type OrderWorkerRequirementCreateManyOrderInput = {
   activityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviewId?: InputMaybe<Scalars['String']['input']>;
   nationalityId?: InputMaybe<Scalars['String']['input']>;
   positionId?: InputMaybe<Scalars['String']['input']>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -2638,7 +3167,6 @@ export type OrderWorkerRequirementCreateManyPositionInput = {
   activityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviewId?: InputMaybe<Scalars['String']['input']>;
   nationalityId?: InputMaybe<Scalars['String']['input']>;
   orderId: Scalars['String']['input'];
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -2655,7 +3183,6 @@ export type OrderWorkerRequirementCreateManySpecialtyInput = {
   activityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interviewId?: InputMaybe<Scalars['String']['input']>;
   nationalityId?: InputMaybe<Scalars['String']['input']>;
   orderId: Scalars['String']['input'];
   positionId?: InputMaybe<Scalars['String']['input']>;
@@ -2673,13 +3200,6 @@ export type OrderWorkerRequirementCreateNestedManyWithoutActivityInput = {
   connectOrCreate?: InputMaybe<Array<OrderWorkerRequirementCreateOrConnectWithoutActivityInput>>;
   create?: InputMaybe<Array<OrderWorkerRequirementCreateWithoutActivityInput>>;
   createMany?: InputMaybe<OrderWorkerRequirementCreateManyActivityInputEnvelope>;
-};
-
-export type OrderWorkerRequirementCreateNestedManyWithoutInterviewInput = {
-  connect?: InputMaybe<Array<OrderWorkerRequirementWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<OrderWorkerRequirementCreateOrConnectWithoutInterviewInput>>;
-  create?: InputMaybe<Array<OrderWorkerRequirementCreateWithoutInterviewInput>>;
-  createMany?: InputMaybe<OrderWorkerRequirementCreateManyInterviewInputEnvelope>;
 };
 
 export type OrderWorkerRequirementCreateNestedManyWithoutNationalityInput = {
@@ -2715,11 +3235,6 @@ export type OrderWorkerRequirementCreateOrConnectWithoutActivityInput = {
   where: OrderWorkerRequirementWhereUniqueInput;
 };
 
-export type OrderWorkerRequirementCreateOrConnectWithoutInterviewInput = {
-  create: OrderWorkerRequirementCreateWithoutInterviewInput;
-  where: OrderWorkerRequirementWhereUniqueInput;
-};
-
 export type OrderWorkerRequirementCreateOrConnectWithoutNationalityInput = {
   create: OrderWorkerRequirementCreateWithoutNationalityInput;
   where: OrderWorkerRequirementWhereUniqueInput;
@@ -2743,19 +3258,6 @@ export type OrderWorkerRequirementCreateOrConnectWithoutSpecialtyInput = {
 export type OrderWorkerRequirementCreateWithoutActivityInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interview?: InputMaybe<InterviewCreateNestedOneWithoutWorkerRequirementsInput>;
-  nationality?: InputMaybe<NationalityCreateNestedOneWithoutOrderRequirementsInput>;
-  order: OrderCreateNestedOneWithoutWorkerRequirementsInput;
-  position?: InputMaybe<PositionCreateNestedOneWithoutOrderRequirementsInput>;
-  quantity?: InputMaybe<Scalars['Int']['input']>;
-  specialty?: InputMaybe<SpecialtyCreateNestedOneWithoutOrderRequirementsInput>;
-  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type OrderWorkerRequirementCreateWithoutInterviewInput = {
-  activity?: InputMaybe<ActivityCreateNestedOneWithoutOrderRequirementsInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
   nationality?: InputMaybe<NationalityCreateNestedOneWithoutOrderRequirementsInput>;
   order: OrderCreateNestedOneWithoutWorkerRequirementsInput;
   position?: InputMaybe<PositionCreateNestedOneWithoutOrderRequirementsInput>;
@@ -2768,7 +3270,6 @@ export type OrderWorkerRequirementCreateWithoutNationalityInput = {
   activity?: InputMaybe<ActivityCreateNestedOneWithoutOrderRequirementsInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interview?: InputMaybe<InterviewCreateNestedOneWithoutWorkerRequirementsInput>;
   order: OrderCreateNestedOneWithoutWorkerRequirementsInput;
   position?: InputMaybe<PositionCreateNestedOneWithoutOrderRequirementsInput>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -2780,7 +3281,6 @@ export type OrderWorkerRequirementCreateWithoutOrderInput = {
   activity?: InputMaybe<ActivityCreateNestedOneWithoutOrderRequirementsInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interview?: InputMaybe<InterviewCreateNestedOneWithoutWorkerRequirementsInput>;
   nationality?: InputMaybe<NationalityCreateNestedOneWithoutOrderRequirementsInput>;
   position?: InputMaybe<PositionCreateNestedOneWithoutOrderRequirementsInput>;
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -2792,7 +3292,6 @@ export type OrderWorkerRequirementCreateWithoutPositionInput = {
   activity?: InputMaybe<ActivityCreateNestedOneWithoutOrderRequirementsInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interview?: InputMaybe<InterviewCreateNestedOneWithoutWorkerRequirementsInput>;
   nationality?: InputMaybe<NationalityCreateNestedOneWithoutOrderRequirementsInput>;
   order: OrderCreateNestedOneWithoutWorkerRequirementsInput;
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -2804,7 +3303,6 @@ export type OrderWorkerRequirementCreateWithoutSpecialtyInput = {
   activity?: InputMaybe<ActivityCreateNestedOneWithoutOrderRequirementsInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interview?: InputMaybe<InterviewCreateNestedOneWithoutWorkerRequirementsInput>;
   nationality?: InputMaybe<NationalityCreateNestedOneWithoutOrderRequirementsInput>;
   order: OrderCreateNestedOneWithoutWorkerRequirementsInput;
   position?: InputMaybe<PositionCreateNestedOneWithoutOrderRequirementsInput>;
@@ -2818,6 +3316,10 @@ export type OrderWorkerRequirementListRelationFilter = {
   some?: InputMaybe<OrderWorkerRequirementWhereInput>;
 };
 
+export type OrderWorkerRequirementOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 export type OrderWorkerRequirementScalarWhereInput = {
   AND?: InputMaybe<Array<OrderWorkerRequirementScalarWhereInput>>;
   NOT?: InputMaybe<Array<OrderWorkerRequirementScalarWhereInput>>;
@@ -2825,7 +3327,6 @@ export type OrderWorkerRequirementScalarWhereInput = {
   activityId?: InputMaybe<StringNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
-  interviewId?: InputMaybe<StringNullableFilter>;
   nationalityId?: InputMaybe<StringNullableFilter>;
   orderId?: InputMaybe<StringFilter>;
   positionId?: InputMaybe<StringNullableFilter>;
@@ -2842,11 +3343,6 @@ export type OrderWorkerRequirementUpdateManyMutationInput = {
 };
 
 export type OrderWorkerRequirementUpdateManyWithWhereWithoutActivityInput = {
-  data: OrderWorkerRequirementUpdateManyMutationInput;
-  where: OrderWorkerRequirementScalarWhereInput;
-};
-
-export type OrderWorkerRequirementUpdateManyWithWhereWithoutInterviewInput = {
   data: OrderWorkerRequirementUpdateManyMutationInput;
   where: OrderWorkerRequirementScalarWhereInput;
 };
@@ -2883,20 +3379,6 @@ export type OrderWorkerRequirementUpdateManyWithoutActivityNestedInput = {
   update?: InputMaybe<Array<OrderWorkerRequirementUpdateWithWhereUniqueWithoutActivityInput>>;
   updateMany?: InputMaybe<Array<OrderWorkerRequirementUpdateManyWithWhereWithoutActivityInput>>;
   upsert?: InputMaybe<Array<OrderWorkerRequirementUpsertWithWhereUniqueWithoutActivityInput>>;
-};
-
-export type OrderWorkerRequirementUpdateManyWithoutInterviewNestedInput = {
-  connect?: InputMaybe<Array<OrderWorkerRequirementWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<OrderWorkerRequirementCreateOrConnectWithoutInterviewInput>>;
-  create?: InputMaybe<Array<OrderWorkerRequirementCreateWithoutInterviewInput>>;
-  createMany?: InputMaybe<OrderWorkerRequirementCreateManyInterviewInputEnvelope>;
-  delete?: InputMaybe<Array<OrderWorkerRequirementWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<OrderWorkerRequirementScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<OrderWorkerRequirementWhereUniqueInput>>;
-  set?: InputMaybe<Array<OrderWorkerRequirementWhereUniqueInput>>;
-  update?: InputMaybe<Array<OrderWorkerRequirementUpdateWithWhereUniqueWithoutInterviewInput>>;
-  updateMany?: InputMaybe<Array<OrderWorkerRequirementUpdateManyWithWhereWithoutInterviewInput>>;
-  upsert?: InputMaybe<Array<OrderWorkerRequirementUpsertWithWhereUniqueWithoutInterviewInput>>;
 };
 
 export type OrderWorkerRequirementUpdateManyWithoutNationalityNestedInput = {
@@ -2960,11 +3442,6 @@ export type OrderWorkerRequirementUpdateWithWhereUniqueWithoutActivityInput = {
   where: OrderWorkerRequirementWhereUniqueInput;
 };
 
-export type OrderWorkerRequirementUpdateWithWhereUniqueWithoutInterviewInput = {
-  data: OrderWorkerRequirementUpdateWithoutInterviewInput;
-  where: OrderWorkerRequirementWhereUniqueInput;
-};
-
 export type OrderWorkerRequirementUpdateWithWhereUniqueWithoutNationalityInput = {
   data: OrderWorkerRequirementUpdateWithoutNationalityInput;
   where: OrderWorkerRequirementWhereUniqueInput;
@@ -2988,19 +3465,6 @@ export type OrderWorkerRequirementUpdateWithWhereUniqueWithoutSpecialtyInput = {
 export type OrderWorkerRequirementUpdateWithoutActivityInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  interview?: InputMaybe<InterviewUpdateOneWithoutWorkerRequirementsNestedInput>;
-  nationality?: InputMaybe<NationalityUpdateOneWithoutOrderRequirementsNestedInput>;
-  order?: InputMaybe<OrderUpdateOneRequiredWithoutWorkerRequirementsNestedInput>;
-  position?: InputMaybe<PositionUpdateOneWithoutOrderRequirementsNestedInput>;
-  quantity?: InputMaybe<IntFieldUpdateOperationsInput>;
-  specialty?: InputMaybe<SpecialtyUpdateOneWithoutOrderRequirementsNestedInput>;
-  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type OrderWorkerRequirementUpdateWithoutInterviewInput = {
-  activity?: InputMaybe<ActivityUpdateOneWithoutOrderRequirementsNestedInput>;
-  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
   nationality?: InputMaybe<NationalityUpdateOneWithoutOrderRequirementsNestedInput>;
   order?: InputMaybe<OrderUpdateOneRequiredWithoutWorkerRequirementsNestedInput>;
   position?: InputMaybe<PositionUpdateOneWithoutOrderRequirementsNestedInput>;
@@ -3013,7 +3477,6 @@ export type OrderWorkerRequirementUpdateWithoutNationalityInput = {
   activity?: InputMaybe<ActivityUpdateOneWithoutOrderRequirementsNestedInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  interview?: InputMaybe<InterviewUpdateOneWithoutWorkerRequirementsNestedInput>;
   order?: InputMaybe<OrderUpdateOneRequiredWithoutWorkerRequirementsNestedInput>;
   position?: InputMaybe<PositionUpdateOneWithoutOrderRequirementsNestedInput>;
   quantity?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3025,7 +3488,6 @@ export type OrderWorkerRequirementUpdateWithoutOrderInput = {
   activity?: InputMaybe<ActivityUpdateOneWithoutOrderRequirementsNestedInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  interview?: InputMaybe<InterviewUpdateOneWithoutWorkerRequirementsNestedInput>;
   nationality?: InputMaybe<NationalityUpdateOneWithoutOrderRequirementsNestedInput>;
   position?: InputMaybe<PositionUpdateOneWithoutOrderRequirementsNestedInput>;
   quantity?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3037,7 +3499,6 @@ export type OrderWorkerRequirementUpdateWithoutPositionInput = {
   activity?: InputMaybe<ActivityUpdateOneWithoutOrderRequirementsNestedInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  interview?: InputMaybe<InterviewUpdateOneWithoutWorkerRequirementsNestedInput>;
   nationality?: InputMaybe<NationalityUpdateOneWithoutOrderRequirementsNestedInput>;
   order?: InputMaybe<OrderUpdateOneRequiredWithoutWorkerRequirementsNestedInput>;
   quantity?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3049,7 +3510,6 @@ export type OrderWorkerRequirementUpdateWithoutSpecialtyInput = {
   activity?: InputMaybe<ActivityUpdateOneWithoutOrderRequirementsNestedInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  interview?: InputMaybe<InterviewUpdateOneWithoutWorkerRequirementsNestedInput>;
   nationality?: InputMaybe<NationalityUpdateOneWithoutOrderRequirementsNestedInput>;
   order?: InputMaybe<OrderUpdateOneRequiredWithoutWorkerRequirementsNestedInput>;
   position?: InputMaybe<PositionUpdateOneWithoutOrderRequirementsNestedInput>;
@@ -3060,12 +3520,6 @@ export type OrderWorkerRequirementUpdateWithoutSpecialtyInput = {
 export type OrderWorkerRequirementUpsertWithWhereUniqueWithoutActivityInput = {
   create: OrderWorkerRequirementCreateWithoutActivityInput;
   update: OrderWorkerRequirementUpdateWithoutActivityInput;
-  where: OrderWorkerRequirementWhereUniqueInput;
-};
-
-export type OrderWorkerRequirementUpsertWithWhereUniqueWithoutInterviewInput = {
-  create: OrderWorkerRequirementCreateWithoutInterviewInput;
-  update: OrderWorkerRequirementUpdateWithoutInterviewInput;
   where: OrderWorkerRequirementWhereUniqueInput;
 };
 
@@ -3101,8 +3555,6 @@ export type OrderWorkerRequirementWhereInput = {
   activityId?: InputMaybe<StringNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
-  interview?: InputMaybe<InterviewNullableScalarRelationFilter>;
-  interviewId?: InputMaybe<StringNullableFilter>;
   nationality?: InputMaybe<NationalityNullableScalarRelationFilter>;
   nationalityId?: InputMaybe<StringNullableFilter>;
   order?: InputMaybe<OrderScalarRelationFilter>;
@@ -3123,8 +3575,6 @@ export type OrderWorkerRequirementWhereUniqueInput = {
   activityId?: InputMaybe<StringNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interview?: InputMaybe<InterviewNullableScalarRelationFilter>;
-  interviewId?: InputMaybe<StringNullableFilter>;
   nationality?: InputMaybe<NationalityNullableScalarRelationFilter>;
   nationalityId?: InputMaybe<StringNullableFilter>;
   order?: InputMaybe<OrderScalarRelationFilter>;
@@ -3144,6 +3594,14 @@ export type PaginationDto = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type PaginationMeta = {
+  __typename?: 'PaginationMeta';
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
 export type Payment = {
   __typename?: 'Payment';
   amount: Scalars['Float']['output'];
@@ -3154,10 +3612,12 @@ export type Payment = {
   id: Scalars['ID']['output'];
   interview?: Maybe<Interview>;
   interviewId?: Maybe<Scalars['String']['output']>;
+  noonOrderId?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Order>;
   orderId?: Maybe<Scalars['String']['output']>;
   paymentMethod?: Maybe<Scalars['String']['output']>;
-  status: Scalars['String']['output'];
+  purpose?: Maybe<PaymentPurpose>;
+  status: PaymentStatus;
   transactionId?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -3168,9 +3628,11 @@ export type PaymentCreateManyClientInput = {
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   interviewId?: InputMaybe<Scalars['String']['input']>;
+  noonOrderId?: InputMaybe<Scalars['String']['input']>;
   orderId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  purpose?: InputMaybe<PaymentPurpose>;
+  status?: InputMaybe<PaymentStatus>;
   transactionId?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -3186,9 +3648,11 @@ export type PaymentCreateManyInterviewInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
+  noonOrderId?: InputMaybe<Scalars['String']['input']>;
   orderId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  purpose?: InputMaybe<PaymentPurpose>;
+  status?: InputMaybe<PaymentStatus>;
   transactionId?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -3205,8 +3669,10 @@ export type PaymentCreateManyOrderInput = {
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   interviewId?: InputMaybe<Scalars['String']['input']>;
+  noonOrderId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  purpose?: InputMaybe<PaymentPurpose>;
+  status?: InputMaybe<PaymentStatus>;
   transactionId?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -3258,9 +3724,11 @@ export type PaymentCreateWithoutClientInput = {
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   interview?: InputMaybe<InterviewCreateNestedOneWithoutPaymentsInput>;
+  noonOrderId?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<OrderCreateNestedOneWithoutPaymentsInput>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  purpose?: InputMaybe<PaymentPurpose>;
+  status?: InputMaybe<PaymentStatus>;
   transactionId?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -3271,9 +3739,11 @@ export type PaymentCreateWithoutInterviewInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
+  noonOrderId?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<OrderCreateNestedOneWithoutPaymentsInput>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  purpose?: InputMaybe<PaymentPurpose>;
+  status?: InputMaybe<PaymentStatus>;
   transactionId?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -3285,8 +3755,10 @@ export type PaymentCreateWithoutOrderInput = {
   dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   interview?: InputMaybe<InterviewCreateNestedOneWithoutPaymentsInput>;
+  noonOrderId?: InputMaybe<Scalars['String']['input']>;
   paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
+  purpose?: InputMaybe<PaymentPurpose>;
+  status?: InputMaybe<PaymentStatus>;
   transactionId?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -3296,6 +3768,15 @@ export type PaymentListRelationFilter = {
   none?: InputMaybe<PaymentWhereInput>;
   some?: InputMaybe<PaymentWhereInput>;
 };
+
+export type PaymentOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export enum PaymentPurpose {
+  FinalPayment = 'FINAL_PAYMENT',
+  InitialPayment = 'INITIAL_PAYMENT'
+}
 
 export type PaymentScalarWhereInput = {
   AND?: InputMaybe<Array<PaymentScalarWhereInput>>;
@@ -3307,20 +3788,31 @@ export type PaymentScalarWhereInput = {
   dateTime?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
   interviewId?: InputMaybe<StringNullableFilter>;
+  noonOrderId?: InputMaybe<StringNullableFilter>;
   orderId?: InputMaybe<StringNullableFilter>;
   paymentMethod?: InputMaybe<StringNullableFilter>;
-  status?: InputMaybe<StringFilter>;
+  purpose?: InputMaybe<EnumPaymentPurposeNullableFilter>;
+  status?: InputMaybe<EnumPaymentStatusFilter>;
   transactionId?: InputMaybe<StringNullableFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
+
+export enum PaymentStatus {
+  Cancelled = 'CANCELLED',
+  Failed = 'FAILED',
+  Paid = 'PAID',
+  Pending = 'PENDING'
+}
 
 export type PaymentUpdateManyMutationInput = {
   amount?: InputMaybe<FloatFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  noonOrderId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  purpose?: InputMaybe<NullableEnumPaymentPurposeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   transactionId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -3403,9 +3895,11 @@ export type PaymentUpdateWithoutClientInput = {
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   interview?: InputMaybe<InterviewUpdateOneWithoutPaymentsNestedInput>;
+  noonOrderId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   order?: InputMaybe<OrderUpdateOneWithoutPaymentsNestedInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  purpose?: InputMaybe<NullableEnumPaymentPurposeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   transactionId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -3416,9 +3910,11 @@ export type PaymentUpdateWithoutInterviewInput = {
   createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  noonOrderId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   order?: InputMaybe<OrderUpdateOneWithoutPaymentsNestedInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  purpose?: InputMaybe<NullableEnumPaymentPurposeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   transactionId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -3430,8 +3926,10 @@ export type PaymentUpdateWithoutOrderInput = {
   dateTime?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   interview?: InputMaybe<InterviewUpdateOneWithoutPaymentsNestedInput>;
+  noonOrderId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   paymentMethod?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  status?: InputMaybe<StringFieldUpdateOperationsInput>;
+  purpose?: InputMaybe<NullableEnumPaymentPurposeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumPaymentStatusFieldUpdateOperationsInput>;
   transactionId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -3466,10 +3964,12 @@ export type PaymentWhereInput = {
   id?: InputMaybe<StringFilter>;
   interview?: InputMaybe<InterviewNullableScalarRelationFilter>;
   interviewId?: InputMaybe<StringNullableFilter>;
+  noonOrderId?: InputMaybe<StringNullableFilter>;
   order?: InputMaybe<OrderNullableScalarRelationFilter>;
   orderId?: InputMaybe<StringNullableFilter>;
   paymentMethod?: InputMaybe<StringNullableFilter>;
-  status?: InputMaybe<StringFilter>;
+  purpose?: InputMaybe<EnumPaymentPurposeNullableFilter>;
+  status?: InputMaybe<EnumPaymentStatusFilter>;
   transactionId?: InputMaybe<StringNullableFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
@@ -3486,10 +3986,12 @@ export type PaymentWhereUniqueInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   interview?: InputMaybe<InterviewNullableScalarRelationFilter>;
   interviewId?: InputMaybe<StringNullableFilter>;
+  noonOrderId?: InputMaybe<StringNullableFilter>;
   order?: InputMaybe<OrderNullableScalarRelationFilter>;
   orderId?: InputMaybe<StringNullableFilter>;
   paymentMethod?: InputMaybe<StringNullableFilter>;
-  status?: InputMaybe<StringFilter>;
+  purpose?: InputMaybe<EnumPaymentPurposeNullableFilter>;
+  status?: InputMaybe<EnumPaymentStatusFilter>;
   transactionId?: InputMaybe<StringNullableFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
@@ -3568,6 +4070,14 @@ export type PositionCreateWithoutWorkersInput = {
 export type PositionNullableScalarRelationFilter = {
   is?: InputMaybe<PositionWhereInput>;
   isNot?: InputMaybe<PositionWhereInput>;
+};
+
+export type PositionOrderByWithRelationInput = {
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  orderRequirements?: InputMaybe<OrderWorkerRequirementOrderByRelationAggregateInput>;
+  pricings?: InputMaybe<PricingOrderByRelationAggregateInput>;
+  workers?: InputMaybe<WorkerOrderByRelationAggregateInput>;
 };
 
 export type PositionScalarRelationFilter = {
@@ -3881,6 +4391,10 @@ export type PricingNationalityIdSpecialtyIdActivityIdPositionIdCompoundUniqueInp
   specialtyId: Scalars['String']['input'];
 };
 
+export type PricingOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 export type PricingScalarWhereInput = {
   AND?: InputMaybe<Array<PricingScalarWhereInput>>;
   NOT?: InputMaybe<Array<PricingScalarWhereInput>>;
@@ -4119,6 +4633,10 @@ export type Query = {
   __typename?: 'Query';
   /** Find all clients */
   findAllClients: Array<User>;
+  interview?: Maybe<Interview>;
+  interviews: Array<Interview>;
+  myClientInterviews: Array<Interview>;
+  myWorkerInterviews: Array<Interview>;
   order: Order;
   orders: Array<Order>;
   pricing: Pricing;
@@ -4127,6 +4645,34 @@ export type Query = {
   user: User;
   userGreetings: Scalars['String']['output'];
   users: Array<User>;
+  worker: Worker;
+  workerStats: WorkerStats;
+  workers: WorkerPaginatedResponse;
+};
+
+
+export type QueryInterviewArgs = {
+  where: InterviewWhereUniqueInput;
+};
+
+
+export type QueryInterviewsArgs = {
+  cursor?: InputMaybe<InterviewWhereUniqueInput>;
+  distinct?: InputMaybe<Array<InterviewScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<InterviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<InterviewWhereInput>;
+};
+
+
+export type QueryMyClientInterviewsArgs = {
+  status?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryMyWorkerInterviewsArgs = {
+  status?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -4163,6 +4709,17 @@ export type QueryUserArgs = {
   id: Scalars['ID']['input'];
 };
 
+
+export type QueryWorkerArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryWorkersArgs = {
+  filter?: InputMaybe<WorkerFilterInput>;
+  pagination?: InputMaybe<PaginationDto>;
+};
+
 export enum QueryMode {
   Default = 'default',
   Insensitive = 'insensitive'
@@ -4173,6 +4730,16 @@ export type ResetPasswordInput = {
   token: Scalars['String']['input'];
 };
 
+export type ScheduleInterviewInput = {
+  clientId: Scalars['String']['input'];
+  dateTime: Scalars['DateTime']['input'];
+  duration?: InputMaybe<Scalars['Float']['input']>;
+  meetingType?: InputMaybe<Scalars['String']['input']>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  orderId: Scalars['String']['input'];
+  workerId: Scalars['String']['input'];
+};
+
 export type SignupInput = {
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -4180,6 +4747,16 @@ export type SignupInput = {
   phone?: InputMaybe<Scalars['String']['input']>;
   role?: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
+export type SortOrderInput = {
+  nulls?: InputMaybe<NullsOrder>;
+  sort: SortOrder;
 };
 
 export type Specialty = {
@@ -4256,6 +4833,14 @@ export type SpecialtyCreateWithoutWorkersInput = {
 export type SpecialtyNullableScalarRelationFilter = {
   is?: InputMaybe<SpecialtyWhereInput>;
   isNot?: InputMaybe<SpecialtyWhereInput>;
+};
+
+export type SpecialtyOrderByWithRelationInput = {
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  orderRequirements?: InputMaybe<OrderWorkerRequirementOrderByRelationAggregateInput>;
+  pricings?: InputMaybe<PricingOrderByRelationAggregateInput>;
+  workers?: InputMaybe<WorkerOrderByRelationAggregateInput>;
 };
 
 export type SpecialtyScalarRelationFilter = {
@@ -4401,6 +4986,11 @@ export type StringNullableFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateInterviewStatusInput = {
+  id: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+};
+
 export type UpdatePricingInput = {
   activityId?: InputMaybe<Scalars['String']['input']>;
   adminCommission?: InputMaybe<Scalars['Float']['input']>;
@@ -4420,6 +5010,32 @@ export type UpdateUserInput = {
   phone?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateWorkerInput = {
+  accommodationType?: InputMaybe<Scalars['String']['input']>;
+  activityId?: InputMaybe<Scalars['String']['input']>;
+  currentCity?: InputMaybe<Scalars['String']['input']>;
+  currentSalary?: InputMaybe<Scalars['Float']['input']>;
+  currentWorkplace?: InputMaybe<Scalars['String']['input']>;
+  cvFile?: InputMaybe<Scalars['String']['input']>;
+  dateOfBirth?: InputMaybe<Scalars['DateTime']['input']>;
+  expectedSalary?: InputMaybe<Scalars['Float']['input']>;
+  experience?: InputMaybe<Scalars['String']['input']>;
+  expiryDate?: InputMaybe<Scalars['DateTime']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
+  hourlyRate?: InputMaybe<Scalars['Float']['input']>;
+  iban?: InputMaybe<Scalars['String']['input']>;
+  iqamaImage?: InputMaybe<Scalars['String']['input']>;
+  iqamaNumber?: InputMaybe<Scalars['String']['input']>;
+  nationalityId?: InputMaybe<Scalars['String']['input']>;
+  portfolioFiles?: InputMaybe<Scalars['String']['input']>;
+  positionId?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['String']['input']>;
+  referralSource?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Scalars['String']['input']>;
+  specialtyId?: InputMaybe<Scalars['String']['input']>;
+  transferCount?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type User = {
@@ -4511,6 +5127,21 @@ export type UserCreateWithoutWorkerInput = {
   phone?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
   username: Scalars['String']['input'];
+};
+
+export type UserOrderByWithRelationInput = {
+  admin?: InputMaybe<AdminOrderByWithRelationInput>;
+  client?: InputMaybe<ClientOrderByWithRelationInput>;
+  email?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  lastLogin?: InputMaybe<SortOrderInput>;
+  loginAttempts?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  passwordHash?: InputMaybe<SortOrder>;
+  phone?: InputMaybe<SortOrderInput>;
+  role?: InputMaybe<SortOrder>;
+  username?: InputMaybe<SortOrder>;
+  worker?: InputMaybe<WorkerOrderByWithRelationInput>;
 };
 
 export type UserScalarRelationFilter = {
@@ -4755,6 +5386,10 @@ export type WhatsAppMessageListRelationFilter = {
   every?: InputMaybe<WhatsAppMessageWhereInput>;
   none?: InputMaybe<WhatsAppMessageWhereInput>;
   some?: InputMaybe<WhatsAppMessageWhereInput>;
+};
+
+export type WhatsAppMessageOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
 };
 
 export type WhatsAppMessageScalarWhereInput = {
@@ -5383,6 +6018,18 @@ export type WorkerCreateWithoutWhatsAppMessagesInput = {
   user: UserCreateNestedOneWithoutWorkerInput;
 };
 
+export type WorkerFilterInput = {
+  activityId?: InputMaybe<Scalars['String']['input']>;
+  experience?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
+  hourlyRateMax?: InputMaybe<Scalars['Float']['input']>;
+  hourlyRateMin?: InputMaybe<Scalars['Float']['input']>;
+  nationalityId?: InputMaybe<Scalars['String']['input']>;
+  positionId?: InputMaybe<Scalars['String']['input']>;
+  skills?: InputMaybe<Scalars['String']['input']>;
+  specialtyId?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type WorkerListRelationFilter = {
   every?: InputMaybe<WorkerWhereInput>;
   none?: InputMaybe<WorkerWhereInput>;
@@ -5392,6 +6039,53 @@ export type WorkerListRelationFilter = {
 export type WorkerNullableScalarRelationFilter = {
   is?: InputMaybe<WorkerWhereInput>;
   isNot?: InputMaybe<WorkerWhereInput>;
+};
+
+export type WorkerOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type WorkerOrderByWithRelationInput = {
+  accommodationType?: InputMaybe<SortOrderInput>;
+  activity?: InputMaybe<ActivityOrderByWithRelationInput>;
+  activityId?: InputMaybe<SortOrderInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  currentCity?: InputMaybe<SortOrderInput>;
+  currentSalary?: InputMaybe<SortOrderInput>;
+  currentWorkplace?: InputMaybe<SortOrderInput>;
+  cvFile?: InputMaybe<SortOrderInput>;
+  dateOfBirth?: InputMaybe<SortOrderInput>;
+  expectedSalary?: InputMaybe<SortOrderInput>;
+  experience?: InputMaybe<SortOrderInput>;
+  expiryDate?: InputMaybe<SortOrderInput>;
+  gender?: InputMaybe<SortOrderInput>;
+  hourlyRate?: InputMaybe<SortOrder>;
+  iban?: InputMaybe<SortOrderInput>;
+  id?: InputMaybe<SortOrder>;
+  interviews?: InputMaybe<InterviewOrderByRelationAggregateInput>;
+  iqamaImage?: InputMaybe<SortOrderInput>;
+  iqamaNumber?: InputMaybe<SortOrderInput>;
+  nationality?: InputMaybe<NationalityOrderByWithRelationInput>;
+  nationalityId?: InputMaybe<SortOrderInput>;
+  portfolioFiles?: InputMaybe<SortOrderInput>;
+  position?: InputMaybe<PositionOrderByWithRelationInput>;
+  positionId?: InputMaybe<SortOrderInput>;
+  profilePicture?: InputMaybe<SortOrderInput>;
+  referralSource?: InputMaybe<SortOrderInput>;
+  skills?: InputMaybe<SortOrderInput>;
+  specialty?: InputMaybe<SpecialtyOrderByWithRelationInput>;
+  specialtyId?: InputMaybe<SortOrderInput>;
+  transferCount?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+  whatsAppMessages?: InputMaybe<WhatsAppMessageOrderByRelationAggregateInput>;
+};
+
+export type WorkerPaginatedResponse = {
+  __typename?: 'WorkerPaginatedResponse';
+  data: Array<Worker>;
+  pagination: PaginationMeta;
 };
 
 export type WorkerScalarRelationFilter = {
@@ -5430,6 +6124,14 @@ export type WorkerScalarWhereInput = {
   transferCount?: InputMaybe<IntFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
   userId?: InputMaybe<StringFilter>;
+};
+
+export type WorkerStats = {
+  __typename?: 'WorkerStats';
+  totalWorkers: Scalars['Int']['output'];
+  workersByActivity: Array<ActivityCount>;
+  workersByNationality: Array<NationalityCount>;
+  workersBySpecialty: Array<SpecialtyCount>;
 };
 
 export type WorkerUpdateManyMutationInput = {
@@ -5935,12 +6637,131 @@ export type WorkerWhereUniqueInput = {
   whatsAppMessages?: InputMaybe<WhatsAppMessageListRelationFilter>;
 };
 
+export type ZoomMeeting = {
+  __typename?: 'ZoomMeeting';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  interview?: Maybe<Interview>;
+  interviewId?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+  zoomHostKey?: Maybe<Scalars['String']['output']>;
+  zoomJoinUrl?: Maybe<Scalars['String']['output']>;
+  zoomMeetingId?: Maybe<Scalars['String']['output']>;
+  zoomMeetingPassword?: Maybe<Scalars['String']['output']>;
+  zoomStartUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type ZoomMeetingCreateNestedOneWithoutInterviewInput = {
+  connect?: InputMaybe<ZoomMeetingWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ZoomMeetingCreateOrConnectWithoutInterviewInput>;
+  create?: InputMaybe<ZoomMeetingCreateWithoutInterviewInput>;
+};
+
+export type ZoomMeetingCreateOrConnectWithoutInterviewInput = {
+  create: ZoomMeetingCreateWithoutInterviewInput;
+  where: ZoomMeetingWhereUniqueInput;
+};
+
+export type ZoomMeetingCreateWithoutInterviewInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  zoomHostKey?: InputMaybe<Scalars['String']['input']>;
+  zoomJoinUrl?: InputMaybe<Scalars['String']['input']>;
+  zoomMeetingId?: InputMaybe<Scalars['String']['input']>;
+  zoomMeetingPassword?: InputMaybe<Scalars['String']['input']>;
+  zoomStartUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ZoomMeetingNullableScalarRelationFilter = {
+  is?: InputMaybe<ZoomMeetingWhereInput>;
+  isNot?: InputMaybe<ZoomMeetingWhereInput>;
+};
+
+export type ZoomMeetingOrderByWithRelationInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  interview?: InputMaybe<InterviewOrderByWithRelationInput>;
+  interviewId?: InputMaybe<SortOrderInput>;
+  updatedAt?: InputMaybe<SortOrder>;
+  zoomHostKey?: InputMaybe<SortOrderInput>;
+  zoomJoinUrl?: InputMaybe<SortOrderInput>;
+  zoomMeetingId?: InputMaybe<SortOrderInput>;
+  zoomMeetingPassword?: InputMaybe<SortOrderInput>;
+  zoomStartUrl?: InputMaybe<SortOrderInput>;
+};
+
+export type ZoomMeetingUpdateOneWithoutInterviewNestedInput = {
+  connect?: InputMaybe<ZoomMeetingWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ZoomMeetingCreateOrConnectWithoutInterviewInput>;
+  create?: InputMaybe<ZoomMeetingCreateWithoutInterviewInput>;
+  delete?: InputMaybe<ZoomMeetingWhereInput>;
+  disconnect?: InputMaybe<ZoomMeetingWhereInput>;
+  update?: InputMaybe<ZoomMeetingUpdateToOneWithWhereWithoutInterviewInput>;
+  upsert?: InputMaybe<ZoomMeetingUpsertWithoutInterviewInput>;
+};
+
+export type ZoomMeetingUpdateToOneWithWhereWithoutInterviewInput = {
+  data: ZoomMeetingUpdateWithoutInterviewInput;
+  where?: InputMaybe<ZoomMeetingWhereInput>;
+};
+
+export type ZoomMeetingUpdateWithoutInterviewInput = {
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  zoomHostKey?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  zoomJoinUrl?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  zoomMeetingId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  zoomMeetingPassword?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  zoomStartUrl?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type ZoomMeetingUpsertWithoutInterviewInput = {
+  create: ZoomMeetingCreateWithoutInterviewInput;
+  update: ZoomMeetingUpdateWithoutInterviewInput;
+  where?: InputMaybe<ZoomMeetingWhereInput>;
+};
+
+export type ZoomMeetingWhereInput = {
+  AND?: InputMaybe<Array<ZoomMeetingWhereInput>>;
+  NOT?: InputMaybe<Array<ZoomMeetingWhereInput>>;
+  OR?: InputMaybe<Array<ZoomMeetingWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  interview?: InputMaybe<InterviewNullableScalarRelationFilter>;
+  interviewId?: InputMaybe<StringNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  zoomHostKey?: InputMaybe<StringNullableFilter>;
+  zoomJoinUrl?: InputMaybe<StringNullableFilter>;
+  zoomMeetingId?: InputMaybe<StringNullableFilter>;
+  zoomMeetingPassword?: InputMaybe<StringNullableFilter>;
+  zoomStartUrl?: InputMaybe<StringNullableFilter>;
+};
+
+export type ZoomMeetingWhereUniqueInput = {
+  AND?: InputMaybe<Array<ZoomMeetingWhereInput>>;
+  NOT?: InputMaybe<Array<ZoomMeetingWhereInput>>;
+  OR?: InputMaybe<Array<ZoomMeetingWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  interview?: InputMaybe<InterviewNullableScalarRelationFilter>;
+  interviewId?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  zoomHostKey?: InputMaybe<StringNullableFilter>;
+  zoomJoinUrl?: InputMaybe<StringNullableFilter>;
+  zoomMeetingId?: InputMaybe<StringNullableFilter>;
+  zoomMeetingPassword?: InputMaybe<StringNullableFilter>;
+  zoomStartUrl?: InputMaybe<StringNullableFilter>;
+};
+
 export type CreateNoonCheckoutMutationVariables = Exact<{
-  input: CreateNoonCheckoutInput;
+  orderId: Scalars['String']['input'];
+  purpose?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type CreateNoonCheckoutMutation = { __typename?: 'Mutation', createNoonCheckout: { __typename?: 'NoonCheckoutResponse', checkoutId: string, redirectUrl: string } };
+export type CreateNoonCheckoutMutation = { __typename?: 'Mutation', createNoonCheckout: { __typename?: 'CreateCheckoutOutput', checkoutId: string, paymentId: string, redirectUrl: string } };
 
 export type CreateOrderMutationVariables = Exact<{
   createOrderInput: OrderCreateInput;
@@ -5961,7 +6782,7 @@ export type OrderQueryVariables = Exact<{
 }>;
 
 
-export type OrderQuery = { __typename?: 'Query', order: { __typename?: 'Order', amount: number, id: string, description?: string | null, initialPayment?: number | null, finalPayment?: number | null, title: string, status: string, isApproved: boolean, createdAt: any, client?: { __typename?: 'Client', id: string, user?: { __typename?: 'User', id: string, name: string } | null } | null } };
+export type OrderQuery = { __typename?: 'Query', order: { __typename?: 'Order', amount: number, id: string, description?: string | null, initialPayment?: number | null, finalPayment?: number | null, title: string, status: string, isApproved: boolean, createdAt: any, client: { __typename?: 'Client', id: string, user: { __typename?: 'User', id: string, name: string } } } };
 
 export type FindAllClientsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5974,7 +6795,7 @@ export type OrdersQueryVariables = Exact<{
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', amount: number, id: string, createdAt: any, title: string, status: string, isApproved: boolean, finalPayment?: number | null, paymentStatus: string, client?: { __typename?: 'Client', user?: { __typename?: 'User', username: string } | null } | null }> };
+export type OrdersQuery = { __typename?: 'Query', orders: Array<{ __typename?: 'Order', amount: number, id: string, createdAt: any, title: string, status: string, isApproved: boolean, finalPayment?: number | null, paymentStatus: PaymentStatus, client: { __typename?: 'Client', user: { __typename?: 'User', username: string } } }> };
 
 export type UpdateOrderMutationVariables = Exact<{
   updateOrderId: Scalars['String']['input'];
@@ -6004,7 +6825,7 @@ export type SignupMutationVariables = Exact<{
 export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthToken', accessToken: string } };
 
 
-export const CreateNoonCheckoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateNoonCheckout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateNoonCheckoutInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createNoonCheckout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkoutId"}},{"kind":"Field","name":{"kind":"Name","value":"redirectUrl"}}]}}]}}]} as unknown as DocumentNode<CreateNoonCheckoutMutation, CreateNoonCheckoutMutationVariables>;
+export const CreateNoonCheckoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateNoonCheckout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"purpose"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createNoonCheckout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}},{"kind":"Argument","name":{"kind":"Name","value":"purpose"},"value":{"kind":"Variable","name":{"kind":"Name","value":"purpose"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkoutId"}},{"kind":"Field","name":{"kind":"Name","value":"paymentId"}},{"kind":"Field","name":{"kind":"Name","value":"redirectUrl"}}]}}]}}]} as unknown as DocumentNode<CreateNoonCheckoutMutation, CreateNoonCheckoutMutationVariables>;
 export const CreateOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createOrderInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createOrderInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createOrderInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateOrderMutation, CreateOrderMutationVariables>;
 export const RemoveOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeOrderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeOrderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<RemoveOrderMutation, RemoveOrderMutationVariables>;
 export const OrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Order"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"initialPayment"}},{"kind":"Field","name":{"kind":"Name","value":"finalPayment"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isApproved"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"client"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<OrderQuery, OrderQueryVariables>;

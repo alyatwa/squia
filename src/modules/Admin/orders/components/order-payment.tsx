@@ -1,6 +1,10 @@
 "use client";
 import { Button } from "@/components/ui";
-import { CreateNoonCheckoutDocument, OrderDocument } from "@/gql/graphql";
+import {
+  CreateNoonCheckoutDocument,
+  OrderDocument,
+  PaymentPurpose,
+} from "@/gql/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
@@ -35,7 +39,8 @@ export const AdminOrderPayment: React.FC = () => {
   const handlePayment = async () => {
     await createCheckout({
       variables: {
-        input: { orderId },
+        orderId,
+        purpose: PaymentPurpose.InitialPayment,
       },
     });
   };
