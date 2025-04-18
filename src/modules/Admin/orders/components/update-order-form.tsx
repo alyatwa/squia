@@ -32,7 +32,7 @@ import {
 import { useUpdateOrder } from "../hooks/useUpdateOrder";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
-import { OrderUpdateInput } from "@/gql/graphql";
+import { OrderUpdateInput, PaymentStatus } from "@/gql/graphql";
 import { OrderStatus } from "@/types/Order.types";
 
 const formSchema = z.object({
@@ -45,7 +45,7 @@ const formSchema = z.object({
   initialPayment: z.number().optional(),
   finalPayment: z.number().optional(),
   paymentMethod: z.string().optional(),
-  paymentStatus: z.string(),
+  paymentStatus: z.nativeEnum(PaymentStatus),
   status: z.string(),
 });
 
@@ -63,7 +63,7 @@ interface UpdateOrderFormProps {
     initialPayment?: number | null;
     finalPayment?: number | null;
     paymentMethod?: string | null;
-    paymentStatus: string;
+    paymentStatus: PaymentStatus;
     status: string;
   };
   button: React.ReactNode;
@@ -334,12 +334,11 @@ export const UpdateOrderForm: React.FC<UpdateOrderFormProps> = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="unpaid">Unpaid</SelectItem>
-                        <SelectItem value="partially_paid">
-                          Partially Paid
-                        </SelectItem>
-                        <SelectItem value="paid">Paid</SelectItem>
-                        <SelectItem value="refunded">Refunded</SelectItem>
+                        {Object.values(PaymentStatus).map((status) => (
+                          <SelectItem key={status} value={status}>
+                            {status.charAt(0).toUpperCase() + status.slice(1)}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
