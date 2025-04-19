@@ -1,0 +1,8 @@
+mutation CreateWorker($createWorkerInput: CreateWorkerInput!) {
+  createWorker(createWorkerInput: $createWorkerInput) {
+    userId
+    id
+    activityId
+    currentCity
+  }
+}

@@ -1,0 +1,12 @@
+query Workers($filter: WorkerFilterInput, $pagination: PaginationDto) {
+  workers(filter: $filter, pagination: $pagination) {
+    data {
+      id
+      user {
+        name
+        id
+        email
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+mutation UpdateWorker(
+  $updateWorkerId: String!
+  $updateWorkerInput: UpdateWorkerInput!
+) {
+  updateWorker(id: $updateWorkerId, updateWorkerInput: $updateWorkerInput) {
+    id
+    createdAt
+    accommodationType
+  }
+}

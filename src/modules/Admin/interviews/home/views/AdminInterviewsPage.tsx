@@ -5,10 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { cn } from "@/lib/utils";
-import {
-  InterviewsDocument,
-  InterviewStatus as GQLInterviewStatus,
-} from "@/gql/graphql";
+import { InterviewsDocument, InterviewStatus } from "@/gql/graphql";
 import { AlertConfirm } from "@/components/shared/alert-confirm";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,14 +19,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AddInterviewDialog } from "../../add-interview/components/add-interview-dialog";
 
-// Define interview status types with UI properties
-export enum InterviewStatus {
-  Pending = "pending",
-  Confirmed = "confirmed",
-  Completed = "completed",
-  Cancelled = "cancelled",
-}
-
 export const AdminInterviewsPage = () => {
   // Active tab state
   const [activeTab, setActiveTab] = useState<InterviewStatus>(
@@ -42,7 +31,7 @@ export const AdminInterviewsPage = () => {
     loading: pendingLoading,
     refetch: refetchPending,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: GQLInterviewStatus.Pending } } },
+    variables: { where: { status: { equals: InterviewStatus.Pending } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -51,7 +40,7 @@ export const AdminInterviewsPage = () => {
     loading: confirmedLoading,
     refetch: refetchConfirmed,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: GQLInterviewStatus.Confirmed } } },
+    variables: { where: { status: { equals: InterviewStatus.Confirmed } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -60,7 +49,7 @@ export const AdminInterviewsPage = () => {
     loading: completedLoading,
     refetch: refetchCompleted,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: GQLInterviewStatus.Completed } } },
+    variables: { where: { status: { equals: InterviewStatus.Completed } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -69,7 +58,7 @@ export const AdminInterviewsPage = () => {
     loading: cancelledLoading,
     refetch: refetchCancelled,
   } = useQuery(InterviewsDocument, {
-    variables: { where: { status: { equals: GQLInterviewStatus.Canceled } } },
+    variables: { where: { status: { equals: InterviewStatus.Canceled } } },
     fetchPolicy: "cache-and-network",
   });
 
@@ -110,7 +99,7 @@ export const AdminInterviewsPage = () => {
       emptyDescription: "لم يتم العثور على أي مقابلات مكتملة في النظام.",
       badgeClass: "bg-green-100 text-green-800",
     },
-    [InterviewStatus.Cancelled]: {
+    [InterviewStatus.Canceled]: {
       data: cancelledData?.interviews || [],
       loading: cancelledLoading,
       icon: "fluent-emoji:counterclockwise-arrows-button",

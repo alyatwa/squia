@@ -1,0 +1,8 @@
+mutation RemoveWorker($removeWorkerId: String!) {
+  removeWorker(id: $removeWorkerId) {
+    id
+    gender
+    createdAt
+    updatedAt
+  }
+}

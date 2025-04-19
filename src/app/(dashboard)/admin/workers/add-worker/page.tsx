@@ -1,4 +1,4 @@
-import { AdminAddWorkerPage } from "@/modules/Admin/workers/add-worker/views/AdminAddWorkerPage";
+import { AdminAddWorkerPage } from "@/modules/Admin/workers/update-worker/views/AdminAddWorkerPage";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {

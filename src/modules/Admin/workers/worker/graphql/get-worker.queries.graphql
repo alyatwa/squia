@@ -1,0 +1,10 @@
+query Worker($workerId: String!) {
+  worker(id: $workerId) {
+    createdAt
+    experience
+    id
+    currentCity
+    iqamaNumber
+    iban
+  }
+}
